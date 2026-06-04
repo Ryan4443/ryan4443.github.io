@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal - Sonic Terminal Layout</title>
+    <title>10 Pro Portal - Matrix Node</title>
     <style>
         :root {
             --bg-main: #030306;
@@ -35,8 +35,8 @@
             background-attachment: fixed;
         }
 
-        /* Security Portal Overlay */
-        .password-overlay {
+        /* Authentication Portal Cover Overlay */
+        .auth-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -50,18 +50,48 @@
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
+            transition: opacity 0.3s ease;
         }
 
-        .password-modal {
+        .auth-modal {
             background: rgba(20, 10, 15, 0.6);
             border: 1px solid var(--accent);
-            padding: 40px 24px;
+            padding: 30px 24px;
             border-radius: 28px;
             max-width: 380px;
             width: 100%;
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             box-shadow: 0 0 50px var(--accent-glow), inset 0 1px 0 var(--glass-specular);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .auth-tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+
+        .auth-tab-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px var(--accent-glow);
         }
 
         #global-clock {
@@ -84,9 +114,25 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 1px var(--glass-specular);
         }
 
+        .user-tagline {
+            position: fixed;
+            top: 12px;
+            right: 15px;
+            z-index: 1001;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #fff;
+            background: rgba(255, 51, 102, 0.1);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--accent);
+            backdrop-filter: blur(20px);
+            text-transform: uppercase;
+        }
+
         header {
             text-align: center;
-            padding: 50px 15px 25px 15px;
+            padding: 60px 15px 25px 15px;
             background: linear-gradient(180deg, rgba(255, 51, 102, 0.03) 0%, transparent 100%);
         }
 
@@ -160,8 +206,8 @@
         .time-box .label { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; margin-top: 3px; }
 
         nav {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex;
+            overflow-x: auto;
             background: rgba(10, 10, 15, 0.5);
             backdrop-filter: blur(30px) saturate(200%);
             -webkit-backdrop-filter: blur(30px) saturate(200%);
@@ -176,7 +222,7 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 14px 2px;
+            padding: 14px 16px;
             font-size: 0.72rem;
             font-weight: 800;
             cursor: pointer;
@@ -184,6 +230,8 @@
             letter-spacing: 0.5px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-btn.active {
@@ -332,20 +380,46 @@
 
         .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,3,6,0.98); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
         .break-modal { background: rgba(20,10,15,0.6); border: 1px solid var(--accent); padding: 35px 20px; border-radius: 28px; max-width: 400px; backdrop-filter: blur(30px); box-shadow: 0 0 50px var(--accent-glow); }
+
+        /* Admin Database Design Elements */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+        .admin-table th, .admin-table td {
+            border: 1px solid var(--border);
+            padding: 10px;
+            text-align: left;
+        }
+        .admin-table th {
+            background: rgba(255, 51, 102, 0.1);
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
 
-    <div id="password-gate-screen" class="password-overlay">
-        <div class="password-modal">
-            <h2 style="color:var(--accent); text-shadow: 0 0 10px var(--accent); margin-bottom: 8px;">🔒 SECURE PORTAL</h2>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 22px;">Authorization Required. Input Terminal PIN to link interface.</p>
-            <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:10px; font-size:1.8rem; font-family:monospace; margin-bottom: 22px;" maxlength="4">
-            <button class="action-btn" onclick="verifyGatePassword()">Synchronize Matrix ⚡</button>
+    <div id="auth-gate-screen" class="auth-overlay">
+        <div class="auth-modal">
+            <div class="auth-tabs">
+                <button id="tab-login" class="auth-tab-btn active" onclick="setAuthMode('login')">Login</button>
+                <button id="tab-register" class="auth-tab-btn" onclick="setAuthMode('register')">Register</button>
+            </div>
+            <h2 id="auth-title" style="color:var(--accent); text-shadow: 0 0 10px var(--accent); margin-bottom: 8px;">🔑 SYSTEM ACCESS</h2>
+            <p id="auth-desc" style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 22px;">Initialize profile encryption links.</p>
+            
+            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:22px;">
+                <input type="text" id="auth-username" placeholder="Username" style="text-align:center;">
+                <input type="password" id="auth-password" placeholder="Password" style="text-align:center;">
+            </div>
+            <button id="auth-submit-btn" class="action-btn" onclick="handleAuthSubmit()">Authenticate Profile ⚡</button>
         </div>
     </div>
 
     <div id="global-clock">00:00:00</div>
+    <div id="user-display-tag" class="user-tagline">STANDBY</div>
 
     <div id="strict-break-screen" class="break-overlay">
         <div class="break-modal">
@@ -380,6 +454,7 @@
         <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
         <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
         <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Style</button>
+        <button class="nav-btn" onclick="showPage('admin-page', this)">👥 Vault</button>
     </nav>
 
     <div class="main-content">
@@ -534,24 +609,38 @@
                 
                 <button class="action-btn secondary" onclick="resetStylesToDefault()">Reset Core Structural Themes 🔄</button>
             </div>
+        </div>
 
-            <div class="card">
-                <h2>🎭 Efficiency Badging Shell</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:12px;">Toggle an identity badge, return to other tabs, and tap any block workspace container to apply stamps.</p>
-                <div class="sticker-shelf">
-                    <button class="sticker-btn" onclick="setActiveSticker('🔥', this)">🔥</button>
-                    <button class="sticker-btn" onclick="setActiveSticker('👑', this)">👑</button>
-                    <button class="sticker-btn" onclick="setActiveSticker('🎯', this)">🎯</button>
-                    <button class="sticker-btn" onclick="setActiveSticker('💯', this)">💯</button>
-                </div>
-                <div id="sticker-status-banner" style="font-size:0.75rem; margin-top:12px; color:var(--text-muted); font-weight:700;">No badge system deployed. Stamping standby.</div>
+        <div id="admin-page" class="page">
+            <div class="card" id="admin-auth-panel">
+                <h2>🔒 Unlock Central Database Vault</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Input the primary administrative code matrix to review user identities.</p>
+                <input type="password" id="admin-master-key" placeholder="••••••••" style="text-align:center; letter-spacing:6px; margin-bottom:15px;">
+                <button class="action-btn" onclick="verifyAdminVaultAccess()">Access Credentials Log ⚡</button>
+            </div>
+
+            <div class="card" id="admin-data-panel" style="display:none; border-color:var(--success);">
+                <h2>📋 Registered Matrix Identities</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Clear-text user directories compiled inside current system local cache storage arrays.</p>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Account Name</th>
+                            <th>Password Output</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body">
+                        </tbody>
+                </table>
+                <button class="action-btn secondary" onclick="lockAdminVault()" style="margin-top:20px;">Seal Vault Storage 🔒</button>
             </div>
         </div>
 
     </div>
 
     <script>
-        /* --- NATIVE REAL-TIME OSCILLATOR SYNTH AUDIO ENGINE --- */
+        /* --- SOUND INTERFACE AUDIO CONTROLLERS --- */
         const AudioEngine = {
             ctx: null, droneOsc1: null, droneOsc2: null, droneGain: null, isDronePlaying: false,
             init() {
@@ -637,27 +726,130 @@
             }
         };
 
-        /* --- LOG-IN GATE SECURITY VERIFICATION --- */
-        function verifyGatePassword() {
-            AudioEngine.init(); // Wakes browser audio components immediately
-            const pinEntered = document.getElementById('gate-pin').value.trim();
-            if(pinEntered === "4443") {
-                AudioEngine.playSuccess();
-                document.getElementById('password-gate-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('password-gate-screen').style.display = 'none';
-                }, 300);
-            } else {
+        /* --- USER MANAGEMENT PROFILE DATABASE STORAGE SHIELDS --- */
+        let currentActiveUser = "";
+        let globalAuthMode = "login";
+
+        function setAuthMode(mode) {
+            AudioEngine.playClick();
+            globalAuthMode = mode;
+            document.getElementById('tab-login').classList.toggle('active', mode === 'login');
+            document.getElementById('tab-register').classList.toggle('active', mode === 'register');
+            document.getElementById('auth-title').innerText = mode === 'login' ? "🔑 SYSTEM ACCESS" : "🛡️ REGISTER PROFILE";
+            document.getElementById('auth-desc').innerText = mode === 'login' ? "Initialize profile encryption links." : "Generate decentralized workspace node.";
+            document.getElementById('auth-submit-btn').innerText = mode === 'login' ? "Authenticate Profile ⚡" : "Create Clean Account ✨";
+        }
+
+        function handleAuthSubmit() {
+            AudioEngine.init();
+            const user = document.getElementById('auth-username').value.trim();
+            const pass = document.getElementById('auth-password').value.trim();
+
+            if(!user || !pass) {
                 AudioEngine.playError();
-                alert("Access Denied: Invalid Terminal Security Key.");
-                document.getElementById('gate-pin').value = "";
+                alert("Execution Aborted: Output credentials blocks empty.");
+                return;
+            }
+
+            let accounts = JSON.parse(localStorage.getItem('portalMasterAccounts') || '[]');
+
+            if(globalAuthMode === 'register') {
+                const checkedUser = accounts.find(a => a.username.toLowerCase() === user.toLowerCase());
+                if(checkedUser) {
+                    AudioEngine.playError();
+                    alert("Conflict Detected: Identity cluster already exists.");
+                    return;
+                }
+                accounts.push({ username: user, password: pass });
+                localStorage.setItem('portalMasterAccounts', JSON.stringify(accounts));
+                AudioEngine.playSuccess();
+                alert("Account created successfully! Proceeding to deploy framework.");
+            } else {
+                const loggedUser = accounts.find(a => a.username.toLowerCase() === user.toLowerCase() && a.password === pass);
+                if(!loggedUser) {
+                    AudioEngine.playError();
+                    alert("Security Failure: Credentials vector mismatch.");
+                    return;
+                }
+                AudioEngine.playSuccess();
+            }
+
+            currentActiveUser = user;
+            document.getElementById('user-display-tag').innerText = `👤 ${currentActiveUser}`;
+            
+            // Unveil interface
+            document.getElementById('auth-gate-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('auth-gate-screen').style.display = 'none';
+            }, 300);
+
+            // Fetch current initialized environment profiles
+            loadProfileScopedData();
+        }
+
+        /* --- ENVIRONMENT CONTEXT RELOAD ROUTERS --- */
+        function loadProfileScopedData() {
+            // Load custom scratchpad
+            const cachedNotes = localStorage.getItem(`portal_${currentActiveUser}_scratchpad`);
+            document.getElementById('scratchpad-area').value = cachedNotes ? cachedNotes : "";
+
+            // Refresh events and items
+            renderEvents();
+            setupSyllabusTrackerNodes();
+        }
+
+        function saveScratchpad() { 
+            AudioEngine.playTick();
+            if(currentActiveUser) {
+                localStorage.setItem(`portal_${currentActiveUser}_scratchpad`, document.getElementById('scratchpad-area').value); 
             }
         }
-        // Link Enter Key functionality to Login Input
-        document.getElementById('gate-pin').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') verifyGatePassword();
-        });
 
+        /* --- ADMINISTRATIVE REPOSITORY VAULT CONTROLLERS --- */
+        function verifyAdminVaultAccess() {
+            AudioEngine.init();
+            const passkey = document.getElementById('admin-master-key').value.trim();
+            
+            if(passkey === "30886") {
+                AudioEngine.playSuccess();
+                document.getElementById('admin-auth-panel').style.display = 'none';
+                document.getElementById('admin-data-panel').style.display = 'block';
+                
+                // Construct account array outputs
+                const tableBody = document.getElementById('admin-table-body');
+                const database = JSON.parse(localStorage.getItem('portalMasterAccounts') || '[]');
+                
+                if(database.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:var(--text-muted);">No records registered inside current operational cache.</td></tr>`;
+                } else {
+                    tableBody.innerHTML = database.map(acc => `
+                        <tr>
+                            <td style="font-weight:700; color:#fff;">${escapeHTML(acc.username)}</td>
+                            <td style="font-family:monospace; color:var(--accent); font-weight:700;">${escapeHTML(acc.password)}</td>
+                        </tr>
+                    `).join('');
+                }
+            } else {
+                AudioEngine.playError();
+                alert("Security Intercept: Unauthorized Admin Pin Verification Refused.");
+                document.getElementById('admin-master-key').value = "";
+            }
+        }
+
+        function lockAdminVault() {
+            AudioEngine.playPop();
+            document.getElementById('admin-master-key').value = "";
+            document.getElementById('admin-data-panel').style.display = 'none';
+            document.getElementById('admin-auth-panel').style.display = 'block';
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        /* --- CLOCK & SOUNDSCAPES MANAGEMENT --- */
         function toggleAlphaDrone() {
             const btn = document.getElementById('audio-synth-toggle');
             const status = AudioEngine.toggleAlphaWave();
@@ -665,7 +857,6 @@
             else { btn.innerText = "Synthesize Focus Wave 🧘"; btn.style.borderColor = "var(--border)"; }
         }
 
-        // 24 Hour Dynamic Synchronous Clock System
         function runGlobalClock() {
             const now = new Date();
             document.getElementById('global-clock').innerText = 
@@ -673,7 +864,6 @@
         }
         setInterval(runGlobalClock, 1000); runGlobalClock();
 
-        // Router View Controller Configuration
         function showPage(id, btn) {
             AudioEngine.playClick();
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -730,24 +920,23 @@
         function pauseTimer() { AudioEngine.playClick(); clearInterval(timerSessionId); timerSessionId = null; }
         function resetTimer() { AudioEngine.playClick(); pauseTimer(); timeLeft = baseTime; updateDisplay(); }
 
-        // Persistent Scratchpad Logic
-        function saveScratchpad() { 
-            AudioEngine.playTick();
-            localStorage.setItem('portalScratchpad', document.getElementById('scratchpad-area').value); 
-        }
-        if(localStorage.getItem('portalScratchpad')) { document.getElementById('scratchpad-area').value = localStorage.getItem('portalScratchpad'); }
-
-        // LocalStorage Timeline Engine
+        // Scoped LocalStorage Timeline Engine
         function addEvent() {
             const title = document.getElementById('event-name').value.trim(); const timestamp = document.getElementById('event-date').value;
             if(!title || !timestamp) { AudioEngine.playError(); return alert("Declare all data parameters."); }
             AudioEngine.playSuccess();
-            const activeEvents = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]'); activeEvents.push({ title, timestamp });
-            activeEvents.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem('portalTimelineEvents', JSON.stringify(activeEvents));
+            
+            const storageKey = `portal_${currentActiveUser}_events`;
+            const activeEvents = JSON.parse(localStorage.getItem(storageKey) || '[]'); activeEvents.push({ title, timestamp });
+            activeEvents.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem(storageKey, JSON.stringify(activeEvents));
             renderEvents(); document.getElementById('event-name').value = "";
         }
         function renderEvents() {
-            const container = document.getElementById('event-list'); const data = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
+            const container = document.getElementById('event-list');
+            if(!currentActiveUser) return;
+            
+            const storageKey = `portal_${currentActiveUser}_events`;
+            const data = JSON.parse(localStorage.getItem(storageKey) || '[]');
             const referenceDay = new Date(); referenceDay.setHours(0,0,0,0);
             container.innerHTML = data.map((item, keyID) => {
                 const targetDay = new Date(item.timestamp); targetDay.setHours(0,0,0,0);
@@ -756,7 +945,7 @@
                 return `
                     <div class="cal-item ${urgentThresholdTriggered ? 'urgent' : ''}">
                         <div>
-                            <div class="chapter-title" style="font-weight:800; color:#fff;">${item.title}</div>
+                            <div class="chapter-title" style="font-weight:800; color:#fff;">${escapeHTML(item.title)}</div>
                             <div style="font-size:0.75rem; margin-top:4px; color:${urgentThresholdTriggered ? '#f43f5e':'var(--text-muted)'}; font-weight:700;">
                                 📅 Scheduled: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 CRITICAL DEADLINE' : ''}
                             </div>
@@ -768,12 +957,12 @@
         }
         function deleteEvent(idx) {
             AudioEngine.playPop();
-            let src = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]'); src.splice(idx, 1);
-            localStorage.setItem('portalTimelineEvents', JSON.stringify(src)); renderEvents();
+            const storageKey = `portal_${currentActiveUser}_events`;
+            let src = JSON.parse(localStorage.getItem(storageKey) || '[]'); src.splice(idx, 1);
+            localStorage.setItem(storageKey, JSON.stringify(src)); renderEvents();
         }
-        renderEvents();
 
-        // --- HIGHLIGHTED RANKING ENGINE SYSTEMS ---
+        // Global Ranking Engine Systems
         const FA_SECURITY_PIN = "6289";
 
         function commitGradeEntry() {
@@ -821,7 +1010,7 @@
                     <div class="rank-item ${positionalClass}">
                         <div style="display:flex; align-items:center; gap:12px;">
                             <span class="rank-badge ${badgeClass}">${statusIcon}</span>
-                            <span style="font-weight:700; color:#fff;">${student.name}</span>
+                            <span style="font-weight:700; color:#fff;">${escapeHTML(student.name)}</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:12px;">
                             <span style="font-family:monospace; font-weight:900; color:var(--accent); font-size:1.1rem;">${student.marks} M</span>
@@ -846,7 +1035,7 @@
         }
         renderLeaderboard();
 
-        // Calculator Engine Logic
+        // Calculator Core Engine
         const calcNode = document.getElementById('calc-screen');
         function append(char) { AudioEngine.playClick(); if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
         function clearCalc() { AudioEngine.playPop(); calcNode.value = '0'; }
@@ -861,29 +1050,54 @@
             } 
         }
 
-        // Syllabus Instantiations
+        // Syllabus Framework Array
         const frameworkDataArray = { 
             math: ["Real Numbers", "Polynomials", "Linear Equations Systems", "Quadratic Formulations", "Arithmetic Progressions", "Trigonometry Layouts"], 
             science: ["Chemical Equations & Matrix", "Acids, Bases Shells", "Life Micro Processes", "Refractive Optical Systems", "Electrical Circuits"] 
         };
+
         function setupSyllabusTrackerNodes() {
+            if(!currentActiveUser) return;
+            const syllabusKey = `portal_${currentActiveUser}_syllabus`;
+            const savedSyllabusStates = JSON.parse(localStorage.getItem(syllabusKey) || '{}');
+
             ['math', 'science'].forEach(domainKey => {
                 const dom = document.getElementById(`${domainKey}-chapters`);
-                dom.innerHTML = frameworkDataArray[domainKey].map(nodeTitle => `
-                    <div class="syllabus-item">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <input type="checkbox" style="transform:scale(1.2); accent-color:var(--accent);" onchange="AudioEngine.playPop()">
-                            <span class="chapter-title" style="font-weight:700; color:#fff;">${nodeTitle}</span>
+                dom.innerHTML = frameworkDataArray[domainKey].map((nodeTitle, idx) => {
+                    const uniqueId = `${domainKey}_ch_${idx}`;
+                    const isChecked = savedSyllabusStates[uniqueId]?.checked ? 'checked' : '';
+                    const noteText = savedSyllabusStates[uniqueId]?.note || '';
+                    const dateText = savedSyllabusStates[uniqueId]?.date || '';
+
+                    return `
+                        <div class="syllabus-item">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="checkbox" id="check_${uniqueId}" ${isChecked} style="transform:scale(1.2); accent-color:var(--accent);" onchange="updateSyllabusState('${uniqueId}')">
+                                <span class="chapter-title" style="font-weight:700; color:#fff;">${nodeTitle}</span>
+                            </div>
+                            <div class="tracker-inputs">
+                                <input type="text" id="note_${uniqueId}" value="${escapeHTML(noteText)}" placeholder="Pending Leftover Notes..." oninput="updateSyllabusState('${uniqueId}')">
+                                <input type="text" id="date_${uniqueId}" value="${escapeHTML(dateText)}" placeholder="Target Date Deadlines" oninput="updateSyllabusState('${uniqueId}')">
+                            </div>
                         </div>
-                        <div class="tracker-inputs">
-                            <input type="text" placeholder="Pending Leftover Notes..." oninput="AudioEngine.playTick()">
-                            <input type="text" placeholder="Target Date Deadlines" oninput="AudioEngine.playTick()">
-                        </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             });
         }
-        setupSyllabusTrackerNodes();
+
+        function updateSyllabusState(id) {
+            AudioEngine.playTick();
+            const syllabusKey = `portal_${currentActiveUser}_syllabus`;
+            let savedSyllabusStates = JSON.parse(localStorage.getItem(syllabusKey) || '{}');
+
+            savedSyllabusStates[id] = {
+                checked: document.getElementById(`check_${id}`).checked,
+                note: document.getElementById(`note_${id}`).value.trim(),
+                date: document.getElementById(`date_${id}`).value.trim()
+            };
+
+            localStorage.setItem(syllabusKey, JSON.stringify(savedSyllabusStates));
+        }
 
         // Doubt Vault Modules
         function saveToVault() {
@@ -891,7 +1105,7 @@
             if(!queryData.trim() || !verificationData.trim()) { AudioEngine.playError(); return; }
             AudioEngine.playSuccess();
             const logElement = document.getElementById('vault-log'); const outputFrame = document.createElement('div'); outputFrame.className = 'cal-item';
-            outputFrame.innerHTML = `<div><strong style="color:var(--accent)">Q:</strong> ${queryData}<br><br><strong style="color:#10b981">A:</strong> ${verificationData}</div>`;
+            outputFrame.innerHTML = `<div><strong style="color:var(--accent)">Q:</strong> ${escapeHTML(queryData)}<br><br><strong style="color:#10b981">A:</strong> ${escapeHTML(verificationData)}</div>`;
             logElement.prepend(outputFrame); document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
         }
 
@@ -949,7 +1163,7 @@
         function resetTTT() { AudioEngine.playClick(); matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
         constructArenaTTT();
 
-        // Style modification picking engines
+        // Style picking engines
         const DOMSelector = document.documentElement;
         document.getElementById('primary-picker').addEventListener('input', (event) => {
             DOMSelector.style.setProperty('--accent', event.target.value); DOMSelector.style.setProperty('--accent-glow', event.target.value + '66');
@@ -963,29 +1177,9 @@
             document.getElementById('primary-picker').value = '#ff3336'; document.getElementById('secondary-picker').value = '#1a1a26';
         }
 
-        // Badges setup
-        let deployedStickerToken = null;
-        function setActiveSticker(emojiChar, elementNode) {
-            AudioEngine.playClick();
-            document.querySelectorAll('.sticker-btn').forEach(btn => btn.classList.remove('selected'));
-            if(deployedStickerToken === emojiChar) { deployedStickerToken = null; document.getElementById('sticker-status-banner').innerText = "Stamping infrastructure standby."; } 
-            else { deployedStickerToken = emojiChar; elementNode.classList.add('selected'); document.getElementById('sticker-status-banner').innerText = `Active Array Deployment: [ ${emojiChar} ]. Tap layout containers to stamp.`; }
-        }
-        document.querySelector('.main-content').addEventListener('click', (event) => {
-            const targetedWorkspaceCard = event.target.closest('.card');
-            if(targetedWorkspaceCard && deployedStickerToken) {
-                if(event.target.closest('input') || event.target.closest('textarea') || event.target.closest('button')) return;
-                AudioEngine.playPop();
-                let stampBox = targetedWorkspaceCard.querySelector('.card-stickers');
-                if(!stampBox) { stampBox = document.createElement('div'); stampBox.className = 'card-stickers'; targetedWorkspaceCard.insertBefore(stampBox, targetedWorkspaceCard.firstChild); }
-                const badgeElement = document.createElement('span'); badgeElement.className = 'sticker-badge'; badgeElement.innerText = deployedStickerToken;
-                badgeElement.onclick = (eventCapture) => { eventCapture.stopPropagation(); AudioEngine.playPop(); badgeElement.remove(); }; stampBox.appendChild(badgeElement);
-            }
-        });
-
-        // Global Passive UI Sound Binder for standard input clicks
-        document.querySelectorAll('input, select, textarea').forEach(elem => {
-            elem.addEventListener('click', () => AudioEngine.playTick());
+        // Connect global keypress listener to landing page modal inputs
+        document.getElementById('auth-password').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') handleAuthSubmit();
         });
     </script>
 </body>
