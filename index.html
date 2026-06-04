@@ -4,379 +4,1122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 10 Pro Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>10 Pro Portal - Refined Terminal Layer</title>
     <style>
         :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --text-main: #f8fafc;
+            --bg-main: #030306;
+            --bg-card: rgba(18, 18, 28, 0.45);
+            --accent: #ff3366;
+            --accent-glow: rgba(255, 51, 102, 0.35);
+            --secondary: #12121a;
+            --secondary-glow: rgba(26, 26, 38, 0.2);
+            --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --border: #334155;
-            --gold: #fbbf24;
-            --silver: #cbd5e1;
-            --bronze: #b45309;
+            --border: rgba(255, 255, 255, 0.06);
+            --glass-specular: rgba(255, 255, 255, 0.04);
+            --success: #10b981;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        
         body {
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 120px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 51, 102, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(26, 26, 38, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(255, 51, 102, 0.01) 0px, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Security Gate Shield Overlay */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030306;
+            z-index: 10000;
             display: flex;
             justify-content: center;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-main); }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 800px) {
-            .container { grid-template-columns: 1fr; }
-        }
-
-        .panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            align-items: center;
+            text-align: center;
             padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            box-sizing: border-box;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        h2 {
-            font-size: 1.2rem;
+        .password-modal {
+            background: rgba(15, 8, 12, 0.7);
+            border: 1px solid var(--accent);
+            padding: 45px 30px;
+            border-radius: 24px;
+            max-width: 360px;
+            width: 100%;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 0 60px var(--accent-glow), inset 0 1px 0 var(--glass-specular);
+        }
+
+        #global-clock {
+            position: fixed;
+            top: 14px;
+            left: 15px;
+            z-index: 1001;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 8px var(--accent);
+            background: rgba(3, 3, 6, 0.75);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            letter-spacing: 1px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 1px var(--glass-specular);
+        }
+
+        .system-tagline {
+            position: fixed;
+            top: 14px;
+            right: 15px;
+            z-index: 1001;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--accent);
+            background: rgba(255, 51, 102, 0.08);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 51, 102, 0.2);
+            backdrop-filter: blur(20px);
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--accent);
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 10px;
-            margin-bottom: 5px;
         }
 
-        /* --- Input & Button Styles --- */
-        input[type="text"], input[type="number"], input[type="password"], textarea {
-            width: 100%;
-            background: var(--bg-main);
+        header {
+            text-align: center;
+            padding: 65px 15px 20px 15px;
+            background: linear-gradient(180deg, rgba(255, 51, 102, 0.02) 0%, transparent 100%);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 0 0 15px var(--accent);
+        }
+
+        .motto {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin: 8px 0 22px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 var(--glass-specular);
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+            margin-bottom: 16px;
+        }
+
+        .countdown-container {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 51, 102, 0.15);
+            border-radius: 16px;
+            padding: 14px;
+            margin: 10px auto;
+            max-width: 480px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        .countdown-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .time-box { background: rgba(0, 0, 0, 0.4); padding: 10px 0; border-radius: 10px; border: 1px solid var(--border); }
+        .time-box .num { font-size: 1.5rem; font-family: monospace; font-weight: 900; color: #fff; }
+        .time-box .label { font-size: 0.52rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+        /* Sleek Fixed Horizontal Scroll Navigation Row */
+        nav {
+            display: flex;
+            overflow-x: auto;
+            background: rgba(6, 6, 10, 0.7);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+            scrollbar-width: none;
+        }
+        nav::-webkit-scrollbar { display: none; }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 15px 18px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-btn:hover { color: #fff; }
+
+        .nav-btn.active {
+            color: #ffffff;
+            text-shadow: 0 0 8px var(--accent);
+            background: rgba(255, 51, 102, 0.05);
+            border-bottom-color: var(--accent);
+        }
+
+        .main-content { max-width: 480px; margin: 25px auto; padding: 0 14px; box-sizing: border-box; }
+        .page { display: none; }
+        .page.active { display: block; animation: smoothFade 0.3s ease-out forwards; }
+
+        @keyframes smoothFade {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea {
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 10px 15px;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            width: 100%;
+            box-sizing: border-box;
             outline: none;
-            transition: 0.2s;
+            transition: all 0.2s ease;
         }
-        
-        input:focus, textarea:focus { border-color: var(--accent); }
 
-        button {
-            background: var(--accent);
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(255, 51, 102, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        button.action-btn {
+            background: linear-gradient(135deg, var(--accent), #b3002d);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 14px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.15);
+            transition: all 0.2s ease;
         }
 
-        button:hover { background: var(--accent-hover); }
+        button.action-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        button.action-btn:active { transform: scale(0.98); }
+        button.action-btn.secondary { background: var(--secondary); box-shadow: none; border: 1px solid var(--border); }
+        button.action-btn.secondary:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.15); }
 
-        /* --- Leaderboard Styles --- */
-        .rank-entry-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        
-        .pin-container { grid-column: span 2; }
-
-        .leaderboard-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .rank-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-main);
-            padding: 12px 15px;
-            border-radius: 8px;
+        .calc-wrapper {
+            background: linear-gradient(145deg, rgba(255,255,255,0.01), rgba(0,0,0,0.5));
+            backdrop-filter: blur(30px);
+            padding: 20px;
+            border-radius: 24px;
             border: 1px solid var(--border);
-            transition: 0.2s;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
-        .rank-item:hover { border-color: var(--text-muted); }
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 800; }
-        .badge-gold { background: rgba(251, 191, 36, 0.2); color: var(--gold); }
-        .badge-silver { background: rgba(203, 213, 225, 0.2); color: var(--silver); }
-        .badge-bronze { background: rgba(180, 83, 9, 0.2); color: var(--bronze); }
-        .badge-standard { background: var(--border); color: var(--text-muted); }
-
-        /* --- Syllabus Tracker Styles --- */
-        .syllabus-container {
-            max-height: 700px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .subject-group { margin-bottom: 20px; }
-        .subject-title { font-weight: 800; color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem; }
-        
-        .chapter-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            padding: 8px;
-            background: var(--bg-main);
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .chapter-item:hover { background: var(--border); }
-        .chapter-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent); }
-        .chapter-label { font-size: 0.9rem; color: var(--text-muted); user-select: none; }
-        .chapter-item input[type="checkbox"]:checked + .chapter-label { text-decoration: line-through; color: var(--border); }
-
-        /* --- Scratchpad --- */
-        #scratchpad-area {
-            resize: vertical;
-            min-height: 150px;
+        #calc-screen {
+            width: 100%;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 14px;
+            margin-bottom: 16px;
+            text-align: right;
+            padding: 15px;
+            font-size: 2.2rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent);
+            border: 1px solid var(--border);
             font-family: monospace;
-            font-size: 0.9rem;
         }
+
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .btn-calc {
+            height: 55px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+        .btn-calc:hover { background: rgba(255,255,255,0.06); }
+        .btn-calc:active { background: var(--accent); transform: scale(0.94); }
+        .btn-calc.op { color: var(--accent); background: rgba(255, 51, 102, 0.02); }
+        .btn-calc.equals { background: linear-gradient(135deg, var(--accent), #b3002d); color: white; grid-column: span 2; }
+        .btn-calc.clear { color: var(--text-muted); }
+
+        .cal-item, .syllabus-item, .rank-item {
+            background: rgba(255, 255, 255, 0.005);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .cal-item, .rank-item { display: flex; justify-content: space-between; align-items: center; }
+        .cal-item.urgent {
+            border-left-color: #f43f5e;
+            background: linear-gradient(90deg, rgba(244, 63, 94, 0.05), transparent);
+        }
+
+        .rank-badge { font-weight: 900; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; }
+        .rank-gold { border-left-color: #ffd700 !important; background: linear-gradient(90deg, rgba(255, 215, 0, 0.04), transparent); }
+        .badge-gold { background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3); }
+        .rank-silver { border-left-color: #e2e8f0 !important; }
+        .badge-silver { background: rgba(226, 232, 240, 0.12); color: #e2e8f0; border: 1px solid rgba(226, 232, 240, 0.2); }
+        .badge-standard { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+
+        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 15px 0; }
+        .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #66001a 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; }
+        .bubble.popped { background: #08080c; box-shadow: inset 0 4px 8px rgba(0,0,0,0.8); border: none; }
+        
+        .reaction-box { width: 100%; height: 100px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 800; cursor: pointer; }
+        .reaction-box.waiting { background: #b45309; }
+        .reaction-box.ready { background: #059669; font-size: 1.2rem; text-shadow: 0 0 8px #10b981; }
+
+        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 200px; margin: 15px auto; }
+        .ttt-cell { aspect-ratio: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 900; cursor: pointer; }
+
+        .card-stickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; min-height: 5px; }
+        .sticker-badge { font-size: 1.1rem; animation: glassStamp 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards; }
+        @keyframes glassStamp { 0% { transform: scale(2); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .sticker-shelf { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .sticker-btn { background: rgba(255,255,255,0.01); border: 1px solid var(--border); font-size: 1.3rem; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; }
+        .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,102,0.08); box-shadow: 0 0 8px var(--accent-glow); }
+        
+        .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .tracker-inputs input { padding: 6px 10px; font-size: 0.78rem; border-radius: 8px; }
+
+        .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,3,6,0.96); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
+        .break-modal { background: rgba(15,8,12,0.7); border: 1px solid var(--accent); padding: 35px 24px; border-radius: 20px; max-width: 380px; backdrop-filter: blur(30px); }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        .stat-card { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 14px; border-radius: 12px; text-align: center; }
+        .stat-value { font-size: 1.4rem; font-weight: 900; color: var(--accent); font-family: monospace; }
+        .stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <div class="panel">
-            <h2>Class 10 Syllabus Tracker</h2>
-            <div id="syllabus-container" class="syllabus-container">
-                </div>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-            
-            <div class="panel">
-                <h2>Live Leaderboard</h2>
-                
-                <div class="rank-entry-form">
-                    <input type="text" id="rank-student-name" placeholder="Student Name">
-                    <input type="number" id="rank-student-marks" placeholder="Marks">
-                    <div class="pin-container">
-                        <input type="password" id="rank-auth-pin" placeholder="Teacher Auth PIN">
-                    </div>
-                    <button style="grid-column: span 2;" onclick="commitGradeEntry()">Push to Cloud</button>
-                </div>
-
-                <div id="leaderboard-container" class="leaderboard-list">
-                    <div style="text-align:center; color:var(--text-muted); padding:15px;">Loading live data...</div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <h2>Global Scratchpad</h2>
-                <textarea id="scratchpad-area" placeholder="Type notes here... Saves automatically." oninput="saveScratchpad()"></textarea>
-            </div>
-            
+    <div id="password-gate-screen" class="password-overlay">
+        <div class="password-modal">
+            <h2 style="color:var(--accent); text-shadow: 0 0 10px var(--accent); margin-bottom: 6px;">🔒 SECURE PORTAL</h2>
+            <p style="color:var(--text-muted); font-size:0.82rem; margin-bottom: 24px;">Authorization Required. Input Terminal PIN to link interface.</p>
+            <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:12px; font-size:1.8rem; font-family:monospace; margin-bottom: 24px;" maxlength="4" oninput="AudioEngine.playTick()">
+            <button class="action-btn" onclick="verifyGatePassword()">Synchronize Matrix ⚡</button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1"></script>
+    <div id="global-clock">00:00:00</div>
+    <div class="system-tagline">Console Node Online</div>
+
+    <div id="strict-break-screen" class="break-overlay">
+        <div class="break-modal">
+            <h2 style="color:var(--accent); text-shadow: 0 0 10px var(--accent);">🚨 SYSTEM LOCKOUT</h2>
+            <p style="font-weight:800; font-size:1rem; color:#fff;">30-Min Continuous Grind Block Reached!</p>
+            <p style="color:var(--text-muted); font-size:0.82rem; line-height:1.5; margin-bottom: 20px;">Your brain requires recovery intervals to process architecture. Stand up, stretch, hydrate, and look away from the terminal screen.</p>
+            <button class="action-btn" onclick="dismissStrictBreak()">Resume Grind ⚡</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>10 <span style="color: var(--accent); text-shadow: 0 0 10px var(--accent-glow);">Pro</span> Portal</h1>
+        <div class="motto">Stop Wishing. Start Grinding. 🔥</div>
+        
+        <div class="countdown-container">
+            <div class="countdown-title">⏳ Board Exams Ultimate Countdown</div>
+            <div class="countdown-digits">
+                <div class="time-box"><div class="num" id="cd-days">00</div><div class="label">Days</div></div>
+                <div class="time-box"><div class="num" id="cd-hours">00</div><div class="label">Hrs</div></div>
+                <div class="time-box"><div class="num" id="cd-mins">00</div><div class="label">Min</div></div>
+                <div class="time-box"><div class="num" id="cd-secs">00</div><div class="label">Sec</div></div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="showPage('dash-page', this)">🏠 Dash</button>
+        <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syll</button>
+        <button class="nav-btn" onclick="showPage('calc-page', this)">🧮 Calc</button>
+        <button class="nav-btn" onclick="showPage('calendar-page', this)">📅 Cal</button>
+        <button class="nav-btn" onclick="showPage('ranks-page', this)">🏆 Rank</button>
+        <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
+        <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
+        <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Style</button>
+        <button class="nav-btn" onclick="showPage('metrics-page', this)">📊 Metrics</button>
+    </nav>
+
+    <div class="main-content">
+
+        <div id="dash-page" class="page active">
+            <div class="card" style="background: linear-gradient(135deg, rgba(255,51,102,0.04), rgba(0,0,0,0.3)); border-left-color: var(--accent);">
+                <div class="card-stickers" id="stickers-dash-quote"></div>
+                <p style="margin:0; font-style:italic; color:#ffe6ec; font-size:0.85rem; line-height:1.6;">
+                    "The pain of discipline is nothing compared to the pain of regret. Complete the checklist items and engineer your future layout." 👑
+                </p>
+            </div>
+
+            <div class="card" onclick="applyStickerToCard('dash-quote')">
+                <h2>🏆 Gamified Reward Sticker Shelf</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:12px;">Earn anchors. Select a sticker and tap the milestone card above to apply.</p>
+                <div class="sticker-shelf">
+                    <button class="sticker-btn" onclick="selectRewardSticker('🔥', this, event)">🔥</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('👑', this, event)">👑</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('⚡', this, event)">⚡</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('💯', this, event)">💯</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('🎯', this, event)">🎯</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🎧 AI Alpha Soundscape</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
+                <button id="audio-synth-toggle" class="action-btn secondary" onclick="toggleAlphaDrone()">Synthesize Focus Wave 🧘</button>
+            </div>
+
+            <div class="card" style="text-align:center;">
+                <h2>⏱️ Focus Block Timer</h2>
+                <div id="timer-display" style="font-size:4rem; font-family:monospace; font-weight:900; margin:10px 0; color:white; text-shadow:0 0 10px rgba(255,255,255,0.15);">25:00</div>
+                
+                <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:16px;">
+                    <input type="number" id="custom-minutes" value="25" style="width:75px; text-align:center; padding:6px;" oninput="AudioEngine.playTick()">
+                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding:8px 12px; width:auto; font-size:0.78rem;">Update</button>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <button class="action-btn" onclick="startTimer()">Engage 🚀</button>
+                    <button class="action-btn secondary" onclick="pauseTimer()">Pause ⏸️</button>
+                    <button class="action-btn secondary" onclick="resetTimer()">Reset 🔄</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📝 Live Scratchpad Terminal</h2>
+                <textarea id="scratchpad-area" rows="4" placeholder="Type data, raw formulas, or temporary checklists... Automatically cached to terminal local environments." oninput="saveScratchpad()"></textarea>
+            </div>
+        </div>
+
+        <div id="syllabus-page" class="page">
+            <div class="card">
+                <h2>📚 Master Syllabus Directory</h2>
+                <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px;">📐 MATHEMATICS ARRAY</span><div id="math-chapters"></div></div>
+                <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px;">🧪 SCIENCE ARRAY</span><div id="science-chapters"></div></div>
+                <div><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px;">🌍 SOCIAL SCIENCE ARRAY</span><div id="social-chapters"></div></div>
+            </div>
+        </div>
+
+        <div id="calc-page" class="page">
+            <div class="calc-wrapper">
+                <input type="text" id="calc-screen" disabled value="0">
+                <div class="calc-grid">
+                    <button class="btn-calc clear" onclick="clearCalc()">C</button>
+                    <button class="btn-calc op" onclick="append('/')">/</button>
+                    <button class="btn-calc op" onclick="append('*')">×</button>
+                    <button class="btn-calc op" onclick="backspace()">⌫</button>
+                    <button class="btn-calc" onclick="append('7')">7</button>
+                    <button class="btn-calc" onclick="append('8')">8</button>
+                    <button class="btn-calc" onclick="append('9')">9</button>
+                    <button class="btn-calc op" onclick="append('-')">-</button>
+                    <button class="btn-calc" onclick="append('4')">4</button>
+                    <button class="btn-calc" onclick="append('5')">5</button>
+                    <button class="btn-calc" onclick="append('6')">6</button>
+                    <button class="btn-calc op" onclick="append('+')">+</button>
+                    <button class="btn-calc" onclick="append('1')">1</button>
+                    <button class="btn-calc" onclick="append('2')">2</button>
+                    <button class="btn-calc" onclick="append('3')">3</button>
+                    <button class="btn-calc op" onclick="append('.')">.</button>
+                    <button class="btn-calc" onclick="append('0')">0</button>
+                    <button class="btn-calc equals" onclick="calculate()">=</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="calendar-page" class="page">
+            <div class="card">
+                <h2>📅 Milestone Schedule Vault</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Flags critical items within a 3-day target parameter automatically.</p>
+                
+                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
+                    <input type="text" id="event-name" placeholder="Target Objective Summary">
+                    <input type="date" id="event-date">
+                    <button class="action-btn" onclick="addEvent()">Lock Event Stream 📌</button>
+                </div>
+
+                <div id="event-list"></div>
+            </div>
+        </div>
+
+        <div id="ranks-page" class="page">
+            <div class="card">
+                <h2>🏆 Live Performance Rankings</h2>
+                <div id="leaderboard-container"></div>
+            </div>
+
+            <div class="card" style="border-color: rgba(255, 51, 102, 0.2);">
+                <h2>🔒 Faculty Override Panel</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Modifications require validation via Faculty Security PIN.</p>
+                
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <input type="text" id="rank-student-name" placeholder="Student Full Name">
+                    <input type="number" id="rank-student-marks" placeholder="Acquired Score / Marks">
+                    <input type="password" id="rank-auth-pin" placeholder="Enter Teacher 4-Digit Security Key" style="text-align:center; letter-spacing:4px;">
+                    <button class="action-btn" onclick="commitGradeEntry()">Publish Authorized Grade ⚡</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="games-page" class="page">
+            <div class="card" style="text-align:center;">
+                <h2>🎮 Stress Fidget Popper</h2>
+                <div class="fidget-grid" id="pop-grid"></div>
+                <button class="action-btn secondary" style="padding:10px;" onclick="resetBubbles()">Reset Matrix Wrap 🔄</button>
+            </div>
+
+            <div class="card" style="text-align:center;">
+                <h2>⚡ Neural Reflex Engine</h2>
+                <div id="reaction-box" class="reaction-box" onclick="clickReaction()">Click To Initialize</div>
+            </div>
+
+            <div class="card" style="text-align:center;">
+                <h2>❌ Tic-Tac-Toe Arena ⭕</h2>
+                <div id="ttt-grid" class="ttt-grid"></div>
+                <button class="action-btn secondary" style="padding:10px;" onclick="resetTTT()">Reset Match Layout 🔄</button>
+            </div>
+        </div>
+
+        <div id="qa-page" class="page">
+            <div class="card">
+                <h2>🧠 Concept Deficit Vault</h2>
+                <textarea id="q-text" rows="2" placeholder="Formula layout error / complex doubt statement..." style="margin-bottom:10px;"></textarea>
+                <textarea id="a-text" rows="3" placeholder="Resolved steps, key insights, derived proofs..."></textarea>
+                <button class="action-btn" onclick="saveToVault()" style="margin-top:12px;">Commit Matrix Log 🔐</button>
+                <div id="vault-log" style="margin-top:18px;"></div>
+            </div>
+        </div>
+
+        <div id="custom-page" class="page">
+            <div class="card">
+                <h2>🎨 Chromatic Customization</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:20px;">Re-engineer neon highlights and chassis backplates dynamically.</p>
+                
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <span>Primary Glow Highlight:</span>
+                    <input type="color" id="primary-picker" value="#ff3366" style="width:55px; height:35px; background:none; border:none; padding:0; cursor:pointer;">
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <span>Secondary Button Chassis:</span>
+                    <input type="color" id="secondary-picker" value="#12121a" style="width:55px; height:35px; background:none; border:none; padding:0; cursor:pointer;">
+                </div>
+                
+                <button class="action-btn secondary" onclick="resetStylesToDefault()">Reset System Themes 🔄</button>
+            </div>
+        </div>
+
+        <div id="metrics-page" class="page">
+            <div class="card">
+                <h2>📊 Dynamic System Workspace Summary</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Real-time analytical output from cached structural configuration fields.</p>
+                
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-completed-chapters">0</div>
+                        <div class="stat-label">Syllabus Modules Clear</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-events">0</div>
+                        <div class="stat-label">Locked Milestones</div>
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-stickers">0</div>
+                        <div class="stat-label">Earned Stickers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-qa-count">0</div>
+                        <div class="stat-label">Deficit Vault Logs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        /* =========================================
-           1. SYLLABUS TRACKER LOGIC
-           ========================================= */
-        const syllabusData = {
-            "Mathematics": [
-                "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
-                "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", 
-                "Introduction to Trigonometry", "Some Applications of Trigonometry", "Circles", 
-                "Constructions", "Areas Related to Circles", "Surface Areas and Volumes", 
-                "Statistics", "Probability"
-            ],
-            "Science": [
-                "Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals", 
-                "Carbon and its Compounds", "Periodic Classification of Elements", "Life Processes", 
-                "Control and Coordination", "How do Organisms Reproduce?", "Heredity and Evolution", 
-                "Light - Reflection and Refraction", "Human Eye and Colourful World", "Electricity", 
-                "Magnetic Effects of Electric Current", "Sources of Energy", "Our Environment", 
-                "Management of Natural Resources"
-            ],
-            "Social Science": [
-                "The Rise of Nationalism in Europe", "Nationalism in India", "The Making of a Global World", 
-                "The Age of Industrialisation", "Print Culture and the Modern World", "Resources and Development", 
-                "Forest and Wildlife Resources", "Water Resources", "Agriculture", "Minerals and Energy Resources", 
-                "Manufacturing Industries", "Lifelines of National Economy", "Power Sharing", "Federalism", 
-                "Democracy and Diversity", "Gender, Religion and Caste", "Popular Struggles and Movements", 
-                "Political Parties", "Outcomes of Democracy", "Challenges to Democracy", "Development", 
-                "Sectors of the Indian Economy", "Money and Credit", "Globalisation and the Indian Economy", 
-                "Consumer Rights"
-            ]
+        /* --- CORE INTERFACE SOUND ARCHITECTURE --- */
+        const AudioEngine = {
+            ctx: null, droneOsc1: null, droneOsc2: null, droneGain: null, isDronePlaying: false,
+            init() {
+                try {
+                    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+                } catch(e){}
+            },
+            playTone(freq, type, duration, vol) {
+                this.init(); if(!this.ctx) return;
+                try {
+                    const t = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = type || 'sine';
+                    osc.frequency.setValueAtTime(freq, t);
+                    gainNode.gain.setValueAtTime(vol || 0.1, t);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, t + duration);
+                    osc.connect(gainNode);
+                    gainNode.connect(this.ctx.destination);
+                    osc.start(t);
+                    osc.stop(t + duration);
+                } catch(e){}
+            },
+            playClick() { this.playTone(600, 'sine', 0.08, 0.1); },
+            playTick() { this.playTone(900, 'sine', 0.03, 0.04); },
+            playPop() {
+                this.init(); if(!this.ctx) return;
+                try {
+                    const t = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(140, t);
+                    osc.frequency.exponentialRampToValueAtTime(420, t + 0.05);
+                    gainNode.gain.setValueAtTime(0.2, t);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, t + 0.06);
+                    osc.connect(gainNode); gainNode.connect(this.ctx.destination);
+                    osc.start(t); osc.stop(t + 0.06);
+                } catch(e){}
+            },
+            playSuccess() {
+                this.playTone(523.25, 'sine', 0.1, 0.12); 
+                setTimeout(() => this.playTone(659.25, 'sine', 0.1, 0.12), 70); 
+                setTimeout(() => this.playTone(783.99, 'sine', 0.22, 0.12), 140); 
+            },
+            playError() {
+                this.init(); if(!this.ctx) return;
+                try {
+                    const t = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(120, t);
+                    osc.frequency.linearRampToValueAtTime(65, t + 0.22);
+                    gainNode.gain.setValueAtTime(0.18, t);
+                    gainNode.gain.linearRampToValueAtTime(0.00001, t + 0.22);
+                    osc.connect(gainNode); gainNode.connect(this.ctx.destination);
+                    osc.start(t); osc.stop(t + 0.22);
+                } catch(e){}
+            },
+            toggleAlphaWave() {
+                this.init(); if(!this.ctx) return false;
+                if (this.isDronePlaying) { this.stopAlphaWave(); return false; } 
+                else {
+                    const t = this.ctx.currentTime;
+                    this.droneGain = this.ctx.createGain();
+                    this.droneOsc1 = this.ctx.createOscillator(); this.droneOsc1.type = 'sine'; this.droneOsc1.frequency.setValueAtTime(140, t);
+                    this.droneOsc2 = this.ctx.createOscillator(); this.droneOsc2.type = 'sine'; this.droneOsc2.frequency.setValueAtTime(150, t);
+                    this.droneGain.gain.setValueAtTime(0.0, t); this.droneGain.gain.linearRampToValueAtTime(0.03, t + 2.0);
+                    this.droneOsc1.connect(this.droneGain); this.droneOsc2.connect(this.droneGain); this.droneGain.connect(this.ctx.destination);
+                    this.droneOsc1.start(t); this.droneOsc2.start(t); this.isDronePlaying = true; return true;
+                }
+            },
+            stopAlphaWave() {
+                if(this.droneGain && this.ctx) {
+                    const t = this.ctx.currentTime;
+                    this.droneGain.gain.cancelScheduledValues(t); this.droneGain.gain.setValueAtTime(this.droneGain.gain.value, t);
+                    this.droneGain.gain.linearRampToValueAtTime(0.0, t + 0.4);
+                    setTimeout(() => { try { this.droneOsc1.stop(); this.droneOsc2.stop(); } catch(e){} }, 500);
+                }
+                this.isDronePlaying = false;
+            }
         };
 
-        function renderSyllabus() {
-            const container = document.getElementById('syllabus-container');
-            let html = '';
-
-            for (const [subject, chapters] of Object.entries(syllabusData)) {
-                html += `<div class="subject-group"><div class="subject-title">${subject}</div>`;
-                
-                chapters.forEach((chapter, index) => {
-                    const chapterId = `chapter-${subject.substring(0,3)}-${index}`;
-                    // Retrieve saved state from localStorage
-                    const isChecked = localStorage.getItem(chapterId) === 'true' ? 'checked' : '';
-                    
-                    html += `
-                        <label class="chapter-item" for="${chapterId}">
-                            <input type="checkbox" id="${chapterId}" ${isChecked} onchange="saveSyllabusProgress('${chapterId}', this.checked)">
-                            <span class="chapter-label">${chapter}</span>
-                        </label>
-                    `;
-                });
-                html += `</div>`;
-            }
-            container.innerHTML = html;
-        }
-
-        function saveSyllabusProgress(id, checked) {
-            localStorage.setItem(id, checked);
-        }
-
-        /* =========================================
-           2. SCRATCHPAD LOGIC
-           ========================================= */
-        function loadScratchpad() {
-            const pad = document.getElementById('scratchpad-area');
-            pad.value = localStorage.getItem('portal_global_scratchpad') || "";
-        }
-
-        function saveScratchpad() {
-            const pad = document.getElementById('scratchpad-area');
-            localStorage.setItem('portal_global_scratchpad', pad.value);
-        }
-
-
-        /* =========================================
-           3. APPWRITE CLOUD LEADERBOARD LOGIC
-           ========================================= */
-        const FA_SECURITY_PIN = "1234"; // <-- Change this to your secret PIN
-
-        const { Client, Databases, ID } = Appwrite;
-        const client = new Client()
-            .setEndpoint('https://cloud.appwrite.io/v1') 
-            .setProject('6a21bad3002cb6968d08');
-
-        const databases = new Databases(client);
-        const DATABASE_ID = '6a21bbd60013b6cecd39';
-        const COLLECTION_ID = 'leaderboard';
-
-        async function syncLiveLeaderboard() {
-            try {
-                await fetchAndRenderRanks();
-                // Listen for LIVE changes
-                client.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID}.documents`, response => {
-                    fetchAndRenderRanks();
-                });
-            } catch (error) {
-                console.error("Database connection issue:", error);
+        /* --- VERIFY MASTER SECURITY CORE PIN (4443) --- */
+        function verifyGatePassword() {
+            AudioEngine.init();
+            const pinVal = document.getElementById('gate-pin').value.trim();
+            if(pinVal === "4443") {
+                AudioEngine.playSuccess();
+                document.getElementById('password-gate-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('password-gate-screen').style.display = 'none';
+                }, 400);
+                initializeSystemWorkspace();
+            } else {
+                AudioEngine.playError();
+                alert("Security Core Failure: Access Terminated.");
+                document.getElementById('gate-pin').value = "";
             }
         }
 
-        async function fetchAndRenderRanks() {
-            const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
-            const sortedRoster = response.documents.sort((a, b) => b.marks - a.marks);
-            buildLeaderboardUI(sortedRoster);
+        /* --- GLOBAL DATA ARCHIVE REPOSITORY SYSTEM --- */
+        let activelySelectedSticker = "";
+
+        function initializeSystemWorkspace() {
+            document.getElementById('scratchpad-area').value = localStorage.getItem('portal_global_scratchpad') || "";
+            renderEvents();
+            setupSyllabusTrackerNodes();
+            renderActiveStickers();
+            calculateSystemMetrics();
         }
 
-        async function commitGradeEntry() {
+        function saveScratchpad() { 
+            localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value); 
+        }
+
+        /* --- STICKER APPRAISAL SUBSYSTEMS --- */
+        function selectRewardSticker(sticker, btnElement, event) {
+            event.stopPropagation();
+            AudioEngine.playClick();
+            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
+            activelySelectedSticker = sticker;
+            btnElement.classList.add('selected');
+        }
+
+        function applyStickerToCard(cardId) {
+            if(!activelySelectedSticker) return;
+            AudioEngine.playSuccess();
+            
+            const storageKey = `portal_global_stickers_${cardId}`;
+            let activeArray = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            activeArray.push(activelySelectedSticker);
+            localStorage.setItem(storageKey, JSON.stringify(activeArray));
+            
+            renderActiveStickers();
+            calculateSystemMetrics();
+            activelySelectedSticker = "";
+            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
+        }
+
+        function renderActiveStickers() {
+            const targets = ['dash-quote'];
+            targets.forEach(cardId => {
+                const storageKey = `portal_global_stickers_${cardId}`;
+                const array = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                const domNode = document.getElementById(`stickers-${cardId}`);
+                if(domNode) {
+                    domNode.innerHTML = array.map(stk => `<span class="sticker-badge">${stk}</span>`).join('');
+                }
+            });
+        }
+
+        /* --- ANALYTICAL TELEMETRY GENERATION MODULE --- */
+        function calculateSystemMetrics() {
+            const syllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
+            let clearCount = 0;
+            for(let node in syllabusStates) { if(syllabusStates[node].checked) clearCount++; }
+            document.getElementById('stat-completed-chapters').innerText = clearCount;
+
+            const eventStorage = JSON.parse(localStorage.getItem('portal_global_events') || '[]');
+            document.getElementById('stat-total-events').innerText = eventStorage.length;
+
+            const stickerStorage = JSON.parse(localStorage.getItem('portal_global_stickers_dash-quote') || '[]');
+            document.getElementById('stat-total-stickers').innerText = stickerStorage.length;
+
+            const qaStorage = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
+            document.getElementById('stat-qa-count').innerText = qaStorage.length;
+        }
+
+        /* --- NAVIGATION INTERFACE PLATFORMS --- */
+        function showPage(id, btn) {
+            AudioEngine.playClick();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
+            if(id === 'metrics-page') calculateSystemMetrics();
+            window.scrollTo(0,0);
+        }
+
+        function toggleAlphaDrone() {
+            const btn = document.getElementById('audio-synth-toggle');
+            const status = AudioEngine.toggleAlphaWave();
+            if(status) { btn.innerText = "Decommission Focus Synth 🛑"; btn.style.borderColor = "var(--accent)"; } 
+            else { btn.innerText = "Synthesize Focus Wave 🧘"; btn.style.borderColor = "var(--border)"; }
+        }
+
+        function runGlobalClock() {
+            const now = new Date();
+            document.getElementById('global-clock').innerText = 
+                `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        }
+        setInterval(runGlobalClock, 1000); runGlobalClock();
+
+        const targetTimeline = new Date("February 15, 2027 00:00:00").getTime();
+        setInterval(() => {
+            const delta = Math.max(0, targetTimeline - new Date().getTime());
+            document.getElementById("cd-days").innerText = Math.floor(delta / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("cd-hours").innerText = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("cd-mins").innerText = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("cd-secs").innerText = Math.floor((delta % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+        let breakCounter = 1800;
+        setInterval(() => { 
+            if (breakCounter > 0) breakCounter--; 
+            else {
+                if(document.getElementById("strict-break-screen").style.display !== "flex") AudioEngine.playError();
+                document.getElementById("strict-break-screen").style.display = "flex"; 
+            }
+        }, 1000);
+        function dismissStrictBreak() { AudioEngine.playSuccess(); document.getElementById("strict-break-screen").style.display = "none"; breakCounter = 1800; }
+
+        let baseTime = 1500, timeLeft = baseTime, timerSessionId = null;
+        function updateDisplay() {
+            document.getElementById('timer-display').innerText = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
+        }
+        function setCustomTime() {
+            AudioEngine.playClick();
+            const input = parseInt(document.getElementById('custom-minutes').value);
+            if(input > 0) { pauseTimer(); baseTime = input * 60; timeLeft = baseTime; updateDisplay(); }
+        }
+        function startTimer() { 
+            AudioEngine.playClick();
+            if (!timerSessionId) { 
+                timerSessionId = setInterval(() => { 
+                    if (timeLeft > 0) { 
+                        timeLeft--; updateDisplay(); 
+                        if(timeLeft <= 5 && timeLeft > 0) AudioEngine.playTick(); 
+                    } else { 
+                        clearInterval(timerSessionId); timerSessionId = null; AudioEngine.playSuccess(); alert("Focus Block Complete!"); 
+                    } 
+                }, 1000); 
+            } 
+        }
+        function pauseTimer() { AudioEngine.playClick(); clearInterval(timerSessionId); timerSessionId = null; }
+        function resetTimer() { AudioEngine.playClick(); pauseTimer(); timeLeft = baseTime; updateDisplay(); }
+
+        function addEvent() {
+            const title = document.getElementById('event-name').value.trim(); const timestamp = document.getElementById('event-date').value;
+            if(!title || !timestamp) { AudioEngine.playError(); return alert("Declare all criteria components."); }
+            AudioEngine.playSuccess();
+            
+            const storageKey = 'portal_global_events';
+            const currentList = JSON.parse(localStorage.getItem(storageKey) || '[]'); currentList.push({ title, timestamp });
+            currentList.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem(storageKey, JSON.stringify(currentList));
+            renderEvents(); document.getElementById('event-name').value = "";
+        }
+        function renderEvents() {
+            const container = document.getElementById('event-list');
+            if(!container) return;
+            
+            const data = JSON.parse(localStorage.getItem('portal_global_events') || '[]');
+            const referenceDay = new Date(); referenceDay.setHours(0,0,0,0);
+            container.innerHTML = data.map((item, keyID) => {
+                const targetDay = new Date(item.timestamp); targetDay.setHours(0,0,0,0);
+                const differentialDays = Math.ceil((targetDay - referenceDay) / (1000 * 60 * 60 * 24));
+                const urgentThresholdTriggered = differentialDays >= 0 && differentialDays <= 3;
+                return `
+                    <div class="cal-item ${urgentThresholdTriggered ? 'urgent' : ''}">
+                        <div>
+                            <div style="font-weight:800; color:#fff;">${escapeHTML(item.title)}</div>
+                            <div style="font-size:0.72rem; margin-top:4px; color:${urgentThresholdTriggered ? '#f43f5e':'var(--text-muted)'}; font-weight:700;">
+                                📅 Target: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 CRITICAL DEADLINE' : ''}
+                            </div>
+                        </div>
+                        <button onclick="deleteEvent(${keyID})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:5px;">×</button>
+                    </div>
+                `;
+            }).join('');
+        }
+        function deleteEvent(idx) {
+            AudioEngine.playPop();
+            let src = JSON.parse(localStorage.getItem('portal_global_events') || '[]'); src.splice(idx, 1);
+            localStorage.setItem('portal_global_events', JSON.stringify(src)); renderEvents();
+        }
+
+        const FA_SECURITY_PIN = "6289";
+        function commitGradeEntry() {
             const name = document.getElementById('rank-student-name').value.trim();
             const marksStr = document.getElementById('rank-student-marks').value.trim();
             const inputPIN = document.getElementById('rank-auth-pin').value.trim();
 
-            if(!name || !marksStr) return alert("Fields cannot be blank.");
-            if(inputPIN !== FA_SECURITY_PIN) return alert("Access Aborted: Invalid PIN Verification.");
+            if(!name || !marksStr) { AudioEngine.playError(); return alert("Metric data fields cannot be blank."); }
+            if(inputPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Access Aborted: Invalid PIN Verification."); }
 
-            try {
-                await databases.createDocument(
-                    DATABASE_ID, 
-                    COLLECTION_ID, 
-                    ID.unique(), 
-                    { name: name, marks: parseFloat(marksStr) }
-                );
+            AudioEngine.playSuccess();
+            const marks = parseFloat(marksStr);
+            let roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
+            
+            const matchIndex = roster.findIndex(student => student.name.toLowerCase() === name.toLowerCase());
+            if(matchIndex > -1) roster[matchIndex].marks = marks;
+            else roster.push({ name, marks });
 
-                // Clear input boxes
-                document.getElementById('rank-student-name').value = "";
-                document.getElementById('rank-student-marks').value = "";
-                document.getElementById('rank-auth-pin').value = "";
-            } catch (err) {
-                console.error(err);
-                alert("Failed to send data to the cloud. Check console for errors.");
-            }
+            roster.sort((alpha, beta) => beta.marks - alpha.marks);
+            localStorage.setItem('portal_global_ranks', JSON.stringify(roster));
+            
+            renderLeaderboard();
+            document.getElementById('rank-student-name').value = "";
+            document.getElementById('rank-student-marks').value = "";
+            document.getElementById('rank-auth-pin').value = "";
         }
 
-        function buildLeaderboardUI(roster) {
+        function renderLeaderboard() {
             const container = document.getElementById('leaderboard-container');
             if(!container) return;
+            const roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
             
             if(roster.length === 0) {
-                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:15px;">No active entries detected.</div>`;
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.82rem; padding:15px;">No active entries detected inside performance cache rows.</div>`;
                 return;
             }
 
             container.innerHTML = roster.map((student, index) => {
-                let badgeClass = "badge-standard"; 
-                let statusIcon = `Rank ${index + 1}`;
-                
-                if(index === 0) { badgeClass = "badge-gold"; statusIcon = "🥇 Rank 1"; }
-                else if(index === 1) { badgeClass = "badge-silver"; statusIcon = "🥈 Rank 2"; }
-                else if(index === 2) { badgeClass = "badge-bronze"; statusIcon = "🥉 Rank 3"; }
+                let positionalClass = ""; let badgeClass = "badge-standard"; let statusIcon = `Pos ${index + 1}`;
+                if(index === 0) { positionalClass = "rank-gold"; badgeClass = "badge-gold"; statusIcon = "🥇 Rank 1"; }
+                else if(index === 1) { positionalClass = "rank-silver"; badgeClass = "badge-silver"; statusIcon = "🥈 Rank 2"; }
 
                 return `
-                    <div class="rank-item">
+                    <div class="rank-item ${positionalClass}">
                         <div style="display:flex; align-items:center; gap:10px;">
-                            <span class="badge ${badgeClass}">${statusIcon}</span>
-                            <span style="font-weight:700;">${student.name}</span>
+                            <span class="rank-badge ${badgeClass}">${statusIcon}</span>
+                            <span style="font-weight:700; color:#fff;">${escapeHTML(student.name)}</span>
                         </div>
-                        <div style="display:flex; align-items:center;">
-                            <span style="font-family:monospace; font-weight:800; color:var(--accent); font-size:1.1rem;">${student.marks} M</span>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="font-family:monospace; font-weight:900; color:var(--accent);">${student.marks} M</span>
+                            <button onclick="administrativeRevoke(${index})" style="background:transparent; border:none; color:rgba(255,255,255,0.15); cursor:pointer;">❌</button>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        /* =========================================
-           4. INITIALIZE APP
-           ========================================= */
-        window.onload = function() {
-            renderSyllabus();
-            loadScratchpad();
-            syncLiveLeaderboard();
+        function administrativeRevoke(idx) {
+            const promptPIN = prompt("Enter Teacher Security PIN to purge row entries:");
+            if(promptPIN === null) return;
+            if(promptPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Purge Rejected."); }
+            AudioEngine.playPop();
+            let roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
+            roster.splice(idx, 1);
+            localStorage.setItem('portal_global_ranks', JSON.stringify(roster));
+            renderLeaderboard();
+        }
+        renderLeaderboard();
+
+        const calcNode = document.getElementById('calc-screen');
+        function append(char) { AudioEngine.playClick(); if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
+        function clearCalc() { AudioEngine.playPop(); calcNode.value = '0'; }
+        function backspace() { AudioEngine.playPop(); calcNode.value = calcNode.value.slice(0, -1) || '0'; }
+        function calculate() { 
+            try { calcNode.value = eval(calcNode.value); AudioEngine.playSuccess(); } 
+            catch { AudioEngine.playError(); calcNode.value = 'Execution Mismatch'; } 
+        }
+
+        /* --- COMPREHENSIVE SUBJECT CONFIGURATION ARRAYS --- */
+        const frameworkDataArray = { 
+            math: [
+                "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
+                "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", 
+                "Introduction to Trigonometry", "Some Applications of Trigonometry", "Circles", 
+                "Areas Related to Circles", "Surface Areas and Volumes", "Statistics", "Probability"
+            ], 
+            science: [
+                "Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals", 
+                "Carbon and its Compounds", "Life Processes", "Control and Coordination", 
+                "How do Organisms Reproduce?", "Heredity and Evolution", "Light - Reflection and Refraction", 
+                "Human Eye and Colourful World", "Electricity", "Magnetic Effects of Electric Current", 
+                "Our Environment"
+            ],
+            social: [
+                "The Rise of Nationalism in Europe", "Nationalism in India", "The Making of a Global World", 
+                "The Age of Industrialisation", "Print Culture and the Modern World", "Resources and Development", 
+                "Forest and Wildlife Resources", "Water Resources", "Agriculture", "Minerals and Energy Resources", 
+                "Manufacturing Industries", "Lifelines of National Economy", "Power Sharing", "Federalism", 
+                "Gender, Religion and Caste", "Political Parties", "Outcomes of Democracy", "Development", 
+                "Sectors of the Indian Economy", "Money and Credit", "Globalisation and the Indian Economy"
+            ]
         };
+
+        function setupSyllabusTrackerNodes() {
+            const savedSyllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
+
+            ['math', 'science', 'social'].forEach(domainKey => {
+                const dom = document.getElementById(`${domainKey}-chapters`);
+                if(!dom) return;
+                dom.innerHTML = frameworkDataArray[domainKey].map((nodeTitle, idx) => {
+                    const uniqueId = `${domainKey}_ch_${idx}`;
+                    const isChecked = savedSyllabusStates[uniqueId]?.checked ? 'checked' : '';
+                    const noteText = savedSyllabusStates[uniqueId]?.note || '';
+                    const dateText = savedSyllabusStates[uniqueId]?.date || '';
+
+                    return `
+                        <div class="syllabus-item">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <input type="checkbox" id="check_${uniqueId}" ${isChecked} style="transform:scale(1.15); accent-color:var(--accent);" onchange="updateSyllabusState('${uniqueId}')">
+                                <span style="font-weight:700; color:#fff; font-size:0.9rem;">${nodeTitle}</span>
+                            </div>
+                            <div class="tracker-inputs">
+                                <input type="text" id="note_${uniqueId}" value="${escapeHTML(noteText)}" placeholder="Leftover Notes..." oninput="updateSyllabusState('${uniqueId}')">
+                                <input type="text" id="date_${uniqueId}" value="${escapeHTML(dateText)}" placeholder="Target Date Metrics" oninput="updateSyllabusState('${uniqueId}')">
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            });
+        }
+
+        function updateSyllabusState(id) {
+            let savedSyllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
+            savedSyllabusStates[id] = {
+                checked: document.getElementById(`check_${id}`).checked,
+                note: document.getElementById(`note_${id}`).value.trim(),
+                date: document.getElementById(`date_${id}`).value.trim()
+            };
+            localStorage.setItem('portal_global_syllabus', JSON.stringify(savedSyllabusStates));
+        }
+
+        function saveToVault() {
+            const queryData = document.getElementById('q-text').value, verificationData = document.getElementById('a-text').value;
+            if(!queryData.trim() || !verificationData.trim()) { AudioEngine.playError(); return; }
+            AudioEngine.playSuccess();
+            
+            let currentLogs = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
+            currentLogs.push({ q: queryData, a: verificationData });
+            localStorage.setItem('portal_global_qa_vault', JSON.stringify(currentLogs));
+
+            renderQAVault();
+            document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
+        }
+        function renderQAVault() {
+            const container = document.getElementById('vault-log');
+            if(!container) return;
+            const currentLogs = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
+            container.innerHTML = currentLogs.map(item => `
+                <div class="cal-item">
+                    <div>
+                        <strong style="color:var(--accent)">Q:</strong> ${escapeHTML(item.q)}<br><br>
+                        <strong style="color:#10b981">A:</strong> ${escapeHTML(item.a)}
+                    </div>
+                </div>
+            `).reverse().join('');
+        }
+        renderQAVault();
+
+        const wrapNode = document.getElementById('pop-grid');
+        for(let loopIdx = 0; loopIdx < 15; loopIdx++) {
+            const bubbleNode = document.createElement('div'); bubbleNode.className = 'bubble';
+            bubbleNode.onclick = function() { AudioEngine.playPop(); this.classList.toggle('popped'); }; wrapNode.appendChild(bubbleNode);
+        }
+        function resetBubbles() { AudioEngine.playClick(); document.querySelectorAll('.bubble').forEach(node => node.classList.remove('popped')); }
+
+        let reactionTaskTimer, speedEvaluationEpoch;
+        function clickReaction() {
+            const box = document.getElementById('reaction-box');
+            if(box.classList.contains('ready')) { 
+                AudioEngine.playSuccess(); box.className = 'reaction-box'; 
+                box.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Replay?`; 
+            } else if(box.classList.contains('waiting')) { 
+                AudioEngine.playError(); clearTimeout(reactionTaskTimer); box.className = 'reaction-box'; 
+                box.innerText = "Premature Tap! Restarting matrix cycle."; 
+            } else {
+                AudioEngine.playClick(); box.className = 'reaction-box waiting'; box.innerText = "Awaiting Green Signal...";
+                reactionTaskTimer = setTimeout(() => { 
+                    AudioEngine.playTone(880, 'sine', 0.15, 0.15); 
+                    box.className = 'reaction-box ready'; box.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); 
+                }, Math.random() * 2500 + 1500);
+            }
+        }
+
+        let matrixTTT = ["","","","","","","","",""], statePlayerToken = "❌";
+        function constructArenaTTT() {
+            const targetedGridNode = document.getElementById('ttt-grid'); if(!targetedGridNode) return; targetedGridNode.innerHTML = "";
+            matrixTTT.forEach((tokenValue, gridIndex) => {
+                const functionalCell = document.createElement('div'); functionalCell.className = 'ttt-cell'; functionalCell.innerText = tokenValue;
+                functionalCell.onclick = () => { 
+                    if(matrixTTT[gridIndex] !== "") { AudioEngine.playError(); return; } AudioEngine.playPop();
+                    matrixTTT[gridIndex] = statePlayerToken; constructArenaTTT(); 
+                    if(evaluateWinTTT()){ AudioEngine.playSuccess(); alert(`${statePlayerToken} Won!`); resetTTT(); } 
+                    else if(!matrixTTT.includes("")){ AudioEngine.playError(); alert("Draw!"); resetTTT(); } 
+                    else statePlayerToken = statePlayerToken === "❌" ? "⭕" : "❌"; 
+                }; targetedGridNode.appendChild(functionalCell);
+            });
+        }
+        function evaluateWinTTT() {
+            const alignmentCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return alignmentCombos.some(comboLine => matrixTTT[comboLine[0]] && matrixTTT[comboLine[0]] === matrixTTT[comboLine[1]] && matrixTTT[comboLine[1]] === matrixTTT[comboLine[2]]);
+        }
+        function resetTTT() { AudioEngine.playClick(); matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
+        constructArenaTTT();
+
+        const DOMSelector = document.documentElement;
+        document.getElementById('primary-picker').addEventListener('input', (event) => {
+            DOMSelector.style.setProperty('--accent', event.target.value); DOMSelector.style.setProperty('--accent-glow', event.target.value + '55');
+        });
+        document.getElementById('secondary-picker').addEventListener('input', (event) => {
+            DOMSelector.style.setProperty('--secondary', event.target.value);
+        });
+        function resetStylesToDefault() {
+            AudioEngine.playPop();
+            DOMSelector.style.setProperty('--accent', '#ff3366'); DOMSelector.style.setProperty('--accent-glow', 'rgba(255, 51, 102, 0.35)'); DOMSelector.style.setProperty('--secondary', '#12121a');
+            document.getElementById('primary-picker').value = '#ff3366'; document.getElementById('secondary-picker').value = '#12121a';
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        }
+
+        document.getElementById('gate-pin').addEventListener('keypress', function(e) { if(e.key === 'Enter') verifyGatePassword(); });
     </script>
 </body>
 </html>
