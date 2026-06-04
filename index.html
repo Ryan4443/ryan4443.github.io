@@ -4,19 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal - Elite Edition</title>
+    <title>10 Pro Portal - Liquid Glass Masterpiece</title>
     <style>
         :root {
-            --bg-main: #060608;
-            --bg-card: rgba(20, 20, 26, 0.7);
-            --accent: #ff3333;
-            --accent-glow: rgba(255, 51, 51, 0.25);
+            --bg-main: #030306;
+            --bg-card: rgba(18, 18, 28, 0.45);
+            --accent: #ff3366;
+            --accent-glow: rgba(255, 51, 102, 0.4);
+            --secondary: #1a1a26;
+            --secondary-glow: rgba(26, 26, 38, 0.3);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.07);
+            --border: rgba(255, 255, 255, 0.08);
+            --glass-specular: rgba(255, 255, 255, 0.05);
             --success: #10b981;
-            --secondary: #1e1e24;
-            --glass: rgba(255, 255, 255, 0.03);
         }
 
         body {
@@ -25,11 +26,16 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            padding-bottom: 80px;
-            background-image: radial-gradient(circle at top right, rgba(255, 51, 51, 0.05), transparent 400px);
+            padding-bottom: 90px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 51, 102, 0.07) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(26, 26, 38, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(255, 51, 102, 0.02) 0px, transparent 40%);
+            background-attachment: fixed;
         }
 
-        /* 24-Hour Floating Clock */
+        /* 24-Hour Floating Clock with Dynamic Glow */
         #global-clock {
             position: fixed;
             top: 12px;
@@ -37,279 +43,270 @@
             z-index: 1001;
             font-family: 'Courier New', monospace;
             font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--accent);
-            background: rgba(6, 6, 8, 0.75);
-            padding: 4px 10px;
-            border-radius: 20px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent);
+            background: rgba(3, 3, 6, 0.65);
+            padding: 6px 14px;
+            border-radius: 30px;
             border: 1px solid var(--border);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 1px var(--glass-specular);
         }
 
-        /* Header Layout */
+        /* Glowing Header Elements */
         header {
             text-align: center;
-            padding: 45px 15px 25px 15px;
-            background: linear-gradient(180deg, rgba(28, 11, 11, 0.4) 0%, var(--bg-main) 100%);
-            border-bottom: 1px solid var(--border);
+            padding: 50px 15px 25px 15px;
+            background: linear-gradient(180deg, rgba(255, 51, 102, 0.03) 0%, transparent 100%);
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.9rem;
+            font-size: 2rem;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-        }
-
-        header h1 span {
-            color: var(--accent);
-            text-shadow: 0 0 15px var(--accent-glow);
+            color: #ffffff;
+            text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent-glow);
         }
 
         .motto {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin: 6px 0 20px 0;
+            margin: 8px 0 20px 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
+            letter-spacing: 3px;
+            font-weight: 600;
         }
 
-        /* Countdown Grid */
+        /* Liquid Glass Card Architecture */
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 22px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 var(--glass-specular);
+            position: relative;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--accent-glow);
+            letter-spacing: 0.5px;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+            margin-bottom: 18px;
+        }
+
+        /* Countdown Grid Setup */
         .countdown-container {
-            background: rgba(26, 8, 8, 0.4);
-            border: 1px solid rgba(255, 51, 51, 0.3);
-            border-radius: 16px;
-            padding: 15px;
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 51, 102, 0.2);
+            border-radius: 20px;
+            padding: 16px;
             margin: 10px auto;
             max-width: 480px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
         }
 
         .countdown-title {
             font-size: 0.75rem;
             text-transform: uppercase;
             color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: 1.5px;
-        }
-
-        .countdown-digits {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-
-        .time-box {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 10px 0;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        .time-box .num {
-            font-size: 1.5rem;
-            font-family: monospace;
+            text-shadow: 0 0 8px var(--accent-glow);
             font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
         }
 
-        .time-box .label {
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
+        .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .time-box { background: rgba(0, 0, 0, 0.4); padding: 12px 0; border-radius: 14px; border: 1px solid var(--border); }
+        .time-box .num { font-size: 1.6rem; font-family: monospace; font-weight: 900; color: #fff; }
+        .time-box .label { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; margin-top: 3px; }
 
-        /* Navigation Grid */
+        /* Liquid Navigation Engine */
         nav {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            background: rgba(20, 20, 26, 0.85);
-            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.5);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .nav-btn {
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 14px 2px;
+            padding: 16px 2px;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            text-align: center;
-            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-btn.active {
-            color: var(--accent);
-            background: rgba(255, 51, 51, 0.04);
-            box-shadow: inset 0 -2px 0 var(--accent);
+            color: #ffffff;
+            text-shadow: 0 0 10px var(--accent);
+            background: rgba(255, 51, 102, 0.06);
+            box-shadow: inset 0 -3px 0 var(--accent);
         }
 
-        /* Core Structure */
-        .main-content {
-            max-width: 480px;
-            margin: 20px auto;
-            padding: 0 12px;
-            box-sizing: border-box;
-        }
-
+        /* Main Content Container */
+        .main-content { max-width: 480px; margin: 25px auto; padding: 0 14px; box-sizing: border-box; }
         .page { display: none; }
-        .page.active { display: block; }
+        .page.active { display: block; animation: smoothFade 0.4s ease forwards; }
 
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 22px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.05);
+        @keyframes smoothFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .card h2 {
-            margin-top: 0;
-            font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            border-left: 3px solid var(--accent);
-            padding-left: 12px;
-            margin-bottom: 15px;
-        }
-
-        /* Inputs & Textareas */
+        /* Form Inputs and Interactive Controls */
         input[type="text"], input[type="number"], input[type="date"], select, textarea {
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 12px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 14px;
             font-size: 0.9rem;
             width: 100%;
             box-sizing: border-box;
             outline: none;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(255, 51, 51, 0.15);
+            box-shadow: 0 0 15px var(--accent-glow);
+            background: rgba(0, 0, 0, 0.5);
         }
 
-        /* Action Buttons */
+        /* Premium Buttons */
         button.action-btn {
-            background: linear-gradient(135deg, var(--accent), #cc1111);
+            background: linear-gradient(135deg, var(--accent), #b3002d);
             color: white;
             border: none;
-            padding: 14px;
+            padding: 15px;
             font-size: 0.9rem;
-            font-weight: 700;
-            border-radius: 12px;
+            font-weight: 800;
+            border-radius: 14px;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.2);
-            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.2);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        button.action-btn:active { transform: scale(0.97); }
+        button.action-btn:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(255, 51, 102, 0.1); }
         button.action-btn.secondary { background: var(--secondary); box-shadow: none; border: 1px solid var(--border); }
+        button.action-btn.secondary:active { background: rgba(255,255,255,0.05); }
 
-        /* Premium Calculator Design */
+        /* Liquid Glass High-Fidelity Calculator */
         .calc-wrapper {
-            background: linear-gradient(145deg, #16161c, #0c0c0e);
-            padding: 20px;
-            border-radius: 28px;
-            border: 1px solid rgba(255,255,255,0.04);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,0,0,0.6));
+            backdrop-filter: blur(30px);
+            padding: 22px;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7), inset 0 1px 0 var(--glass-specular);
         }
 
         #calc-screen {
             width: 100%;
-            height: 75px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 16px;
-            margin-bottom: 18px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 18px;
+            margin-bottom: 20px;
             text-align: right;
-            padding: 15px;
-            font-size: 2.2rem;
+            padding: 18px;
+            font-size: 2.4rem;
             color: #fff;
+            text-shadow: 0 0 15px var(--accent);
             border: 1px solid var(--border);
             font-family: monospace;
         }
 
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         .btn-calc {
-            height: 58px;
-            border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.02);
+            height: 60px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
             background: rgba(255,255,255,0.03);
             color: white;
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
         }
 
-        .btn-calc:active { background: var(--accent); transform: scale(0.93); }
-        .btn-calc.op { color: var(--accent); background: rgba(255, 51, 51, 0.05); }
-        .btn-calc.equals { background: var(--accent); color: white; grid-column: span 2; }
-        .btn-calc.clear { color: #94a3b8; }
+        .btn-calc:active { background: var(--accent); transform: scale(0.92); box-shadow: 0 0 15px var(--accent); }
+        .btn-calc.op { color: var(--accent); background: rgba(255, 51, 102, 0.04); }
+        .btn-calc.equals { background: linear-gradient(135deg, var(--accent), #b3002d); color: white; grid-column: span 2; box-shadow: 0 4px 15px var(--accent-glow); }
+        .btn-calc.clear { color: var(--text-muted); }
 
-        /* Calendar Render Items */
-        .cal-item {
-            background: rgba(255, 255, 255, 0.02);
+        /* Render Nodes for Calendar & Syllabus Lists */
+        .cal-item, .syllabus-item {
+            background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--border);
             border-left: 4px solid var(--accent);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: inset 0 1px 0 var(--glass-specular);
         }
 
+        .cal-item { display: flex; justify-content: space-between; align-items: center; }
         .cal-item.urgent {
-            border-left-color: #e11d48;
-            background: linear-gradient(90deg, rgba(225, 29, 72, 0.07), transparent);
-            box-shadow: 0 0 15px rgba(225, 29, 72, 0.1);
+            border-left-color: #f43f5e;
+            background: linear-gradient(90deg, rgba(244, 63, 94, 0.08), transparent);
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
         }
 
-        /* Rec Room Styling */
-        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 15px 0; }
-        .bubble { aspect-ratio: 1; background: radial-gradient(circle, #ff5252 0%, #b71c1c 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; }
-        .bubble.popped { background: #151518; box-shadow: inset 0 4px 8px rgba(0,0,0,0.7); border: none; }
+        /* Rec Room Engine Layout styling */
+        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 15px 0; }
+        .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #800020 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .bubble.popped { background: #0c0c10; box-shadow: inset 0 6px 10px rgba(0,0,0,0.8); border: none; }
         
-        .reaction-box { width: 100%; height: 110px; background: #131317; border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 15px 0; cursor: pointer; }
-        .reaction-box.waiting { background: #d97706; }
-        .reaction-box.ready { background: #10b981; font-size: 1.4rem; }
+        .reaction-box { width: 100%; height: 110px; background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 800; cursor: pointer; box-shadow: inset 0 1px 0 var(--glass-specular); }
+        .reaction-box.waiting { background: #d97706; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .reaction-box.ready { background: #10b981; font-size: 1.4rem; text-shadow: 0 0 10px #10b981; }
 
-        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 220px; margin: 15px auto; }
-        .ttt-cell { aspect-ratio: 1; background: #131317; border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; cursor: pointer; }
+        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 220px; margin: 15px auto; }
+        .ttt-cell { aspect-ratio: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; cursor: pointer; }
 
-        /* Syllabus Layout */
-        .syllabus-item { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 8px; }
-        .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
-        .tracker-inputs input { padding: 6px 10px; font-size: 0.75rem; }
-
-        /* Sticker Container Utilities */
-        .card-stickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; min-height: 10px; }
-        .sticker-badge { font-size: 1.2rem; cursor: pointer; }
-        .sticker-shelf { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-        .sticker-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-size: 1.3rem; padding: 8px; border-radius: 10px; cursor: pointer; }
-        .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,51,0.1); }
+        /* Sticker Assets System */
+        .card-stickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; min-height: 5px; }
+        .sticker-badge { font-size: 1.2rem; cursor: pointer; animation: glassStamp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes glassStamp { 0% { transform: scale(2.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .sticker-shelf { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+        .sticker-btn { background: rgba(255,255,255,0.02); border: 1px solid var(--border); font-size: 1.4rem; padding: 10px; border-radius: 14px; cursor: pointer; }
+        .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,102,0.1); box-shadow: 0 0 10px var(--accent-glow); }
         
-        /* Layout Blocks */
-        .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6,6,8,0.97); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
-        .break-modal { background: #140505; border: 1px solid var(--accent); padding: 30px 15px; border-radius: 20px; max-width: 400px; box-shadow: 0 0 40px var(--accent-glow); }
+        /* Syllabus Components layout grids */
+        .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .tracker-inputs input { padding: 8px 12px; font-size: 0.8rem; border-radius: 10px; }
+
+        /* Lockout Blocks */
+        .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,3,6,0.98); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
+        .break-modal { background: rgba(20,10,15,0.6); border: 1px solid var(--accent); padding: 35px 20px; border-radius: 28px; max-width: 400px; backdrop-filter: blur(30px); box-shadow: 0 0 50px var(--accent-glow); }
     </style>
 </head>
 <body>
@@ -318,19 +315,19 @@
 
     <div id="strict-break-screen" class="break-overlay">
         <div class="break-modal">
-            <h2 style="color:var(--accent);">🚨 SYSTEM LOCKOUT</h2>
-            <p style="font-weight:700;">30-Minute Continuous Cap Reached!</p>
-            <p style="color:var(--text-muted); font-size:0.85rem;">Stand up, stretch your back, and let your eyes rest completely.</p>
-            <button class="action-btn" onclick="dismissStrictBreak()" style="margin-top:15px;">Resume Grind ⚡</button>
+            <h2 style="color:var(--accent); text-shadow: 0 0 10px var(--accent);">🚨 SYSTEM LOCKOUT</h2>
+            <p style="font-weight:800; font-size:1.1rem; color:#fff;">30-Min Continuous Grind Block Reached!</p>
+            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Your brain requires recovery intervals to process architecture. Stand up, stretch, hydrate, and look away from the terminal screen.</p>
+            <button class="action-btn" onclick="dismissStrictBreak()" style="margin-top:18px;">Resume Grind ⚡</button>
         </div>
     </div>
 
     <header>
-        <h1>10 <span>Pro</span> Portal</h1>
+        <h1>10 <span class="glow-text">Pro</span> Portal</h1>
         <div class="motto">Stop Wishing. Start Grinding. 🔥</div>
         
         <div class="countdown-container">
-            <div class="countdown-title">⏳ Boards Final Countdown</div>
+            <div class="countdown-title">⏳ Board Exams Ultimate Countdown</div>
             <div class="countdown-digits">
                 <div class="time-box"><div class="num" id="cd-days">00</div><div class="label">Days</div></div>
                 <div class="time-box"><div class="num" id="cd-hours">00</div><div class="label">Hrs</div></div>
@@ -353,34 +350,45 @@
     <div class="main-content">
 
         <div id="dash-page" class="page active">
-            <div class="card" style="background: linear-gradient(135deg, rgba(30,5,5,0.5), rgba(0,0,0,0.3)); border-left: 3px solid var(--accent);">
-                <p style="margin:0; font-style:italic; color:#ffcccc; font-size:0.85rem; line-height:1.5;">
-                    "The pain of discipline is nothing compared to the pain of regret." 👑
+            <div class="card" style="background: linear-gradient(135deg, rgba(255,51,102,0.06), rgba(0,0,0,0.4)); border-left: 4px solid var(--accent);">
+                <p style="margin:0; font-style:italic; color:#ffe6ec; font-size:0.85rem; line-height:1.6; text-shadow: 0 0 5px rgba(255,51,102,0.2);">
+                    "The pain of discipline is nothing compared to the pain of regret. Complete the checklist items and engineer your future layout." 👑
                 </p>
             </div>
 
+            <div class="card">
+                <h2>🎧 AI Alpha Soundscape</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
+                <button id="audio-synth-toggle" class="action-btn secondary" onclick="toggleAlphaDrone()">Synthesize Focus Wave 🧘</button>
+            </div>
+
             <div class="card pomodoro-box" style="text-align:center;">
-                <h2>⏱️ Focus Work Block</h2>
-                <div id="timer-display" style="font-size:3.8rem; font-family:monospace; font-weight:800; margin:10px 0; color:white;">25:00</div>
+                <h2>⏱️ Focus Block Timer</h2>
+                <div id="timer-display" style="font-size:4.2rem; font-family:monospace; font-weight:900; margin:12px 0; color:white; text-shadow:0 0 15px rgba(255,255,255,0.2);">25:00</div>
                 
-                <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:15px;">
-                    <input type="number" id="custom-minutes" value="25" style="width:70px; text-align:center; padding:6px;">
-                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding:6px 12px; width:auto; font-size:0.8rem;">Set Mins</button>
+                <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:18px;">
+                    <input type="number" id="custom-minutes" value="25" style="width:80px; text-align:center; padding:8px;">
+                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding:8px 14px; width:auto; font-size:0.8rem;">Update</button>
                 </div>
 
-                <div style="display:flex; gap:8px;">
-                    <button class="action-btn" onclick="startTimer()">Start Block 🚀</button>
+                <div style="display:flex; gap:10px;">
+                    <button class="action-btn" onclick="startTimer()">Engage 🚀</button>
                     <button class="action-btn secondary" onclick="pauseTimer()">Pause ⏸️</button>
                     <button class="action-btn secondary" onclick="resetTimer()">Reset 🔄</button>
                 </div>
+            </div>
+
+            <div class="card">
+                <h2>📝 Live Scratchpad Notes</h2>
+                <textarea id="scratchpad-area" rows="4" placeholder="Type quick raw data, equations, formula layouts, or checklists... Everything auto-saves instantly." oninput="saveScratchpad()"></textarea>
             </div>
         </div>
 
         <div id="syllabus-page" class="page">
             <div class="card">
-                <h2>📈 Master Syllabus Engine</h2>
-                <div style="margin-bottom:15px;"><span style="color:var(--accent); font-weight:700;">📐 Math</span><div id="math-chapters"></div></div>
-                <div><span style="color:var(--accent); font-weight:700;">🧪 Science</span><div id="science-chapters"></div></div>
+                <h2> Master Syllabus Directory</h2>
+                <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; text-shadow:0 0 8px var(--accent-glow);">📐 Mathematics Target Array</span><div id="math-chapters"></div></div>
+                <div><span style="color:var(--accent); font-weight:800; text-shadow:0 0 8px var(--accent-glow);">🧪 Science Target Array</span><div id="science-chapters"></div></div>
             </div>
         </div>
 
@@ -412,13 +420,13 @@
 
         <div id="calendar-page" class="page">
             <div class="card">
-                <h2>📅 Smart Schedule Vault</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Dates sync dynamically with your browser memory.</p>
+                <h2>📅 Milestone Schedule Vault</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Add custom critical dates. Automatically flags upcoming 3-day deadlines.</p>
                 
-                <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
-                    <input type="text" id="event-name" placeholder="Target Milestone (e.g. Science Pre-Board)">
+                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:22px;">
+                    <input type="text" id="event-name" placeholder="Target Objective Summary">
                     <input type="date" id="event-date">
-                    <button class="action-btn" onclick="addEvent()">Lock Date Entry 📌</button>
+                    <button class="action-btn" onclick="addEvent()">Lock Event Stream 📌</button>
                 </div>
 
                 <div id="event-list"></div>
@@ -427,243 +435,380 @@
 
         <div id="games-page" class="page">
             <div class="card fidget-container" style="text-align:center;">
-                <h2>🎮 Fidget Popper</h2>
+                <h2>🎮 Stress Fidget Popper</h2>
                 <div class="fidget-grid" id="pop-grid"></div>
-                <button class="action-btn secondary" style="padding:8px;" onclick="resetBubbles()">Reset Wrap 🔄</button>
+                <button class="action-btn secondary" style="padding:10px;" onclick="resetBubbles()">Reset Wrap Matrix 🔄</button>
             </div>
 
             <div class="card" style="text-align:center;">
-                <h2>⚡ Reflex Engine</h2>
-                <div id="reaction-box" class="reaction-box" onclick="clickReaction()">Tap to Engage</div>
+                <h2>⚡ Neural Reflex Engine</h2>
+                <div id="reaction-box" class="reaction-box" onclick="clickReaction()">Click To Initialize</div>
             </div>
 
             <div class="card" style="text-align:center;">
-                <h2>❌ Tic-Tac-Toe ⭕</h2>
+                <h2>❌ Tic-Tac-Toe Arena ⭕</h2>
                 <div id="ttt-grid" class="ttt-grid"></div>
-                <button class="action-btn secondary" style="padding:8px;" onclick="resetTTT()">Reset Board 🔄</button>
+                <button class="action-btn secondary" style="padding:10px;" onclick="resetTTT()">Reset Match Layout 🔄</button>
             </div>
         </div>
 
         <div id="qa-page" class="page">
             <div class="card">
-                <h2>🧠 Concept Doubt Vault</h2>
-                <textarea id="q-text" rows="2" placeholder="Formula or tricky question..."></textarea>
-                <textarea id="a-text" rows="3" placeholder="Core textbook proof/steps..."></textarea>
-                <button class="action-btn" onclick="saveToVault()">Secure Log Entry 🔐</button>
-                <div id="vault-log" style="margin-top:15px;"></div>
+                <h2>🧠 Concept Deficit Vault</h2>
+                <textarea id="q-text" rows="2" placeholder="Formula layout error / complex doubt question statement..."></textarea>
+                <textarea id="a-text" rows="3" placeholder="Resolved steps, key insights, derived mathematical response proofs..."></textarea>
+                <button class="action-btn" onclick="saveToVault()">Commit Matrix Log 🔐</button>
+                <div id="vault-log" style="margin-top:18px;"></div>
             </div>
         </div>
 
         <div id="custom-page" class="page">
             <div class="card">
-                <h2>🎨 Brand Theme</h2>
-                <div style="display:flex; justify-content:between; align-items:center; margin-bottom:10px;">
+                <h2>🎨 Dual Chromatic Matrix Controls</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:20px;">Re-engineer primary glows and secondary chassis colors dynamically.</p>
+                
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                     <span>Primary Neon Highlight:</span>
-                    <input type="color" id="primary-picker" value="#ff3333" style="width:50px; height:35px; background:none; border:none; padding:0;">
+                    <input type="color" id="primary-picker" value="#ff3366" style="width:60px; height:40px; background:none; border:none; padding:0; cursor:pointer;">
                 </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <span>Secondary Button/Chassis:</span>
+                    <input type="color" id="secondary-picker" value="#1a1a26" style="width:60px; height:40px; background:none; border:none; padding:0; cursor:pointer;">
+                </div>
+                
+                <button class="action-btn secondary" onclick="resetStylesToDefault()">Reset Core Structural Themes 🔄</button>
             </div>
 
             <div class="card">
-                <h2>🎭 Reward Stickers</h2>
+                <h2>🎭 Efficiency Badging Shell</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:12px;">Toggle an identity badge, return to other tabs, and tap any block workspace container to apply stamps.</p>
                 <div class="sticker-shelf">
                     <button class="sticker-btn" onclick="setActiveSticker('🔥', this)">🔥</button>
                     <button class="sticker-btn" onclick="setActiveSticker('👑', this)">👑</button>
                     <button class="sticker-btn" onclick="setActiveSticker('🎯', this)">🎯</button>
                     <button class="sticker-btn" onclick="setActiveSticker('💯', this)">💯</button>
                 </div>
-                <div id="sticker-status-banner" style="font-size:0.75rem; margin-top:8px; color:var(--text-muted);">No sticker active.</div>
+                <div id="sticker-status-banner" style="font-size:0.75rem; margin-top:12px; color:var(--text-muted); font-weight:700;">No badge system deployed. Stamping standby.</div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // --- 24 HOUR LIVE CLOCK SYSTEM ---
-        function updateGlobalClock() {
-            const now = new Date();
-            const hrs = now.getHours().toString().padStart(2, '0');
-            const mins = now.getMinutes().toString().padStart(2, '0');
-            const secs = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('global-clock').innerText = `${hrs}:${mins}:${secs}`;
-        }
-        setInterval(updateGlobalClock, 1000);
-        updateGlobalClock();
+        /* CORE AUDIO CONTROLLER & PROCEDURAL ALPHA WAVE SYNTHESIS ENGINE */
+        const AudioEngine = {
+            ctx: null,
+            droneOsc1: null,
+            droneOsc2: null,
+            droneGain: null,
+            isDronePlaying: false,
 
-        // Page Navigation Control
-        function showPage(pageId, btn) {
+            init() {
+                try {
+                    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+                } catch(e){}
+            },
+            toggleAlphaWave() {
+                this.init();
+                if(!this.ctx) return false;
+
+                if (this.isDronePlaying) {
+                    this.stopAlphaWave();
+                    return false;
+                } else {
+                    const t = this.ctx.currentTime;
+                    this.droneGain = this.ctx.createGain();
+                    
+                    // Detune fundamental channels by exact 10Hz to formulate a perfect alpha focus wave matrix
+                    this.droneOsc1 = this.ctx.createOscillator();
+                    this.droneOsc1.type = 'sine';
+                    this.droneOsc1.frequency.setValueAtTime(140, t); // Base Left frequency 140Hz
+
+                    this.droneOsc2 = this.ctx.createOscillator();
+                    this.droneOsc2.type = 'sine';
+                    this.droneOsc2.frequency.setValueAtTime(150, t); // Base Right frequency 150Hz (Creates 10Hz Alpha pulse)
+
+                    this.droneGain.gain.setValueAtTime(0.0, t);
+                    this.droneGain.gain.linearRampToValueAtTime(0.04, t + 2.0); // Soft fade-in envelope
+
+                    this.droneOsc1.connect(this.droneGain);
+                    this.droneOsc2.connect(this.droneGain);
+                    this.droneGain.connect(this.ctx.destination);
+
+                    this.droneOsc1.start(t);
+                    this.droneOsc2.start(t);
+                    this.isDronePlaying = true;
+                    return true;
+                }
+            },
+            stopAlphaWave() {
+                if(this.droneGain && this.ctx) {
+                    const t = this.ctx.currentTime;
+                    this.droneGain.gain.cancelScheduledValues(t);
+                    this.droneGain.gain.setValueAtTime(this.droneGain.gain.value, t);
+                    this.droneGain.gain.linearRampToValueAtTime(0.0, t + 0.5); // Smooth release envelope
+                    setTimeout(() => {
+                        try {
+                            this.droneOsc1.stop(); this.droneOsc2.stop();
+                        } catch(e){}
+                    }, 600);
+                }
+                this.isDronePlaying = false;
+            }
+        };
+
+        function toggleAlphaDrone() {
+            const btn = document.getElementById('audio-synth-toggle');
+            const status = AudioEngine.toggleAlphaWave();
+            if(status) {
+                btn.innerText = "Decommission Focus Synth 🛑";
+                btn.style.borderColor = "var(--accent)";
+            } else {
+                btn.innerText = "Synthesize Focus Wave 🧘";
+                btn.style.borderColor = "var(--border)";
+            }
+        }
+
+        // 24 Hour Dynamic Synchronous Clock System
+        function runGlobalClock() {
+            const now = new Date();
+            document.getElementById('global-clock').innerText = 
+                `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        }
+        setInterval(runGlobalClock, 1000);
+        runGlobalClock();
+
+        // Interface Router System Configuration
+        function showPage(id, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             btn.classList.add('active');
             window.scrollTo(0,0);
+            AudioEngine.init();
         }
 
-        // Master Fixed Target Timeline (Mid-Feb 2027)
-        const targetDate = new Date("February 15, 2027 00:00:00").getTime();
+        // Timeline Countdown Processing (Target mid Feb 2027 Frameworks)
+        const targetTimeline = new Date("February 15, 2027 00:00:00").getTime();
         setInterval(() => {
-            const finalDiff = Math.max(0, targetDate - new Date().getTime());
-            document.getElementById("cd-days").innerText = Math.floor(finalDiff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("cd-hours").innerText = Math.floor((finalDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("cd-mins").innerText = Math.floor((finalDiff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("cd-secs").innerText = Math.floor((finalDiff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            const delta = Math.max(0, targetTimeline - new Date().getTime());
+            document.getElementById("cd-days").innerText = Math.floor(delta / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("cd-hours").innerText = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("cd-mins").innerText = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("cd-secs").innerText = Math.floor((delta % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // Continuous Strict Break Controller
+        // Strict 30-Minute Break Sentinel Enforcer
         let breakCounter = 1800;
-        setInterval(() => {
-            if (breakCounter > 0) breakCounter--;
-            else document.getElementById("strict-break-screen").style.display = "flex";
-        }, 1000);
+        setInterval(() => { if (breakCounter > 0) breakCounter--; else document.getElementById("strict-break-screen").style.display = "flex"; }, 1000);
         function dismissStrictBreak() { document.getElementById("strict-break-screen").style.display = "none"; breakCounter = 1800; }
 
-        // Core Pomodoro Engine
-        let defaultTime = 1500, timeLeft = defaultTime, timerId = null;
+        // Modular Pomodoro Mechanism Engine
+        let baseTime = 1500, timeLeft = baseTime, timerSessionId = null;
         function updateDisplay() {
             document.getElementById('timer-display').innerText = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
         }
         function setCustomTime() {
-            const val = parseInt(document.getElementById('custom-minutes').value);
-            if(val > 0) { pauseTimer(); defaultTime = val * 60; timeLeft = defaultTime; updateDisplay(); }
+            const input = parseInt(document.getElementById('custom-minutes').value);
+            if(input > 0) { pauseTimer(); baseTime = input * 60; timeLeft = baseTime; updateDisplay(); }
         }
-        function startTimer() { if (!timerId) { timerId = setInterval(() => { if (timeLeft > 0) { timeLeft--; updateDisplay(); } else { clearInterval(timerId); timerId = null; alert("Focus Block Finished!"); } }, 1000); } }
-        function pauseTimer() { clearInterval(timerId); timerId = null; }
-        function resetTimer() { pauseTimer(); timeLeft = defaultTime; updateDisplay(); }
+        function startTimer() { 
+            AudioEngine.init();
+            if (!timerSessionId) { 
+                timerSessionId = setInterval(() => { 
+                    if (timeLeft > 0) { timeLeft--; updateDisplay(); } 
+                    else { clearInterval(timerSessionId); timerSessionId = null; alert("Focus Block Complete!"); } 
+                }, 1000); 
+            } 
+        }
+        function pauseTimer() { clearInterval(timerSessionId); timerSessionId = null; }
+        function resetTimer() { pauseTimer(); timeLeft = baseTime; updateDisplay(); }
 
-        // --- SMART CALENDAR LOGIC WITH PERSISTIST STORAGE ---
+        // Persistent Scratchpad Logic
+        function saveScratchpad() {
+            localStorage.setItem('portalScratchpad', document.getElementById('scratchpad-area').value);
+        }
+        if(localStorage.getItem('portalScratchpad')) {
+            document.getElementById('scratchpad-area').value = localStorage.getItem('portalScratchpad');
+        }
+
+        // LocalStorage Driven Milestone Array Processor Engine
         function addEvent() {
-            const name = document.getElementById('event-name').value.trim();
-            const date = document.getElementById('event-date').value;
-            if(!name || !date) return alert("Please fill details!");
+            const title = document.getElementById('event-name').value.trim();
+            const timestamp = document.getElementById('event-date').value;
+            if(!title || !timestamp) return alert("All event parameters must be declared.");
 
-            const events = JSON.parse(localStorage.getItem('portalEvents') || '[]');
-            events.push({ name, date });
-            events.sort((a,b) => new Date(a.date) - new Date(b.date));
-            localStorage.setItem('portalEvents', JSON.stringify(events));
+            const activeEvents = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
+            activeEvents.push({ title, timestamp });
+            activeEvents.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp));
+            localStorage.setItem('portalTimelineEvents', JSON.stringify(activeEvents));
             
             renderEvents();
             document.getElementById('event-name').value = "";
         }
-
         function renderEvents() {
             const container = document.getElementById('event-list');
-            const events = JSON.parse(localStorage.getItem('portalEvents') || '[]');
-            const today = new Date();
-            today.setHours(0,0,0,0);
+            const data = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
+            const referenceDay = new Date(); referenceDay.setHours(0,0,0,0);
 
-            container.innerHTML = events.map((e, idx) => {
-                const eventDate = new Date(e.date);
-                eventDate.setHours(0,0,0,0);
-                const dayDiff = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
-                const isUrgent = dayDiff >= 0 && dayDiff <= 3;
+            container.innerHTML = data.map((item, keyID) => {
+                const targetDay = new Date(item.timestamp); targetDay.setHours(0,0,0,0);
+                const differentialDays = Math.ceil((targetDay - referenceDay) / (1000 * 60 * 60 * 24));
+                const urgentThresholdTriggered = differentialDays >= 0 && differentialDays <= 3;
 
                 return `
-                    <div class="cal-item ${isUrgent ? 'urgent' : ''}">
+                    <div class="cal-item ${urgentThresholdTriggered ? 'urgent' : ''}">
                         <div>
-                            <div class="chapter-title" style="font-weight:700;">${e.name}</div>
-                            <div style="font-size:0.75rem; margin-top:2px; color:${isUrgent ? '#e11d48':'var(--text-muted)'};">
-                                📅 ${e.date} ${isUrgent ? '• 🚨 DEADLINE CRITICAL' : ''}
+                            <div class="chapter-title" style="font-weight:800; color:#fff;">${item.title}</div>
+                            <div style="font-size:0.75rem; margin-top:4px; color:${urgentThresholdTriggered ? '#f43f5e':'var(--text-muted)'}; font-weight:700;">
+                                📅 Scheduled: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 HIGH PRIORITY CRITICAL DEADLINE' : ''}
                             </div>
                         </div>
-                        <button onclick="deleteEvent(${idx})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1rem;">×</button>
+                        <button onclick="deleteEvent(${keyID})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:5px;">×</button>
                     </div>
                 `;
             }).join('');
         }
         function deleteEvent(idx) {
-            let events = JSON.parse(localStorage.getItem('portalEvents') || '[]');
-            events.splice(idx, 1);
-            localStorage.setItem('portalEvents', JSON.stringify(events));
+            let src = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
+            src.splice(idx, 1);
+            localStorage.setItem('portalTimelineEvents', JSON.stringify(src));
             renderEvents();
         }
         renderEvents();
 
-        // Calculator Core Logic
-        const scr = document.getElementById('calc-screen');
-        function append(v) { if(scr.value==='0') scr.value=v; else scr.value+=v; }
-        function clearCalc() { scr.value='0'; }
-        function backspace() { scr.value = scr.value.slice(0,-1) || '0'; }
-        function calculate() { try { scr.value = eval(scr.value); } catch { scr.value='Error'; } }
+        // High-Fidelity Calculator Engine Matrix logic
+        const calcNode = document.getElementById('calc-screen');
+        function append(char) { if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
+        function clearCalc() { calcNode.value = '0'; }
+        function backspace() { calcNode.value = calcNode.value.slice(0, -1) || '0'; }
+        function calculate() { try { calcNode.value = eval(calcNode.value); } catch { calcNode.value = 'Syntax Execution Error'; } }
 
-        // Syllabus Population
-        const chaps = { math: ["Real Numbers", "Polynomials", "Quadratic Equations", "Arithmetic Progressions", "Trigonometry"], science: ["Chemical Reactions", "Acids & Salts", "Life Processes", "Light Reflection", "Electricity"] };
-        function initSyllabus() {
-            ['math', 'science'].forEach(k => {
-                const c = document.getElementById(`${k}-chapters`);
-                c.innerHTML = chaps[k].map(ch => `<div class="syllabus-item"><div style="display:flex; align-items:center; gap:8px;"><input type="checkbox"><span class="chapter-title">${ch}</span></div><div class="tracker-inputs"><input type="text" placeholder="Leftovers..."><input type="text" placeholder="Target"></div></div>`).join('');
+        // Syllabus Tracker Array Node Instantiations
+        const frameworkDataArray = { 
+            math: ["Real Numbers", "Polynomials", "Linear Equations Systems", "Quadratic Formulations", "Arithmetic Progressions", "Trigonometry Layouts"], 
+            science: ["Chemical Equations & Matrix", "Acids, Bases Shells", "Life Micro Processes", "Refractive Optical Systems", "Electrical Circuits"] 
+        };
+        function setupSyllabusTrackerNodes() {
+            ['math', 'science'].forEach(domainKey => {
+                const dom = document.getElementById(`${domainKey}-chapters`);
+                dom.innerHTML = frameworkDataArray[domainKey].map(nodeTitle => `
+                    <div class="syllabus-item">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <input type="checkbox" style="transform:scale(1.2); accent-color:var(--accent);">
+                            <span class="chapter-title" style="font-weight:700; color:#fff;">${nodeTitle}</span>
+                        </div>
+                        <div class="tracker-inputs">
+                            <input type="text" placeholder="Pending Leftover Notes...">
+                            <input type="text" placeholder="Target Date Deadlines">
+                        </div>
+                    </div>
+                `).join('');
             });
         }
-        initSyllabus();
+        setupSyllabusTrackerNodes();
 
-        // Q&A Vault
+        // Deficit Q&A Vault Ledger Modules
         function saveToVault() {
-            const q = document.getElementById('q-text').value, a = document.getElementById('a-text').value;
-            if(!q.trim() || !a.trim()) return;
-            const log = document.getElementById('vault-log');
-            const el = document.createElement('div'); el.className = 'cal-item';
-            el.innerHTML = `<div><strong>Q:</strong> ${q}<br><br><strong>A:</strong> ${a}</div>`;
-            log.prepend(el);
-            document.getElementById('q-text').value=""; document.getElementById('a-text').value="";
+            const queryData = document.getElementById('q-text').value, verificationData = document.getElementById('a-text').value;
+            if(!queryData.trim() || !verificationData.trim()) return;
+            const logElement = document.getElementById('vault-log');
+            const outputFrame = document.createElement('div'); outputFrame.className = 'cal-item';
+            outputFrame.innerHTML = `<div><strong style="color:var(--accent)">Q:</strong> ${queryData}<br><br><strong style="color:#10b981">A:</strong> ${verificationData}</div>`;
+            logElement.prepend(outputFrame);
+            document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
         }
 
-        // Rec Room Setup (Fidget Popper, Reflex, TTT)
-        const pg = document.getElementById('pop-grid');
-        for(let i=0; i<15; i++) {
-            const b = document.createElement('div'); b.className='bubble';
-            b.onclick = function() { this.classList.toggle('popped'); };
-            pg.appendChild(b);
+        // Recreation Lounge Implementations (Fidget Popper Engine, Neural Reaction Box, TTT Grid)
+        const wrapperNode = document.getElementById('pop-grid');
+        for(let loopIdx = 0; loopIdx < 15; loopIdx++) {
+            const bubbleNode = document.createElement('div'); bubbleNode.className = 'bubble';
+            bubbleNode.onclick = function() { this.classList.toggle('popped'); };
+            wrapperNode.appendChild(bubbleNode);
         }
-        function resetBubbles() { document.querySelectorAll('.bubble').forEach(b=>b.classList.remove('popped')); }
+        function resetBubbles() { document.querySelectorAll('.bubble').forEach(node => node.classList.remove('popped')); }
 
-        let rTimeout, rStart;
+        let reactionTaskTimer, speedEvaluationEpoch;
         function clickReaction() {
-            const box = document.getElementById('reaction-box');
-            if(box.classList.contains('ready')) {
-                box.className='reaction-box'; box.innerText=`⚡ ${Date.now() - rStart} ms! Replay?`;
-            } else if(box.classList.contains('waiting')) {
-                clearTimeout(rTimeout); box.className='reaction-box'; box.innerText="Early! Retry.";
+            const structuralBox = document.getElementById('reaction-box');
+            if(structuralBox.classList.contains('ready')) {
+                structuralBox.className = 'reaction-box'; structuralBox.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Trigger Replay?`;
+            } else if(structuralBox.classList.contains('waiting')) {
+                clearTimeout(reactionTaskTimer); structuralBox.className = 'reaction-box'; structuralBox.innerText = "Premature Tap! Restarting sequence.";
             } else {
-                box.className='reaction-box waiting'; box.innerText="Wait for Green...";
-                rTimeout = setTimeout(() => { box.className='reaction-box ready'; box.innerText='TAP NOW!'; rStart=Date.now(); }, Math.random()*3000 + 1500);
+                structuralBox.className = 'reaction-box waiting'; structuralBox.innerText = "Awaiting Green Structural Signal Grid...";
+                reactionTaskTimer = setTimeout(() => { structuralBox.className = 'reaction-box ready'; structuralBox.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); }, Math.random() * 3000 + 1500);
             }
         }
 
-        let tttB = ["","","","","","","","",""], tttP = "❌";
-        function buildTTT() {
-            const g = document.getElementById('ttt-grid'); g.innerHTML="";
-            tttB.forEach((c,i) => {
-                const el = document.createElement('div'); el.className='ttt-cell'; el.innerText=c;
-                el.onclick = () => { if(tttB[i]!=="") return; tttB[i]=tttP; buildTTT(); if(checkW()){ alert(`${tttP} Wins!`); resetTTT(); } else if(!tttB.includes("")){ alert("Draw!"); resetTTT(); } else tttP=tttP==="❌"?"⭕":"❌"; };
-                g.appendChild(el);
+        let matrixTTT = ["","","","","","","","",""], statePlayerToken = "❌";
+        function constructArenaTTT() {
+            const targetedGridNode = document.getElementById('ttt-grid'); targetedGridNode.innerHTML = "";
+            matrixTTT.forEach((tokenValue, gridIndex) => {
+                const functionalCell = document.createElement('div'); functionalCell.className = 'ttt-cell'; functionalCell.innerText = tokenValue;
+                functionalCell.onclick = () => { 
+                    if(matrixTTT[gridIndex] !== "") return; 
+                    matrixTTT[gridIndex] = statePlayerToken; 
+                    constructArenaTTT(); 
+                    if(evaluateWinTTT()){ alert(`${statePlayerToken} Secure Match Dominance!`); resetTTT(); } 
+                    else if(!matrixTTT.includes("")){ alert("Stalemate Grid Draw!"); resetTTT(); } 
+                    else statePlayerToken = statePlayerToken === "❌" ? "⭕" : "❌"; 
+                };
+                targetedGridNode.appendChild(functionalCell);
             });
         }
-        function checkW() {
-            const w = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-            return w.some(comb => tttB[comb[0]] && tttB[comb[0]]===tttB[comb[1]] && tttB[comb[1]]===tttB[comb[2]]);
+        function evaluateWinTTT() {
+            const alignmentCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return alignmentCombos.some(comboLine => matrixTTT[comboLine[0]] && matrixTTT[comboLine[0]] === matrixTTT[comboLine[1]] && matrixTTT[comboLine[1]] === matrixTTT[comboLine[2]]);
         }
-        function resetTTT() { tttB=["","","","","","","","",""]; tttP="❌"; buildTTT(); }
-        buildTTT();
+        function resetTTT() { matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
+        constructArenaTTT();
 
-        // Custom Settings & Decorative Stickers
-        document.getElementById('primary-picker').addEventListener('input', (e) => {
-            document.documentElement.style.setProperty('--accent', e.target.value);
-            document.documentElement.style.setProperty('--accent-glow', e.target.value + '44');
+        // Chromatic Color Modification Event Engine
+        const DOMSelector = document.documentElement;
+        document.getElementById('primary-picker').addEventListener('input', (event) => {
+            const inputHexColor = event.target.value;
+            DOMSelector.style.setProperty('--accent', inputHexColor);
+            DOMSelector.style.setProperty('--accent-glow', inputHexColor + '66');
         });
 
-        let chosenSticker = null;
-        function setActiveSticker(emoji, el) {
-            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
-            if(chosenSticker === emoji) { chosenSticker = null; document.getElementById('sticker-status-banner').innerText = "No sticker active."; }
-            else { chosenSticker = emoji; el.classList.add('selected'); document.getElementById('sticker-status-banner').innerText = `Active: ${emoji}. Tap any card block layout to stamp.`; }
+        document.getElementById('secondary-picker').addEventListener('input', (event) => {
+            DOMSelector.style.setProperty('--secondary', event.target.value);
+            DOMSelector.style.setProperty('--secondary-glow', event.target.value + 'aa');
+        });
+
+        function resetStylesToDefault() {
+            DOMSelector.style.setProperty('--accent', '#ff3336');
+            DOMSelector.style.setProperty('--accent-glow', 'rgba(255, 51, 102, 0.4)');
+            DOMSelector.style.setProperty('--secondary', '#1a1a26');
+            document.getElementById('primary-picker').value = '#ff3336';
+            document.getElementById('secondary-picker').value = '#1a1a26';
         }
-        document.querySelector('.main-content').addEventListener('click', (e) => {
-            const card = e.target.closest('.card');
-            if(card && chosenSticker) {
-                if(e.target.closest('input') || e.target.closest('textarea') || e.target.closest('button')) return;
-                let box = card.querySelector('.card-stickers');
-                if(!box) { box = document.createElement('div'); box.className='card-stickers'; card.insertBefore(box, card.firstChild); }
-                const b = document.createElement('span'); b.className='sticker-badge'; b.innerText=chosenSticker;
-                b.onclick = (event) => { event.stopPropagation(); b.remove(); };
-                box.appendChild(b);
+
+        // Efficiency Reward Sticker Badging Logic Systems
+        let deployedStickerToken = null;
+        function setActiveSticker(emojiChar, elementNode) {
+            document.querySelectorAll('.sticker-btn').forEach(btn => btn.classList.remove('selected'));
+            if(deployedStickerToken === emojiChar) { 
+                deployedStickerToken = null; 
+                document.getElementById('sticker-status-banner').innerText = "Stamping infrastructure standby."; 
+            } else { 
+                deployedStickerToken = emojiChar; 
+                elementNode.classList.add('selected'); 
+                document.getElementById('sticker-status-banner').innerText = `Active Array Deployment: [ ${emojiChar} ]. Tap layout container elements to stamp.`; 
+            }
+        }
+        document.querySelector('.main-content').addEventListener('click', (event) => {
+            const targetedWorkspaceCard = event.target.closest('.card');
+            if(targetedWorkspaceCard && deployedStickerToken) {
+                if(event.target.closest('input') || event.target.closest('textarea') || event.target.closest('button')) return;
+                let stampBox = targetedWorkspaceCard.querySelector('.card-stickers');
+                if(!stampBox) { stampBox = document.createElement('div'); stampBox.className = 'card-stickers'; targetedWorkspaceCard.insertBefore(stampBox, targetedWorkspaceCard.firstChild); }
+                const badgeElement = document.createElement('span'); badgeElement.className = 'sticker-badge'; badgeElement.innerText = deployedStickerToken;
+                badgeElement.onclick = (eventCapture) => { eventCapture.stopPropagation(); badgeElement.remove(); };
+                stampBox.appendChild(badgeElement);
             }
         });
     </script>
