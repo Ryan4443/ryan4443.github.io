@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal - Matrix Node</title>
+    <title>10 Pro Portal - Refined Terminal Layer</title>
     <style>
         :root {
             --bg-main: #030306;
             --bg-card: rgba(18, 18, 28, 0.45);
             --accent: #ff3366;
-            --accent-glow: rgba(255, 51, 102, 0.4);
-            --secondary: #1a1a26;
-            --secondary-glow: rgba(26, 26, 38, 0.3);
+            --accent-glow: rgba(255, 51, 102, 0.35);
+            --secondary: #12121a;
+            --secondary-glow: rgba(26, 26, 38, 0.2);
             --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.08);
-            --glass-specular: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.06);
+            --glass-specular: rgba(255, 255, 255, 0.04);
             --success: #10b981;
         }
 
@@ -29,14 +29,14 @@
             padding-bottom: 120px;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(255, 51, 102, 0.07) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, rgba(255, 51, 102, 0.05) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(26, 26, 38, 0.2) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(255, 51, 102, 0.02) 0px, transparent 40%);
+                radial-gradient(at 50% 50%, rgba(255, 51, 102, 0.01) 0px, transparent 40%);
             background-attachment: fixed;
         }
 
-        /* Authentication Portal Cover Overlay */
-        .auth-overlay {
+        /* Security Gate Shield Overlay */
+        .password-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -50,203 +50,179 @@
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .auth-modal {
-            background: rgba(20, 10, 15, 0.6);
+        .password-modal {
+            background: rgba(15, 8, 12, 0.7);
             border: 1px solid var(--accent);
-            padding: 30px 24px;
-            border-radius: 28px;
-            max-width: 380px;
+            padding: 45px 30px;
+            border-radius: 24px;
+            max-width: 360px;
             width: 100%;
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
-            box-shadow: 0 0 50px var(--accent-glow), inset 0 1px 0 var(--glass-specular);
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            background: rgba(0,0,0,0.3);
-            padding: 4px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .auth-tab-btn {
-            flex: 1;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            padding: 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 8px;
-            text-transform: uppercase;
-        }
-
-        .auth-tab-btn.active {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 4px 12px var(--accent-glow);
+            box-shadow: 0 0 60px var(--accent-glow), inset 0 1px 0 var(--glass-specular);
         }
 
         #global-clock {
             position: fixed;
-            top: 12px;
+            top: 14px;
             left: 15px;
             z-index: 1001;
             font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 900;
             color: #fff;
-            text-shadow: 0 0 10px var(--accent);
-            background: rgba(3, 3, 6, 0.65);
+            text-shadow: 0 0 8px var(--accent);
+            background: rgba(3, 3, 6, 0.75);
             padding: 6px 14px;
             border-radius: 30px;
             border: 1px solid var(--border);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             letter-spacing: 1px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 1px var(--glass-specular);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 1px var(--glass-specular);
         }
 
-        .user-tagline {
+        .system-tagline {
             position: fixed;
-            top: 12px;
+            top: 14px;
             right: 15px;
             z-index: 1001;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 800;
-            color: #fff;
-            background: rgba(255, 51, 102, 0.1);
+            color: var(--accent);
+            background: rgba(255, 51, 102, 0.08);
             padding: 6px 14px;
             border-radius: 30px;
-            border: 1px solid var(--accent);
+            border: 1px solid rgba(255, 51, 102, 0.2);
             backdrop-filter: blur(20px);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         header {
             text-align: center;
-            padding: 60px 15px 25px 15px;
-            background: linear-gradient(180deg, rgba(255, 51, 102, 0.03) 0%, transparent 100%);
+            padding: 65px 15px 20px 15px;
+            background: linear-gradient(180deg, rgba(255, 51, 102, 0.02) 0%, transparent 100%);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 900;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             text-transform: uppercase;
             color: #ffffff;
-            text-shadow: 0 0 15px var(--accent), 0 0 30px var(--accent-glow);
+            text-shadow: 0 0 15px var(--accent);
         }
 
         .motto {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
-            margin: 8px 0 20px 0;
+            margin: 8px 0 22px 0;
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 600;
         }
 
         .card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 22px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 var(--glass-specular);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 var(--glass-specular);
             position: relative;
+            transition: border-color 0.3s ease;
         }
 
         .card h2 {
             margin-top: 0;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: #ffffff;
-            text-shadow: 0 0 10px var(--accent-glow);
             letter-spacing: 0.5px;
-            border-left: 4px solid var(--accent);
-            padding-left: 12px;
-            margin-bottom: 18px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+            margin-bottom: 16px;
         }
 
         .countdown-container {
-            background: rgba(255, 255, 255, 0.01);
+            background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 51, 102, 0.2);
-            border-radius: 20px;
-            padding: 16px;
+            border: 1px solid rgba(255, 51, 102, 0.15);
+            border-radius: 16px;
+            padding: 14px;
             margin: 10px auto;
             max-width: 480px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
         }
 
         .countdown-title {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             color: var(--accent);
-            text-shadow: 0 0 8px var(--accent-glow);
             font-weight: 800;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             letter-spacing: 2px;
         }
 
-        .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .time-box { background: rgba(0, 0, 0, 0.4); padding: 12px 0; border-radius: 14px; border: 1px solid var(--border); }
-        .time-box .num { font-size: 1.6rem; font-family: monospace; font-weight: 900; color: #fff; }
-        .time-box .label { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; margin-top: 3px; }
+        .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .time-box { background: rgba(0, 0, 0, 0.4); padding: 10px 0; border-radius: 10px; border: 1px solid var(--border); }
+        .time-box .num { font-size: 1.5rem; font-family: monospace; font-weight: 900; color: #fff; }
+        .time-box .label { font-size: 0.52rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
 
+        /* Sleek Fixed Horizontal Scroll Navigation Row */
         nav {
             display: flex;
             overflow-x: auto;
-            background: rgba(10, 10, 15, 0.5);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            background: rgba(6, 6, 10, 0.7);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+            scrollbar-width: none;
         }
+        nav::-webkit-scrollbar { display: none; }
 
         .nav-btn {
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 14px 16px;
+            padding: 15px 18px;
             font-size: 0.72rem;
             font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
             border-bottom: 2px solid transparent;
             white-space: nowrap;
             flex-shrink: 0;
         }
 
+        .nav-btn:hover { color: #fff; }
+
         .nav-btn.active {
             color: #ffffff;
-            text-shadow: 0 0 10px var(--accent);
-            background: rgba(255, 51, 102, 0.06);
+            text-shadow: 0 0 8px var(--accent);
+            background: rgba(255, 51, 102, 0.05);
             border-bottom-color: var(--accent);
         }
 
         .main-content { max-width: 480px; margin: 25px auto; padding: 0 14px; box-sizing: border-box; }
         .page { display: none; }
-        .page.active { display: block; animation: smoothFade 0.4s ease forwards; }
+        .page.active { display: block; animation: smoothFade 0.3s ease-out forwards; }
 
         @keyframes smoothFade {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -254,18 +230,18 @@
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 14px;
-            border-radius: 14px;
-            font-size: 0.9rem;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 0.88rem;
             width: 100%;
             box-sizing: border-box;
             outline: none;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
+            box-shadow: 0 0 12px rgba(255, 51, 102, 0.2);
             background: rgba(0, 0, 0, 0.5);
         }
 
@@ -273,165 +249,142 @@
             background: linear-gradient(135deg, var(--accent), #b3002d);
             color: white;
             border: none;
-            padding: 15px;
-            font-size: 0.9rem;
+            padding: 14px;
+            font-size: 0.85rem;
             font-weight: 800;
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.2);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.15);
+            transition: all 0.2s ease;
         }
 
-        button.action-btn:active { transform: scale(0.96); box-shadow: 0 2px 10px rgba(255, 51, 102, 0.1); }
+        button.action-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        button.action-btn:active { transform: scale(0.98); }
         button.action-btn.secondary { background: var(--secondary); box-shadow: none; border: 1px solid var(--border); }
-        button.action-btn.secondary:active { background: rgba(255,255,255,0.05); }
+        button.action-btn.secondary:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.15); }
 
         .calc-wrapper {
-            background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,0,0,0.6));
+            background: linear-gradient(145deg, rgba(255,255,255,0.01), rgba(0,0,0,0.5));
             backdrop-filter: blur(30px);
-            padding: 22px;
-            border-radius: 32px;
+            padding: 20px;
+            border-radius: 24px;
             border: 1px solid var(--border);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.7), inset 0 1px 0 var(--glass-specular);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
         #calc-screen {
             width: 100%;
-            height: 80px;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 18px;
-            margin-bottom: 20px;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 14px;
+            margin-bottom: 16px;
             text-align: right;
-            padding: 18px;
-            font-size: 2.4rem;
+            padding: 15px;
+            font-size: 2.2rem;
             color: #fff;
-            text-shadow: 0 0 15px var(--accent);
+            text-shadow: 0 0 10px var(--accent);
             border: 1px solid var(--border);
             font-family: monospace;
         }
 
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .btn-calc {
-            height: 60px;
-            border-radius: 16px;
+            height: 55px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            background: rgba(255,255,255,0.03);
+            background: rgba(255,255,255,0.02);
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.1s ease;
         }
-
-        .btn-calc:active { background: var(--accent); transform: scale(0.92); box-shadow: 0 0 15px var(--accent); }
-        .btn-calc.op { color: var(--accent); background: rgba(255, 51, 102, 0.04); }
-        .btn-calc.equals { background: linear-gradient(135deg, var(--accent), #b3002d); color: white; grid-column: span 2; box-shadow: 0 4px 15px var(--accent-glow); }
+        .btn-calc:hover { background: rgba(255,255,255,0.06); }
+        .btn-calc:active { background: var(--accent); transform: scale(0.94); }
+        .btn-calc.op { color: var(--accent); background: rgba(255, 51, 102, 0.02); }
+        .btn-calc.equals { background: linear-gradient(135deg, var(--accent), #b3002d); color: white; grid-column: span 2; }
         .btn-calc.clear { color: var(--text-muted); }
 
         .cal-item, .syllabus-item, .rank-item {
-            background: rgba(255, 255, 255, 0.01);
+            background: rgba(255, 255, 255, 0.005);
             border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: inset 0 1px 0 var(--glass-specular);
+            border-left: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
         }
 
         .cal-item, .rank-item { display: flex; justify-content: space-between; align-items: center; }
         .cal-item.urgent {
             border-left-color: #f43f5e;
-            background: linear-gradient(90deg, rgba(244, 63, 94, 0.08), transparent);
-            box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
+            background: linear-gradient(90deg, rgba(244, 63, 94, 0.05), transparent);
         }
 
-        .rank-badge { font-weight: 900; padding: 4px 12px; border-radius: 10px; font-size: 0.8rem; letter-spacing: 0.5px; }
-        .rank-gold { border-left-color: #ffd700 !important; background: linear-gradient(90deg, rgba(255, 215, 0, 0.06), transparent); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
-        .badge-gold { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid #ffd700; }
-        .rank-silver { border-left-color: #e2e8f0 !important; background: linear-gradient(90deg, rgba(226, 232, 240, 0.05), transparent); }
-        .badge-silver { background: rgba(226, 232, 240, 0.15); color: #e2e8f0; border: 1px solid #e2e8f0; }
-        .rank-bronze { border-left-color: #b45309 !important; background: linear-gradient(90deg, rgba(180, 83, 9, 0.05), transparent); }
-        .badge-bronze { background: rgba(180, 83, 9, 0.15); color: #f59e0b; border: 1px solid #f59e0b; }
-        .badge-standard { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
+        .rank-badge { font-weight: 900; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; }
+        .rank-gold { border-left-color: #ffd700 !important; background: linear-gradient(90deg, rgba(255, 215, 0, 0.04), transparent); }
+        .badge-gold { background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3); }
+        .rank-silver { border-left-color: #e2e8f0 !important; }
+        .badge-silver { background: rgba(226, 232, 240, 0.12); color: #e2e8f0; border: 1px solid rgba(226, 232, 240, 0.2); }
+        .badge-standard { background: rgba(255,255,255,0.04); color: var(--text-muted); }
 
-        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 15px 0; }
-        .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #800020 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
-        .bubble.popped { background: #0c0c10; box-shadow: inset 0 6px 10px rgba(0,0,0,0.8); border: none; }
+        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 15px 0; }
+        .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #66001a 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; }
+        .bubble.popped { background: #08080c; box-shadow: inset 0 4px 8px rgba(0,0,0,0.8); border: none; }
         
-        .reaction-box { width: 100%; height: 110px; background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 800; cursor: pointer; box-shadow: inset 0 1px 0 var(--glass-specular); }
-        .reaction-box.waiting { background: #d97706; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .reaction-box.ready { background: #10b981; font-size: 1.4rem; text-shadow: 0 0 10px #10b981; }
+        .reaction-box { width: 100%; height: 100px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 800; cursor: pointer; }
+        .reaction-box.waiting { background: #b45309; }
+        .reaction-box.ready { background: #059669; font-size: 1.2rem; text-shadow: 0 0 8px #10b981; }
 
-        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 220px; margin: 15px auto; }
-        .ttt-cell { aspect-ratio: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; cursor: pointer; }
+        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 200px; margin: 15px auto; }
+        .ttt-cell { aspect-ratio: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 900; cursor: pointer; }
 
         .card-stickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; min-height: 5px; }
-        .sticker-badge { font-size: 1.2rem; cursor: pointer; animation: glassStamp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes glassStamp { 0% { transform: scale(2.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        .sticker-shelf { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-        .sticker-btn { background: rgba(255,255,255,0.02); border: 1px solid var(--border); font-size: 1.4rem; padding: 10px; border-radius: 14px; cursor: pointer; }
-        .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,102,0.1); box-shadow: 0 0 10px var(--accent-glow); }
+        .sticker-badge { font-size: 1.1rem; animation: glassStamp 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards; }
+        @keyframes glassStamp { 0% { transform: scale(2); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .sticker-shelf { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .sticker-btn { background: rgba(255,255,255,0.01); border: 1px solid var(--border); font-size: 1.3rem; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; }
+        .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,102,0.08); box-shadow: 0 0 8px var(--accent-glow); }
         
         .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .tracker-inputs input { padding: 8px 12px; font-size: 0.8rem; border-radius: 10px; }
+        .tracker-inputs input { padding: 6px 10px; font-size: 0.78rem; border-radius: 8px; }
 
-        .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,3,6,0.98); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
-        .break-modal { background: rgba(20,10,15,0.6); border: 1px solid var(--accent); padding: 35px 20px; border-radius: 28px; max-width: 400px; backdrop-filter: blur(30px); box-shadow: 0 0 50px var(--accent-glow); }
+        .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,3,6,0.96); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
+        .break-modal { background: rgba(15,8,12,0.7); border: 1px solid var(--accent); padding: 35px 24px; border-radius: 20px; max-width: 380px; backdrop-filter: blur(30px); }
 
-        /* Admin Database Design Elements */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.85rem;
-        }
-        .admin-table th, .admin-table td {
-            border: 1px solid var(--border);
-            padding: 10px;
-            text-align: left;
-        }
-        .admin-table th {
-            background: rgba(255, 51, 102, 0.1);
-            color: var(--accent);
-        }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        .stat-card { background: rgba(0,0,0,0.3); border: 1px solid var(--border); padding: 14px; border-radius: 12px; text-align: center; }
+        .stat-value { font-size: 1.4rem; font-weight: 900; color: var(--accent); font-family: monospace; }
+        .stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
     </style>
 </head>
 <body>
 
-    <div id="auth-gate-screen" class="auth-overlay">
-        <div class="auth-modal">
-            <div class="auth-tabs">
-                <button id="tab-login" class="auth-tab-btn active" onclick="setAuthMode('login')">Login</button>
-                <button id="tab-register" class="auth-tab-btn" onclick="setAuthMode('register')">Register</button>
-            </div>
-            <h2 id="auth-title" style="color:var(--accent); text-shadow: 0 0 10px var(--accent); margin-bottom: 8px;">🔑 SYSTEM ACCESS</h2>
-            <p id="auth-desc" style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 22px;">Initialize profile encryption links.</p>
-            
-            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:22px;">
-                <input type="text" id="auth-username" placeholder="Username" style="text-align:center;">
-                <input type="password" id="auth-password" placeholder="Password" style="text-align:center;">
-            </div>
-            <button id="auth-submit-btn" class="action-btn" onclick="handleAuthSubmit()">Authenticate Profile ⚡</button>
+    <div id="password-gate-screen" class="password-overlay">
+        <div class="password-modal">
+            <h2 style="color:var(--accent); text-shadow: 0 0 10px var(--accent); margin-bottom: 6px;">🔒 SECURE PORTAL</h2>
+            <p style="color:var(--text-muted); font-size:0.82rem; margin-bottom: 24px;">Authorization Required. Input Terminal PIN to link interface.</p>
+            <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:12px; font-size:1.8rem; font-family:monospace; margin-bottom: 24px;" maxlength="4" oninput="AudioEngine.playTick()">
+            <button class="action-btn" onclick="verifyGatePassword()">Synchronize Matrix ⚡</button>
         </div>
     </div>
 
     <div id="global-clock">00:00:00</div>
-    <div id="user-display-tag" class="user-tagline">STANDBY</div>
+    <div class="system-tagline">Console Node Online</div>
 
     <div id="strict-break-screen" class="break-overlay">
         <div class="break-modal">
             <h2 style="color:var(--accent); text-shadow: 0 0 10px var(--accent);">🚨 SYSTEM LOCKOUT</h2>
-            <p style="font-weight:800; font-size:1.1rem; color:#fff;">30-Min Continuous Grind Block Reached!</p>
-            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Your brain requires recovery intervals to process architecture. Stand up, stretch, hydrate, and look away from the terminal screen.</p>
-            <button class="action-btn" onclick="dismissStrictBreak()" style="margin-top:18px;">Resume Grind ⚡</button>
+            <p style="font-weight:800; font-size:1rem; color:#fff;">30-Min Continuous Grind Block Reached!</p>
+            <p style="color:var(--text-muted); font-size:0.82rem; line-height:1.5; margin-bottom: 20px;">Your brain requires recovery intervals to process architecture. Stand up, stretch, hydrate, and look away from the terminal screen.</p>
+            <button class="action-btn" onclick="dismissStrictBreak()">Resume Grind ⚡</button>
         </div>
     </div>
 
     <header>
-        <h1>10 <span class="glow-text">Pro</span> Portal</h1>
+        <h1>10 <span style="color: var(--accent); text-shadow: 0 0 10px var(--accent-glow);">Pro</span> Portal</h1>
         <div class="motto">Stop Wishing. Start Grinding. 🔥</div>
         
         <div class="countdown-container">
@@ -454,31 +407,44 @@
         <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
         <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
         <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Style</button>
-        <button class="nav-btn" onclick="showPage('admin-page', this)">👥 Vault</button>
+        <button class="nav-btn" onclick="showPage('metrics-page', this)">📊 Metrics</button>
     </nav>
 
     <div class="main-content">
 
         <div id="dash-page" class="page active">
-            <div class="card" style="background: linear-gradient(135deg, rgba(255,51,102,0.06), rgba(0,0,0,0.4)); border-left: 4px solid var(--accent);">
-                <p style="margin:0; font-style:italic; color:#ffe6ec; font-size:0.85rem; line-height:1.6; text-shadow: 0 0 5px rgba(255,51,102,0.2);">
+            <div class="card" style="background: linear-gradient(135deg, rgba(255,51,102,0.04), rgba(0,0,0,0.3)); border-left-color: var(--accent);">
+                <div class="card-stickers" id="stickers-dash-quote"></div>
+                <p style="margin:0; font-style:italic; color:#ffe6ec; font-size:0.85rem; line-height:1.6;">
                     "The pain of discipline is nothing compared to the pain of regret. Complete the checklist items and engineer your future layout." 👑
                 </p>
             </div>
 
+            <div class="card" onclick="applyStickerToCard('dash-quote')">
+                <h2>🏆 Gamified Reward Sticker Shelf</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:12px;">Earn anchors. Select a sticker and tap the milestone card above to apply.</p>
+                <div class="sticker-shelf">
+                    <button class="sticker-btn" onclick="selectRewardSticker('🔥', this, event)">🔥</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('👑', this, event)">👑</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('⚡', this, event)">⚡</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('💯', this, event)">💯</button>
+                    <button class="sticker-btn" onclick="selectRewardSticker('🎯', this, event)">🎯</button>
+                </div>
+            </div>
+
             <div class="card">
                 <h2>🎧 AI Alpha Soundscape</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
                 <button id="audio-synth-toggle" class="action-btn secondary" onclick="toggleAlphaDrone()">Synthesize Focus Wave 🧘</button>
             </div>
 
-            <div class="card pomodoro-box" style="text-align:center;">
+            <div class="card" style="text-align:center;">
                 <h2>⏱️ Focus Block Timer</h2>
-                <div id="timer-display" style="font-size:4.2rem; font-family:monospace; font-weight:900; margin:12px 0; color:white; text-shadow:0 0 15px rgba(255,255,255,0.2);">25:00</div>
+                <div id="timer-display" style="font-size:4rem; font-family:monospace; font-weight:900; margin:10px 0; color:white; text-shadow:0 0 10px rgba(255,255,255,0.15);">25:00</div>
                 
-                <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:18px;">
-                    <input type="number" id="custom-minutes" value="25" style="width:80px; text-align:center; padding:8px;" oninput="AudioEngine.playTick()">
-                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding:8px 14px; width:auto; font-size:0.8rem;">Update</button>
+                <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:16px;">
+                    <input type="number" id="custom-minutes" value="25" style="width:75px; text-align:center; padding:6px;" oninput="AudioEngine.playTick()">
+                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding:8px 12px; width:auto; font-size:0.78rem;">Update</button>
                 </div>
 
                 <div style="display:flex; gap:10px;">
@@ -489,16 +455,16 @@
             </div>
 
             <div class="card">
-                <h2>📝 Live Scratchpad Notes</h2>
-                <textarea id="scratchpad-area" rows="4" placeholder="Type quick raw data, equations, formula layouts, or checklists... Everything auto-saves instantly." oninput="saveScratchpad()"></textarea>
+                <h2>📝 Live Scratchpad Terminal</h2>
+                <textarea id="scratchpad-area" rows="4" placeholder="Type data, raw formulas, or temporary checklists... Automatically cached to terminal local environments." oninput="saveScratchpad()"></textarea>
             </div>
         </div>
 
         <div id="syllabus-page" class="page">
             <div class="card">
                 <h2>📚 Master Syllabus Directory</h2>
-                <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; text-shadow:0 0 8px var(--accent-glow);">📐 Mathematics Target Array</span><div id="math-chapters"></div></div>
-                <div><span style="color:var(--accent); font-weight:800; text-shadow:0 0 8px var(--accent-glow);">🧪 Science Target Array</span><div id="science-chapters"></div></div>
+                <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px;">📐 MATHEMATICS ARRAY</span><div id="math-chapters"></div></div>
+                <div><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px;">🧪 SCIENCE ARRAY</span><div id="science-chapters"></div></div>
             </div>
         </div>
 
@@ -531,9 +497,9 @@
         <div id="calendar-page" class="page">
             <div class="card">
                 <h2>📅 Milestone Schedule Vault</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Add custom critical dates. Automatically flags upcoming 3-day deadlines.</p>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Flags critical items within a 3-day target parameter automatically.</p>
                 
-                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:22px;">
+                <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
                     <input type="text" id="event-name" placeholder="Target Objective Summary">
                     <input type="date" id="event-date">
                     <button class="action-btn" onclick="addEvent()">Lock Event Stream 📌</button>
@@ -546,13 +512,12 @@
         <div id="ranks-page" class="page">
             <div class="card">
                 <h2>🏆 Live Performance Rankings</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Global metrics sorted by top academic scores. Open view format.</p>
                 <div id="leaderboard-container"></div>
             </div>
 
-            <div class="card" style="border-color: rgba(255, 51, 102, 0.25);">
+            <div class="card" style="border-color: rgba(255, 51, 102, 0.2);">
                 <h2>🔒 Faculty Override Panel</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Authorized parameter modification requires Teacher Security PIN authentication.</p>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Modifications require validation via Faculty Security PIN.</p>
                 
                 <div style="display:flex; flex-direction:column; gap:10px;">
                     <input type="text" id="rank-student-name" placeholder="Student Full Name">
@@ -564,10 +529,10 @@
         </div>
 
         <div id="games-page" class="page">
-            <div class="card fidget-container" style="text-align:center;">
+            <div class="card" style="text-align:center;">
                 <h2>🎮 Stress Fidget Popper</h2>
                 <div class="fidget-grid" id="pop-grid"></div>
-                <button class="action-btn secondary" style="padding:10px;" onclick="resetBubbles()">Reset Wrap Matrix 🔄</button>
+                <button class="action-btn secondary" style="padding:10px;" onclick="resetBubbles()">Reset Matrix Wrap 🔄</button>
             </div>
 
             <div class="card" style="text-align:center;">
@@ -585,62 +550,65 @@
         <div id="qa-page" class="page">
             <div class="card">
                 <h2>🧠 Concept Deficit Vault</h2>
-                <textarea id="q-text" rows="2" placeholder="Formula layout error / complex doubt question statement..."></textarea>
-                <textarea id="a-text" rows="3" placeholder="Resolved steps, key insights, derived mathematical response proofs..."></textarea>
-                <button class="action-btn" onclick="saveToVault()">Commit Matrix Log 🔐</button>
+                <textarea id="q-text" rows="2" placeholder="Formula layout error / complex doubt statement..." style="margin-bottom:10px;"></textarea>
+                <textarea id="a-text" rows="3" placeholder="Resolved steps, key insights, derived proofs..."></textarea>
+                <button class="action-btn" onclick="saveToVault()" style="margin-top:12px;">Commit Matrix Log 🔐</button>
                 <div id="vault-log" style="margin-top:18px;"></div>
             </div>
         </div>
 
         <div id="custom-page" class="page">
             <div class="card">
-                <h2>🎨 Dual Chromatic Matrix Controls</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:20px;">Re-engineer primary glows and secondary chassis colors dynamically.</p>
+                <h2>🎨 Chromatic Customization</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:20px;">Re-engineer neon highlights and chassis backplates dynamically.</p>
                 
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                    <span>Primary Neon Highlight:</span>
-                    <input type="color" id="primary-picker" value="#ff3366" style="width:60px; height:40px; background:none; border:none; padding:0; cursor:pointer;">
+                    <span>Primary Glow Highlight:</span>
+                    <input type="color" id="primary-picker" value="#ff3366" style="width:55px; height:35px; background:none; border:none; padding:0; cursor:pointer;">
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                    <span>Secondary Button/Chassis:</span>
-                    <input type="color" id="secondary-picker" value="#1a1a26" style="width:60px; height:40px; background:none; border:none; padding:0; cursor:pointer;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <span>Secondary Button Chassis:</span>
+                    <input type="color" id="secondary-picker" value="#12121a" style="width:55px; height:35px; background:none; border:none; padding:0; cursor:pointer;">
                 </div>
                 
-                <button class="action-btn secondary" onclick="resetStylesToDefault()">Reset Core Structural Themes 🔄</button>
+                <button class="action-btn secondary" onclick="resetStylesToDefault()">Reset System Themes 🔄</button>
             </div>
         </div>
 
-        <div id="admin-page" class="page">
-            <div class="card" id="admin-auth-panel">
-                <h2>🔒 Unlock Central Database Vault</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Input the primary administrative code matrix to review user identities.</p>
-                <input type="password" id="admin-master-key" placeholder="••••••••" style="text-align:center; letter-spacing:6px; margin-bottom:15px;">
-                <button class="action-btn" onclick="verifyAdminVaultAccess()">Access Credentials Log ⚡</button>
-            </div>
-
-            <div class="card" id="admin-data-panel" style="display:none; border-color:var(--success);">
-                <h2>📋 Registered Matrix Identities</h2>
-                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Clear-text user directories compiled inside current system local cache storage arrays.</p>
+        <div id="metrics-page" class="page">
+            <div class="card">
+                <h2>📊 Dynamic System Workspace Summary</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Real-time analytical output from cached structural configuration fields.</p>
                 
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Account Name</th>
-                            <th>Password Output</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-table-body">
-                        </tbody>
-                </table>
-                <button class="action-btn secondary" onclick="lockAdminVault()" style="margin-top:20px;">Seal Vault Storage 🔒</button>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-completed-chapters">0</div>
+                        <div class="stat-label">Syllabus Modules Clear</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-events">0</div>
+                        <div class="stat-label">Locked Milestones</div>
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-stickers">0</div>
+                        <div class="stat-label">Earned Stickers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-qa-count">0</div>
+                        <div class="stat-label">Deficit Vault Logs</div>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
 
     <script>
-        /* --- SOUND INTERFACE AUDIO CONTROLLERS --- */
+        /* --- CORE INTERFACE SOUND ARCHITECTURE --- */
         const AudioEngine = {
             ctx: null, droneOsc1: null, droneOsc2: null, droneGain: null, isDronePlaying: false,
             init() {
@@ -665,8 +633,8 @@
                     osc.stop(t + duration);
                 } catch(e){}
             },
-            playClick() { this.playTone(600, 'sine', 0.08, 0.12); },
-            playTick() { this.playTone(900, 'sine', 0.03, 0.05); },
+            playClick() { this.playTone(600, 'sine', 0.08, 0.1); },
+            playTick() { this.playTone(900, 'sine', 0.03, 0.04); },
             playPop() {
                 this.init(); if(!this.ctx) return;
                 try {
@@ -675,17 +643,17 @@
                     const gainNode = this.ctx.createGain();
                     osc.type = 'triangle';
                     osc.frequency.setValueAtTime(140, t);
-                    osc.frequency.exponentialRampToValueAtTime(450, t + 0.05);
-                    gainNode.gain.setValueAtTime(0.25, t);
+                    osc.frequency.exponentialRampToValueAtTime(420, t + 0.05);
+                    gainNode.gain.setValueAtTime(0.2, t);
                     gainNode.gain.exponentialRampToValueAtTime(0.00001, t + 0.06);
                     osc.connect(gainNode); gainNode.connect(this.ctx.destination);
                     osc.start(t); osc.stop(t + 0.06);
                 } catch(e){}
             },
             playSuccess() {
-                this.playTone(523.25, 'sine', 0.12, 0.15); 
-                setTimeout(() => this.playTone(659.25, 'sine', 0.12, 0.15), 80); 
-                setTimeout(() => this.playTone(783.99, 'sine', 0.25, 0.15), 160); 
+                this.playTone(523.25, 'sine', 0.1, 0.12); 
+                setTimeout(() => this.playTone(659.25, 'sine', 0.1, 0.12), 70); 
+                setTimeout(() => this.playTone(783.99, 'sine', 0.22, 0.12), 140); 
             },
             playError() {
                 this.init(); if(!this.ctx) return;
@@ -694,12 +662,12 @@
                     const osc = this.ctx.createOscillator();
                     const gainNode = this.ctx.createGain();
                     osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(130, t);
-                    osc.frequency.linearRampToValueAtTime(70, t + 0.25);
-                    gainNode.gain.setValueAtTime(0.2, t);
-                    gainNode.gain.linearRampToValueAtTime(0.00001, t + 0.25);
+                    osc.frequency.setValueAtTime(120, t);
+                    osc.frequency.linearRampToValueAtTime(65, t + 0.22);
+                    gainNode.gain.setValueAtTime(0.18, t);
+                    gainNode.gain.linearRampToValueAtTime(0.00001, t + 0.22);
                     osc.connect(gainNode); gainNode.connect(this.ctx.destination);
-                    osc.start(t); osc.stop(t + 0.25);
+                    osc.start(t); osc.stop(t + 0.22);
                 } catch(e){}
             },
             toggleAlphaWave() {
@@ -710,7 +678,7 @@
                     this.droneGain = this.ctx.createGain();
                     this.droneOsc1 = this.ctx.createOscillator(); this.droneOsc1.type = 'sine'; this.droneOsc1.frequency.setValueAtTime(140, t);
                     this.droneOsc2 = this.ctx.createOscillator(); this.droneOsc2.type = 'sine'; this.droneOsc2.frequency.setValueAtTime(150, t);
-                    this.droneGain.gain.setValueAtTime(0.0, t); this.droneGain.gain.linearRampToValueAtTime(0.04, t + 2.0);
+                    this.droneGain.gain.setValueAtTime(0.0, t); this.droneGain.gain.linearRampToValueAtTime(0.03, t + 2.0);
                     this.droneOsc1.connect(this.droneGain); this.droneOsc2.connect(this.droneGain); this.droneGain.connect(this.ctx.destination);
                     this.droneOsc1.start(t); this.droneOsc2.start(t); this.isDronePlaying = true; return true;
                 }
@@ -719,137 +687,115 @@
                 if(this.droneGain && this.ctx) {
                     const t = this.ctx.currentTime;
                     this.droneGain.gain.cancelScheduledValues(t); this.droneGain.gain.setValueAtTime(this.droneGain.gain.value, t);
-                    this.droneGain.gain.linearRampToValueAtTime(0.0, t + 0.5);
-                    setTimeout(() => { try { this.droneOsc1.stop(); this.droneOsc2.stop(); } catch(e){} }, 600);
+                    this.droneGain.gain.linearRampToValueAtTime(0.0, t + 0.4);
+                    setTimeout(() => { try { this.droneOsc1.stop(); this.droneOsc2.stop(); } catch(e){} }, 500);
                 }
                 this.isDronePlaying = false;
             }
         };
 
-        /* --- USER MANAGEMENT PROFILE DATABASE STORAGE SHIELDS --- */
-        let currentActiveUser = "";
-        let globalAuthMode = "login";
-
-        function setAuthMode(mode) {
-            AudioEngine.playClick();
-            globalAuthMode = mode;
-            document.getElementById('tab-login').classList.toggle('active', mode === 'login');
-            document.getElementById('tab-register').classList.toggle('active', mode === 'register');
-            document.getElementById('auth-title').innerText = mode === 'login' ? "🔑 SYSTEM ACCESS" : "🛡️ REGISTER PROFILE";
-            document.getElementById('auth-desc').innerText = mode === 'login' ? "Initialize profile encryption links." : "Generate decentralized workspace node.";
-            document.getElementById('auth-submit-btn').innerText = mode === 'login' ? "Authenticate Profile ⚡" : "Create Clean Account ✨";
-        }
-
-        function handleAuthSubmit() {
+        /* --- VERIFY MASTER SECURITY CORE PIN (4443) --- */
+        function verifyGatePassword() {
             AudioEngine.init();
-            const user = document.getElementById('auth-username').value.trim();
-            const pass = document.getElementById('auth-password').value.trim();
-
-            if(!user || !pass) {
-                AudioEngine.playError();
-                alert("Execution Aborted: Output credentials blocks empty.");
-                return;
-            }
-
-            let accounts = JSON.parse(localStorage.getItem('portalMasterAccounts') || '[]');
-
-            if(globalAuthMode === 'register') {
-                const checkedUser = accounts.find(a => a.username.toLowerCase() === user.toLowerCase());
-                if(checkedUser) {
-                    AudioEngine.playError();
-                    alert("Conflict Detected: Identity cluster already exists.");
-                    return;
-                }
-                accounts.push({ username: user, password: pass });
-                localStorage.setItem('portalMasterAccounts', JSON.stringify(accounts));
+            const pinVal = document.getElementById('gate-pin').value.trim();
+            if(pinVal === "4443") {
                 AudioEngine.playSuccess();
-                alert("Account created successfully! Proceeding to deploy framework.");
+                document.getElementById('password-gate-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('password-gate-screen').style.display = 'none';
+                }, 400);
+                initializeSystemWorkspace();
             } else {
-                const loggedUser = accounts.find(a => a.username.toLowerCase() === user.toLowerCase() && a.password === pass);
-                if(!loggedUser) {
-                    AudioEngine.playError();
-                    alert("Security Failure: Credentials vector mismatch.");
-                    return;
-                }
-                AudioEngine.playSuccess();
+                AudioEngine.playError();
+                alert("Security Core Failure: Access Terminated.");
+                document.getElementById('gate-pin').value = "";
             }
-
-            currentActiveUser = user;
-            document.getElementById('user-display-tag').innerText = `👤 ${currentActiveUser}`;
-            
-            // Unveil interface
-            document.getElementById('auth-gate-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('auth-gate-screen').style.display = 'none';
-            }, 300);
-
-            // Fetch current initialized environment profiles
-            loadProfileScopedData();
         }
 
-        /* --- ENVIRONMENT CONTEXT RELOAD ROUTERS --- */
-        function loadProfileScopedData() {
-            // Load custom scratchpad
-            const cachedNotes = localStorage.getItem(`portal_${currentActiveUser}_scratchpad`);
-            document.getElementById('scratchpad-area').value = cachedNotes ? cachedNotes : "";
+        /* --- GLOBAL DATA ARCHIVE REPOSITORY SYSTEM --- */
+        let activelySelectedSticker = "";
 
-            // Refresh events and items
+        function initializeSystemWorkspace() {
+            // Load custom local storage elements directly
+            document.getElementById('scratchpad-area').value = localStorage.getItem('portal_global_scratchpad') || "";
             renderEvents();
             setupSyllabusTrackerNodes();
+            renderActiveStickers();
+            calculateSystemMetrics();
         }
 
         function saveScratchpad() { 
-            AudioEngine.playTick();
-            if(currentActiveUser) {
-                localStorage.setItem(`portal_${currentActiveUser}_scratchpad`, document.getElementById('scratchpad-area').value); 
-            }
+            localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value); 
         }
 
-        /* --- ADMINISTRATIVE REPOSITORY VAULT CONTROLLERS --- */
-        function verifyAdminVaultAccess() {
-            AudioEngine.init();
-            const passkey = document.getElementById('admin-master-key').value.trim();
+        /* --- STICKER APPRAISAL SUBSYSTEMS --- */
+        function selectRewardSticker(sticker, btnElement, event) {
+            event.stopPropagation();
+            AudioEngine.playClick();
+            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
+            activelySelectedSticker = sticker;
+            btnElement.classList.add('selected');
+        }
+
+        function applyStickerToCard(cardId) {
+            if(!activelySelectedSticker) return;
+            AudioEngine.playSuccess();
             
-            if(passkey === "30886") {
-                AudioEngine.playSuccess();
-                document.getElementById('admin-auth-panel').style.display = 'none';
-                document.getElementById('admin-data-panel').style.display = 'block';
-                
-                // Construct account array outputs
-                const tableBody = document.getElementById('admin-table-body');
-                const database = JSON.parse(localStorage.getItem('portalMasterAccounts') || '[]');
-                
-                if(database.length === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:var(--text-muted);">No records registered inside current operational cache.</td></tr>`;
-                } else {
-                    tableBody.innerHTML = database.map(acc => `
-                        <tr>
-                            <td style="font-weight:700; color:#fff;">${escapeHTML(acc.username)}</td>
-                            <td style="font-family:monospace; color:var(--accent); font-weight:700;">${escapeHTML(acc.password)}</td>
-                        </tr>
-                    `).join('');
+            const storageKey = `portal_global_stickers_${cardId}`;
+            let activeArray = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            activeArray.push(activelySelectedSticker);
+            localStorage.setItem(storageKey, JSON.stringify(activeArray));
+            
+            renderActiveStickers();
+            calculateSystemMetrics();
+            activelySelectedSticker = "";
+            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
+        }
+
+        function renderActiveStickers() {
+            const targets = ['dash-quote'];
+            targets.forEach(cardId => {
+                const storageKey = `portal_global_stickers_${cardId}`;
+                const array = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                const domNode = document.getElementById(`stickers-${cardId}`);
+                if(domNode) {
+                    domNode.innerHTML = array.map(stk => `<span class="sticker-badge">${stk}</span>`).join('');
                 }
-            } else {
-                AudioEngine.playError();
-                alert("Security Intercept: Unauthorized Admin Pin Verification Refused.");
-                document.getElementById('admin-master-key').value = "";
-            }
+            });
         }
 
-        function lockAdminVault() {
-            AudioEngine.playPop();
-            document.getElementById('admin-master-key').value = "";
-            document.getElementById('admin-data-panel').style.display = 'none';
-            document.getElementById('admin-auth-panel').style.display = 'block';
+        /* --- ANALYTICAL TELEMETRY GENERATION MODULE --- */
+        function calculateSystemMetrics() {
+            // Calculated Complete Syllabus Items
+            const syllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
+            let clearCount = 0;
+            for(let node in syllabusStates) { if(syllabusStates[node].checked) clearCount++; }
+            document.getElementById('stat-completed-chapters').innerText = clearCount;
+
+            // Locked Critical Milestone Dates
+            const eventStorage = JSON.parse(localStorage.getItem('portal_global_events') || '[]');
+            document.getElementById('stat-total-events').innerText = eventStorage.length;
+
+            // Total Stamped reward icons
+            const stickerStorage = JSON.parse(localStorage.getItem('portal_global_stickers_dash-quote') || '[]');
+            document.getElementById('stat-total-stickers').innerText = stickerStorage.length;
+
+            // Total Q&A Deficit Blocks
+            const qaStorage = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
+            document.getElementById('stat-qa-count').innerText = qaStorage.length;
         }
 
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
+        /* --- NAVIGATION INTERFACE PLATFORMS --- */
+        function showPage(id, btn) {
+            AudioEngine.playClick();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
+            if(id === 'metrics-page') calculateSystemMetrics();
+            window.scrollTo(0,0);
         }
 
-        /* --- CLOCK & SOUNDSCAPES MANAGEMENT --- */
         function toggleAlphaDrone() {
             const btn = document.getElementById('audio-synth-toggle');
             const status = AudioEngine.toggleAlphaWave();
@@ -864,16 +810,7 @@
         }
         setInterval(runGlobalClock, 1000); runGlobalClock();
 
-        function showPage(id, btn) {
-            AudioEngine.playClick();
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            btn.classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        // Timeline Countdown
+        // High Precision Target Event Countdowns
         const targetTimeline = new Date("February 15, 2027 00:00:00").getTime();
         setInterval(() => {
             const delta = Math.max(0, targetTimeline - new Date().getTime());
@@ -883,7 +820,7 @@
             document.getElementById("cd-secs").innerText = Math.floor((delta % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // Strict Break Sentinel Enforcer
+        // System Safe Lockout Protocols
         let breakCounter = 1800;
         setInterval(() => { 
             if (breakCounter > 0) breakCounter--; 
@@ -894,7 +831,7 @@
         }, 1000);
         function dismissStrictBreak() { AudioEngine.playSuccess(); document.getElementById("strict-break-screen").style.display = "none"; breakCounter = 1800; }
 
-        // Modular Pomodoro Mechanism Engine
+        // Precision Chronograph Layouts
         let baseTime = 1500, timeLeft = baseTime, timerSessionId = null;
         function updateDisplay() {
             document.getElementById('timer-display').innerText = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
@@ -920,23 +857,22 @@
         function pauseTimer() { AudioEngine.playClick(); clearInterval(timerSessionId); timerSessionId = null; }
         function resetTimer() { AudioEngine.playClick(); pauseTimer(); timeLeft = baseTime; updateDisplay(); }
 
-        // Scoped LocalStorage Timeline Engine
+        // Calendar Deadline Processors
         function addEvent() {
             const title = document.getElementById('event-name').value.trim(); const timestamp = document.getElementById('event-date').value;
-            if(!title || !timestamp) { AudioEngine.playError(); return alert("Declare all data parameters."); }
+            if(!title || !timestamp) { AudioEngine.playError(); return alert("Declare all criteria components."); }
             AudioEngine.playSuccess();
             
-            const storageKey = `portal_${currentActiveUser}_events`;
-            const activeEvents = JSON.parse(localStorage.getItem(storageKey) || '[]'); activeEvents.push({ title, timestamp });
-            activeEvents.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem(storageKey, JSON.stringify(activeEvents));
+            const storageKey = 'portal_global_events';
+            const currentList = JSON.parse(localStorage.getItem(storageKey) || '[]'); currentList.push({ title, timestamp });
+            currentList.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem(storageKey, JSON.stringify(currentList));
             renderEvents(); document.getElementById('event-name').value = "";
         }
         function renderEvents() {
             const container = document.getElementById('event-list');
-            if(!currentActiveUser) return;
+            if(!container) return;
             
-            const storageKey = `portal_${currentActiveUser}_events`;
-            const data = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            const data = JSON.parse(localStorage.getItem('portal_global_events') || '[]');
             const referenceDay = new Date(); referenceDay.setHours(0,0,0,0);
             container.innerHTML = data.map((item, keyID) => {
                 const targetDay = new Date(item.timestamp); targetDay.setHours(0,0,0,0);
@@ -945,9 +881,9 @@
                 return `
                     <div class="cal-item ${urgentThresholdTriggered ? 'urgent' : ''}">
                         <div>
-                            <div class="chapter-title" style="font-weight:800; color:#fff;">${escapeHTML(item.title)}</div>
-                            <div style="font-size:0.75rem; margin-top:4px; color:${urgentThresholdTriggered ? '#f43f5e':'var(--text-muted)'}; font-weight:700;">
-                                📅 Scheduled: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 CRITICAL DEADLINE' : ''}
+                            <div style="font-weight:800; color:#fff;">${escapeHTML(item.title)}</div>
+                            <div style="font-size:0.72rem; margin-top:4px; color:${urgentThresholdTriggered ? '#f43f5e':'var(--text-muted)'}; font-weight:700;">
+                                📅 Target: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 CRITICAL DEADLINE' : ''}
                             </div>
                         </div>
                         <button onclick="deleteEvent(${keyID})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:5px;">×</button>
@@ -957,46 +893,44 @@
         }
         function deleteEvent(idx) {
             AudioEngine.playPop();
-            const storageKey = `portal_${currentActiveUser}_events`;
-            let src = JSON.parse(localStorage.getItem(storageKey) || '[]'); src.splice(idx, 1);
-            localStorage.setItem(storageKey, JSON.stringify(src)); renderEvents();
+            let src = JSON.parse(localStorage.getItem('portal_global_events') || '[]'); src.splice(idx, 1);
+            localStorage.setItem('portal_global_events', JSON.stringify(src)); renderEvents();
         }
 
-        // Global Ranking Engine Systems
+        // Performance Metric Records
         const FA_SECURITY_PIN = "6289";
-
         function commitGradeEntry() {
             const name = document.getElementById('rank-student-name').value.trim();
             const marksStr = document.getElementById('rank-student-marks').value.trim();
             const inputPIN = document.getElementById('rank-auth-pin').value.trim();
 
-            if(!name || !marksStr) { AudioEngine.playError(); return alert("Aborted: Student metrics fields cannot be blank."); }
-            if(inputPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Access Denied: Invalid Teacher Security PIN."); }
+            if(!name || !marksStr) { AudioEngine.playError(); return alert("Metric data fields cannot be blank."); }
+            if(inputPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Access Aborted: Invalid PIN Verification."); }
 
             AudioEngine.playSuccess();
             const marks = parseFloat(marksStr);
-            let roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
+            let roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
             
-            const matchesIndex = roster.findIndex(student => student.name.toLowerCase() === name.toLowerCase());
-            if(matchesIndex > -1) roster[matchesIndex].marks = marks;
+            const matchIndex = roster.findIndex(student => student.name.toLowerCase() === name.toLowerCase());
+            if(matchIndex > -1) roster[matchIndex].marks = marks;
             else roster.push({ name, marks });
 
             roster.sort((alpha, beta) => beta.marks - alpha.marks);
-            localStorage.setItem('portalRanksRoster', JSON.stringify(roster));
+            localStorage.setItem('portal_global_ranks', JSON.stringify(roster));
             
             renderLeaderboard();
             document.getElementById('rank-student-name').value = "";
             document.getElementById('rank-student-marks').value = "";
             document.getElementById('rank-auth-pin').value = "";
-            alert("Success: Verified score entry published to global ranking matrix!");
         }
 
         function renderLeaderboard() {
             const container = document.getElementById('leaderboard-container');
-            const roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
+            if(!container) return;
+            const roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
             
             if(roster.length === 0) {
-                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.85rem; padding:15px;">No active ranking profiles on record. Use the terminal console below to initiate marks entry.</div>`;
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.82rem; padding:15px;">No active entries detected inside performance cache rows.</div>`;
                 return;
             }
 
@@ -1004,17 +938,16 @@
                 let positionalClass = ""; let badgeClass = "badge-standard"; let statusIcon = `Pos ${index + 1}`;
                 if(index === 0) { positionalClass = "rank-gold"; badgeClass = "badge-gold"; statusIcon = "🥇 Rank 1"; }
                 else if(index === 1) { positionalClass = "rank-silver"; badgeClass = "badge-silver"; statusIcon = "🥈 Rank 2"; }
-                else if(index === 2) { positionalClass = "rank-bronze"; badgeClass = "badge-bronze"; statusIcon = "🥉 Rank 3"; }
 
                 return `
                     <div class="rank-item ${positionalClass}">
-                        <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
                             <span class="rank-badge ${badgeClass}">${statusIcon}</span>
                             <span style="font-weight:700; color:#fff;">${escapeHTML(student.name)}</span>
                         </div>
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <span style="font-family:monospace; font-weight:900; color:var(--accent); font-size:1.1rem;">${student.marks} M</span>
-                            <button onclick="administrativeRevoke(${index})" style="background:transparent; border:none; color:rgba(255,255,255,0.2); cursor:pointer; font-size:0.9rem;">❌</button>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span style="font-family:monospace; font-weight:900; color:var(--accent);">${student.marks} M</span>
+                            <button onclick="administrativeRevoke(${index})" style="background:transparent; border:none; color:rgba(255,255,255,0.15); cursor:pointer;">❌</button>
                         </div>
                     </div>
                 `;
@@ -1022,47 +955,39 @@
         }
 
         function administrativeRevoke(idx) {
-            AudioEngine.playClick();
-            const promptPIN = prompt("Enter Teacher Security PIN to purge record node:");
+            const promptPIN = prompt("Enter Teacher Security PIN to purge row entries:");
             if(promptPIN === null) return;
-            if(promptPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Access Denied: Invalid Security Key."); }
-            
+            if(promptPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Purge Rejected."); }
             AudioEngine.playPop();
-            let roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
+            let roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
             roster.splice(idx, 1);
-            localStorage.setItem('portalRanksRoster', JSON.stringify(roster));
+            localStorage.setItem('portal_global_ranks', JSON.stringify(roster));
             renderLeaderboard();
         }
         renderLeaderboard();
 
-        // Calculator Core Engine
+        // Calculation Operational Systems
         const calcNode = document.getElementById('calc-screen');
         function append(char) { AudioEngine.playClick(); if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
         function clearCalc() { AudioEngine.playPop(); calcNode.value = '0'; }
         function backspace() { AudioEngine.playPop(); calcNode.value = calcNode.value.slice(0, -1) || '0'; }
         function calculate() { 
-            try { 
-                calcNode.value = eval(calcNode.value); 
-                AudioEngine.playSuccess();
-            } catch { 
-                AudioEngine.playError();
-                calcNode.value = 'Syntax Execution Error'; 
-            } 
+            try { calcNode.value = eval(calcNode.value); AudioEngine.playSuccess(); } 
+            catch { AudioEngine.playError(); calcNode.value = 'Execution Mismatch'; } 
         }
 
-        // Syllabus Framework Array
+        // Syllabus Metric Tracking Matrix Configurations
         const frameworkDataArray = { 
             math: ["Real Numbers", "Polynomials", "Linear Equations Systems", "Quadratic Formulations", "Arithmetic Progressions", "Trigonometry Layouts"], 
             science: ["Chemical Equations & Matrix", "Acids, Bases Shells", "Life Micro Processes", "Refractive Optical Systems", "Electrical Circuits"] 
         };
 
         function setupSyllabusTrackerNodes() {
-            if(!currentActiveUser) return;
-            const syllabusKey = `portal_${currentActiveUser}_syllabus`;
-            const savedSyllabusStates = JSON.parse(localStorage.getItem(syllabusKey) || '{}');
+            const savedSyllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
 
             ['math', 'science'].forEach(domainKey => {
                 const dom = document.getElementById(`${domainKey}-chapters`);
+                if(!dom) return;
                 dom.innerHTML = frameworkDataArray[domainKey].map((nodeTitle, idx) => {
                     const uniqueId = `${domainKey}_ch_${idx}`;
                     const isChecked = savedSyllabusStates[uniqueId]?.checked ? 'checked' : '';
@@ -1072,12 +997,12 @@
                     return `
                         <div class="syllabus-item">
                             <div style="display:flex; align-items:center; gap:10px;">
-                                <input type="checkbox" id="check_${uniqueId}" ${isChecked} style="transform:scale(1.2); accent-color:var(--accent);" onchange="updateSyllabusState('${uniqueId}')">
-                                <span class="chapter-title" style="font-weight:700; color:#fff;">${nodeTitle}</span>
+                                <input type="checkbox" id="check_${uniqueId}" ${isChecked} style="transform:scale(1.15); accent-color:var(--accent);" onchange="updateSyllabusState('${uniqueId}')">
+                                <span style="font-weight:700; color:#fff; font-size:0.9rem;">${nodeTitle}</span>
                             </div>
                             <div class="tracker-inputs">
-                                <input type="text" id="note_${uniqueId}" value="${escapeHTML(noteText)}" placeholder="Pending Leftover Notes..." oninput="updateSyllabusState('${uniqueId}')">
-                                <input type="text" id="date_${uniqueId}" value="${escapeHTML(dateText)}" placeholder="Target Date Deadlines" oninput="updateSyllabusState('${uniqueId}')">
+                                <input type="text" id="note_${uniqueId}" value="${escapeHTML(noteText)}" placeholder="Leftover Notes..." oninput="updateSyllabusState('${uniqueId}')">
+                                <input type="text" id="date_${uniqueId}" value="${escapeHTML(dateText)}" placeholder="Target Date Metrics" oninput="updateSyllabusState('${uniqueId}')">
                             </div>
                         </div>
                     `;
@@ -1086,72 +1011,79 @@
         }
 
         function updateSyllabusState(id) {
-            AudioEngine.playTick();
-            const syllabusKey = `portal_${currentActiveUser}_syllabus`;
-            let savedSyllabusStates = JSON.parse(localStorage.getItem(syllabusKey) || '{}');
-
+            let savedSyllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
             savedSyllabusStates[id] = {
                 checked: document.getElementById(`check_${id}`).checked,
                 note: document.getElementById(`note_${id}`).value.trim(),
                 date: document.getElementById(`date_${id}`).value.trim()
             };
-
-            localStorage.setItem(syllabusKey, JSON.stringify(savedSyllabusStates));
+            localStorage.setItem('portal_global_syllabus', JSON.stringify(savedSyllabusStates));
         }
 
-        // Doubt Vault Modules
+        // Memory Deficit Record Logic Arrays
         function saveToVault() {
             const queryData = document.getElementById('q-text').value, verificationData = document.getElementById('a-text').value;
             if(!queryData.trim() || !verificationData.trim()) { AudioEngine.playError(); return; }
             AudioEngine.playSuccess();
-            const logElement = document.getElementById('vault-log'); const outputFrame = document.createElement('div'); outputFrame.className = 'cal-item';
-            outputFrame.innerHTML = `<div><strong style="color:var(--accent)">Q:</strong> ${escapeHTML(queryData)}<br><br><strong style="color:#10b981">A:</strong> ${escapeHTML(verificationData)}</div>`;
-            logElement.prepend(outputFrame); document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
-        }
+            
+            let currentLogs = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
+            currentLogs.push({ q: queryData, a: verificationData });
+            localStorage.setItem('portal_global_qa_vault', JSON.stringify(currentLogs));
 
-        // Recreation Lounges (Popper, Speed Evaluation, TTT)
-        const wrapperNode = document.getElementById('pop-grid');
+            renderQAVault();
+            document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
+        }
+        function renderQAVault() {
+            const container = document.getElementById('vault-log');
+            if(!container) return;
+            const currentLogs = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
+            container.innerHTML = currentLogs.map(item => `
+                <div class="cal-item">
+                    <div>
+                        <strong style="color:var(--accent)">Q:</strong> ${escapeHTML(item.q)}<br><br>
+                        <strong style="color:#10b981">A:</strong> ${escapeHTML(item.a)}
+                    </div>
+                </div>
+            `).reverse().join('');
+        }
+        renderQAVault();
+
+        // Stress Fidget Initialization
+        const wrapNode = document.getElementById('pop-grid');
         for(let loopIdx = 0; loopIdx < 15; loopIdx++) {
             const bubbleNode = document.createElement('div'); bubbleNode.className = 'bubble';
-            bubbleNode.onclick = function() { AudioEngine.playPop(); this.classList.toggle('popped'); }; wrapperNode.appendChild(bubbleNode);
+            bubbleNode.onclick = function() { AudioEngine.playPop(); this.classList.toggle('popped'); }; wrapNode.appendChild(bubbleNode);
         }
         function resetBubbles() { AudioEngine.playClick(); document.querySelectorAll('.bubble').forEach(node => node.classList.remove('popped')); }
 
         let reactionTaskTimer, speedEvaluationEpoch;
         function clickReaction() {
-            const structuralBox = document.getElementById('reaction-box');
-            if(structuralBox.classList.contains('ready')) { 
-                AudioEngine.playSuccess();
-                structuralBox.className = 'reaction-box'; 
-                structuralBox.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Trigger Replay?`; 
-            } 
-            else if(structuralBox.classList.contains('waiting')) { 
-                AudioEngine.playError();
-                clearTimeout(reactionTaskTimer); 
-                structuralBox.className = 'reaction-box'; 
-                structuralBox.innerText = "Premature Tap! Restarting sequence."; 
-            } 
-            else {
-                AudioEngine.playClick();
-                structuralBox.className = 'reaction-box waiting'; structuralBox.innerText = "Awaiting Green Structural Signal Grid...";
+            const box = document.getElementById('reaction-box');
+            if(box.classList.contains('ready')) { 
+                AudioEngine.playSuccess(); box.className = 'reaction-box'; 
+                box.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Replay?`; 
+            } else if(box.classList.contains('waiting')) { 
+                AudioEngine.playError(); clearTimeout(reactionTaskTimer); box.className = 'reaction-box'; 
+                box.innerText = "Premature Tap! Restarting matrix cycle."; 
+            } else {
+                AudioEngine.playClick(); box.className = 'reaction-box waiting'; box.innerText = "Awaiting Green Signal...";
                 reactionTaskTimer = setTimeout(() => { 
-                    AudioEngine.playTone(880, 'sine', 0.15, 0.2); 
-                    structuralBox.className = 'reaction-box ready'; structuralBox.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); 
-                }, Math.random() * 3000 + 1500);
+                    AudioEngine.playTone(880, 'sine', 0.15, 0.15); 
+                    box.className = 'reaction-box ready'; box.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); 
+                }, Math.random() * 2500 + 1500);
             }
         }
 
         let matrixTTT = ["","","","","","","","",""], statePlayerToken = "❌";
         function constructArenaTTT() {
-            const targetedGridNode = document.getElementById('ttt-grid'); targetedGridNode.innerHTML = "";
+            const targetedGridNode = document.getElementById('ttt-grid'); if(!targetedGridNode) return; targetedGridNode.innerHTML = "";
             matrixTTT.forEach((tokenValue, gridIndex) => {
                 const functionalCell = document.createElement('div'); functionalCell.className = 'ttt-cell'; functionalCell.innerText = tokenValue;
                 functionalCell.onclick = () => { 
-                    if(matrixTTT[gridIndex] !== "") { AudioEngine.playError(); return; } 
-                    AudioEngine.playPop();
+                    if(matrixTTT[gridIndex] !== "") { AudioEngine.playError(); return; } AudioEngine.playPop();
                     matrixTTT[gridIndex] = statePlayerToken; constructArenaTTT(); 
-                    if(evaluateWinTTT()){ AudioEngine.playSuccess(); alert(`${statePlayerToken} Secured Match Dominance!`); resetTTT(); } 
-                    else if(!matrixTTT.includes("")){ AudioEngine.playError(); alert("Stalemate Grid Draw!"); resetTTT(); } 
+                    if(evaluateWinTTT()){ AudioEngine.playSuccess(); alert(`${statePlayerToken} Won!`); resetTTT(); } 
+                    else if(!matrixTTT.includes("")){ AudioEngine.playError(); alert("Draw!"); resetTTT(); } 
                     else statePlayerToken = statePlayerToken === "❌" ? "⭕" : "❌"; 
                 }; targetedGridNode.appendChild(functionalCell);
             });
@@ -1163,24 +1095,25 @@
         function resetTTT() { AudioEngine.playClick(); matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
         constructArenaTTT();
 
-        // Style picking engines
+        // Style Highlight realignments
         const DOMSelector = document.documentElement;
         document.getElementById('primary-picker').addEventListener('input', (event) => {
-            DOMSelector.style.setProperty('--accent', event.target.value); DOMSelector.style.setProperty('--accent-glow', event.target.value + '66');
+            DOMSelector.style.setProperty('--accent', event.target.value); DOMSelector.style.setProperty('--accent-glow', event.target.value + '55');
         });
         document.getElementById('secondary-picker').addEventListener('input', (event) => {
-            DOMSelector.style.setProperty('--secondary', event.target.value); DOMSelector.style.setProperty('--secondary-glow', event.target.value + 'aa');
+            DOMSelector.style.setProperty('--secondary', event.target.value);
         });
         function resetStylesToDefault() {
             AudioEngine.playPop();
-            DOMSelector.style.setProperty('--accent', '#ff3336'); DOMSelector.style.setProperty('--accent-glow', 'rgba(255, 51, 102, 0.4)'); DOMSelector.style.setProperty('--secondary', '#1a1a26');
-            document.getElementById('primary-picker').value = '#ff3336'; document.getElementById('secondary-picker').value = '#1a1a26';
+            DOMSelector.style.setProperty('--accent', '#ff3366'); DOMSelector.style.setProperty('--accent-glow', 'rgba(255, 51, 102, 0.35)'); DOMSelector.style.setProperty('--secondary', '#12121a');
+            document.getElementById('primary-picker').value = '#ff3366'; document.getElementById('secondary-picker').value = '#12121a';
         }
 
-        // Connect global keypress listener to landing page modal inputs
-        document.getElementById('auth-password').addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') handleAuthSubmit();
-        });
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        }
+
+        document.getElementById('gate-pin').addEventListener('keypress', function(e) { if(e.key === 'Enter') verifyGatePassword(); });
     </script>
 </body>
 </html>
