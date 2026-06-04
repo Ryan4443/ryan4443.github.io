@@ -608,7 +608,20 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1"></script>
+
     <script>
+        /* --- APPWRITE CLOUD CLIENT CORE INITIALIZATION --- */
+        const { Client, Databases, ID } = Appwrite;
+        const appwriteClient = new Client()
+            .setEndpoint('https://cloud.appwrite.io/v1') 
+            .setProject('6a21bad3002cb6968d08'); // Your Unique Project ID
+
+        const appwriteDB = new Databases(appwriteClient);
+
+        const DATABASE_ID = '6a21bbd60013b6cecd39'; // Your Unique Database ID
+        const COLLECTION_ID = 'leaderboard';        // Your Unique Collection ID
+
         /* --- CORE INTERFACE SOUND ARCHITECTURE --- */
         const AudioEngine = {
             ctx: null, droneOsc1: null, droneOsc2: null, droneGain: null, isDronePlaying: false,
@@ -722,6 +735,7 @@
             setupSyllabusTrackerNodes();
             renderActiveStickers();
             calculateSystemMetrics();
+            syncLiveLeaderboard(); // Synchronize real-time cloud data pipelines
         }
 
         function saveScratchpad() { 
@@ -889,8 +903,22 @@
             localStorage.setItem('portal_global_events', JSON.stringify(src)); renderEvents();
         }
 
+        /* --- INTEGRATED CLOUD LEADERBOARD CONTROLLERS --- */
         const FA_SECURITY_PIN = "6289";
-        function commitGradeEntry() {
+
+        async function syncLiveLeaderboard() {
+            try {
+                await renderLeaderboard();
+                // Attach a live web socket listener to refresh on real-time mutations
+                appwriteClient.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID}.documents`, response => {
+                    renderLeaderboard();
+                });
+            } catch (error) {
+                console.error("Database initialization matrix fault:", error);
+            }
+        }
+
+        async function commitGradeEntry() {
             const name = document.getElementById('rank-student-name').value.trim();
             const marksStr = document.getElementById('rank-student-marks').value.trim();
             const inputPIN = document.getElementById('rank-auth-pin').value.trim();
@@ -900,63 +928,80 @@
 
             AudioEngine.playSuccess();
             const marks = parseFloat(marksStr);
-            let roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
-            
-            const matchIndex = roster.findIndex(student => student.name.toLowerCase() === name.toLowerCase());
-            if(matchIndex > -1) roster[matchIndex].marks = marks;
-            else roster.push({ name, marks });
 
-            roster.sort((alpha, beta) => beta.marks - alpha.marks);
-            localStorage.setItem('portal_global_ranks', JSON.stringify(roster));
-            
-            renderLeaderboard();
-            document.getElementById('rank-student-name').value = "";
-            document.getElementById('rank-student-marks').value = "";
-            document.getElementById('rank-auth-pin').value = "";
+            try {
+                // Push data record payloads directly to Appwrite Cloud
+                await appwriteDB.createDocument(
+                    DATABASE_ID, 
+                    COLLECTION_ID, 
+                    ID.unique(), 
+                    {
+                        name: name,
+                        marks: marks
+                    }
+                );
+
+                document.getElementById('rank-student-name').value = "";
+                document.getElementById('rank-student-marks').value = "";
+                document.getElementById('rank-auth-pin').value = "";
+            } catch (err) {
+                console.error("Cloud synchronization breakdown:", err);
+                alert("Failed to sync records to the cloud layout. Check console permissions.");
+            }
         }
 
-        function renderLeaderboard() {
+        async function renderLeaderboard() {
             const container = document.getElementById('leaderboard-container');
             if(!container) return;
-            const roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
             
-            if(roster.length === 0) {
-                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.82rem; padding:15px;">No active entries detected inside performance cache rows.</div>`;
-                return;
+            try {
+                const response = await appwriteDB.listDocuments(DATABASE_ID, COLLECTION_ID);
+                const roster = response.documents.sort((alpha, beta) => beta.marks - alpha.marks);
+                
+                if(roster.length === 0) {
+                    container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.82rem; padding:15px;">No active entries detected inside performance cache rows.</div>`;
+                    return;
+                }
+
+                container.innerHTML = roster.map((student, index) => {
+                    let positionalClass = ""; let badgeClass = "badge-standard"; let statusIcon = `Pos ${index + 1}`;
+                    if(index === 0) { positionalClass = "rank-gold"; badgeClass = "badge-gold"; statusIcon = "🥇 Rank 1"; }
+                    else if(index === 1) { positionalClass = "rank-silver"; badgeClass = "badge-silver"; statusIcon = "🥈 Rank 2"; }
+
+                    return `
+                        <div class="rank-item ${positionalClass}">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <span class="rank-badge ${badgeClass}">${statusIcon}</span>
+                                <span style="font-weight:700; color:#fff;">${escapeHTML(student.name)}</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <span style="font-family:monospace; font-weight:900; color:var(--accent);">${student.marks} M</span>
+                                <button onclick="administrativeRevoke('${student.$id}')" style="background:transparent; border:none; color:rgba(255,255,255,0.15); cursor:pointer;">❌</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error("Error drawing live leaderboards:", error);
+                container.innerHTML = `<div style="text-align:center; color:#ff3366; font-size:0.82rem; padding:15px;">Cloud synchronization failure.</div>`;
             }
-
-            container.innerHTML = roster.map((student, index) => {
-                let positionalClass = ""; let badgeClass = "badge-standard"; let statusIcon = `Pos ${index + 1}`;
-                if(index === 0) { positionalClass = "rank-gold"; badgeClass = "badge-gold"; statusIcon = "🥇 Rank 1"; }
-                else if(index === 1) { positionalClass = "rank-silver"; badgeClass = "badge-silver"; statusIcon = "🥈 Rank 2"; }
-
-                return `
-                    <div class="rank-item ${positionalClass}">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span class="rank-badge ${badgeClass}">${statusIcon}</span>
-                            <span style="font-weight:700; color:#fff;">${escapeHTML(student.name)}</span>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span style="font-family:monospace; font-weight:900; color:var(--accent);">${student.marks} M</span>
-                            <button onclick="administrativeRevoke(${index})" style="background:transparent; border:none; color:rgba(255,255,255,0.15); cursor:pointer;">❌</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
         }
 
-        function administrativeRevoke(idx) {
+        async function administrativeRevoke(documentId) {
             const promptPIN = prompt("Enter Teacher Security PIN to purge row entries:");
             if(promptPIN === null) return;
             if(promptPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Purge Rejected."); }
+            
             AudioEngine.playPop();
-            let roster = JSON.parse(localStorage.getItem('portal_global_ranks') || '[]');
-            roster.splice(idx, 1);
-            localStorage.setItem('portal_global_ranks', JSON.stringify(roster));
-            renderLeaderboard();
+            try {
+                await appwriteDB.deleteDocument(DATABASE_ID, COLLECTION_ID, documentId);
+            } catch(err) {
+                console.error("Deletion sequence terminated:", err);
+                alert("Could not process record destruction inside cloud collection layers.");
+            }
         }
-        renderLeaderboard();
 
+        /* --- BASIC ARITHMETIC CORE MODULES --- */
         const calcNode = document.getElementById('calc-screen');
         function append(char) { AudioEngine.playClick(); if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
         function clearCalc() { AudioEngine.playPop(); calcNode.value = '0'; }
