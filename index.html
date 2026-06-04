@@ -35,6 +35,35 @@
             background-attachment: fixed;
         }
 
+        /* Security Portal Overlay */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030306;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .password-modal {
+            background: rgba(20, 10, 15, 0.6);
+            border: 1px solid var(--accent);
+            padding: 40px 24px;
+            border-radius: 28px;
+            max-width: 380px;
+            width: 100%;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 0 50px var(--accent-glow), inset 0 1px 0 var(--glass-specular);
+        }
+
         #global-clock {
             position: fixed;
             top: 12px;
@@ -307,6 +336,15 @@
 </head>
 <body>
 
+    <div id="password-gate-screen" class="password-overlay">
+        <div class="password-modal">
+            <h2 style="color:var(--accent); text-shadow: 0 0 10px var(--accent); margin-bottom: 8px;">🔒 SECURE PORTAL</h2>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 22px;">Authorization Required. Input Terminal PIN to link interface.</p>
+            <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:10px; font-size:1.8rem; font-family:monospace; margin-bottom: 22px;" maxlength="4">
+            <button class="action-btn" onclick="verifyGatePassword()">Synchronize Matrix ⚡</button>
+        </div>
+    </div>
+
     <div id="global-clock">00:00:00</div>
 
     <div id="strict-break-screen" class="break-overlay">
@@ -556,9 +594,9 @@
                 } catch(e){}
             },
             playSuccess() {
-                this.playTone(523.25, 'sine', 0.12, 0.15); // Note C5
-                setTimeout(() => this.playTone(659.25, 'sine', 0.12, 0.15), 80); // Note E5
-                setTimeout(() => this.playTone(783.99, 'sine', 0.25, 0.15), 160); // Note G5
+                this.playTone(523.25, 'sine', 0.12, 0.15); 
+                setTimeout(() => this.playTone(659.25, 'sine', 0.12, 0.15), 80); 
+                setTimeout(() => this.playTone(783.99, 'sine', 0.25, 0.15), 160); 
             },
             playError() {
                 this.init(); if(!this.ctx) return;
@@ -598,6 +636,27 @@
                 this.isDronePlaying = false;
             }
         };
+
+        /* --- LOG-IN GATE SECURITY VERIFICATION --- */
+        function verifyGatePassword() {
+            AudioEngine.init(); // Wakes browser audio components immediately
+            const pinEntered = document.getElementById('gate-pin').value.trim();
+            if(pinEntered === "4443") {
+                AudioEngine.playSuccess();
+                document.getElementById('password-gate-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('password-gate-screen').style.display = 'none';
+                }, 300);
+            } else {
+                AudioEngine.playError();
+                alert("Access Denied: Invalid Terminal Security Key.");
+                document.getElementById('gate-pin').value = "";
+            }
+        }
+        // Link Enter Key functionality to Login Input
+        document.getElementById('gate-pin').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') verifyGatePassword();
+        });
 
         function toggleAlphaDrone() {
             const btn = document.getElementById('audio-synth-toggle');
@@ -661,7 +720,7 @@
                 timerSessionId = setInterval(() => { 
                     if (timeLeft > 0) { 
                         timeLeft--; updateDisplay(); 
-                        if(timeLeft <= 5 && timeLeft > 0) AudioEngine.playTick(); // Tick warning counts
+                        if(timeLeft <= 5 && timeLeft > 0) AudioEngine.playTick(); 
                     } else { 
                         clearInterval(timerSessionId); timerSessionId = null; AudioEngine.playSuccess(); alert("Focus Block Complete!"); 
                     } 
@@ -862,7 +921,7 @@
                 AudioEngine.playClick();
                 structuralBox.className = 'reaction-box waiting'; structuralBox.innerText = "Awaiting Green Structural Signal Grid...";
                 reactionTaskTimer = setTimeout(() => { 
-                    AudioEngine.playTone(880, 'sine', 0.15, 0.2); // Notify user with a high tone automatically
+                    AudioEngine.playTone(880, 'sine', 0.15, 0.2); 
                     structuralBox.className = 'reaction-box ready'; structuralBox.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); 
                 }, Math.random() * 3000 + 1500);
             }
