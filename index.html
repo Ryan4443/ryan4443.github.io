@@ -1,0 +1,585 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Pro Portal - Max Efficiency</title>
+    <style>
+        :root {
+            --bg-main: #0a0a0c;
+            --bg-card: #141418;
+            --accent: #ff2a2a;
+            --accent-glow: rgba(255, 42, 42, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #a0a0ab;
+            --border: #27272a;
+            --success: #10b981;
+            --secondary: #27272a;
+        }
+
+        body {
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 60px;
+        }
+
+        /* Header & Branding */
+        header {
+            text-align: center;
+            padding: 20px 15px;
+            background: linear-gradient(180deg, #1c0b0b 0%, var(--bg-main) 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        header h1 span {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .motto {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 5px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            background: #1a0808;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px auto;
+            max-width: 500px;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .countdown-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .countdown-digits {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .time-box {
+            background: #000;
+            padding: 8px 0;
+            border-radius: 4px;
+        }
+
+        .time-box .num {
+            font-size: 1.4rem;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .time-box .label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 15px 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent);
+            background: rgba(255, 42, 42, 0.05);
+        }
+
+        /* Content Container */
+        .main-content {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Sticker Container Styling Inside Cards */
+        .card-stickers {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            min-height: 24px;
+        }
+
+        .sticker-badge {
+            font-size: 1.3rem;
+            cursor: pointer;
+            user-select: none;
+            animation: stampPop 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes stampPop {
+            0% { transform: scale(3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Focus System */
+        .pomodoro-box {
+            text-align: center;
+        }
+
+        #timer-display {
+            font-size: 4.5rem;
+            font-family: monospace;
+            font-weight: bold;
+            margin: 10px 0 20px 0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button.action-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        button.action-btn.secondary {
+            background: var(--secondary);
+        }
+
+        /* Syllabus Page */
+        .subject-section {
+            margin-bottom: 25px;
+        }
+
+        .subject-heading {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 4px;
+        }
+
+        .syllabus-item {
+            background: #1a1a22;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .syllabus-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .syllabus-header input[type="checkbox"] {
+            transform: scale(1.3);
+            accent-color: var(--accent);
+        }
+
+        .chapter-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .tracker-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .tracker-inputs input, select, .custom-input {
+            background: #0d0d11;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Q&A Notebook */
+        textarea {
+            width: 100%;
+            background: #0d0d11;
+            color: white;
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+            margin-bottom: 12px;
+            resize: none;
+        }
+
+        .saved-qa {
+            background: #111;
+            border-left: 3px solid var(--accent);
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Fidget Toy Page */
+        .fidget-container {
+            text-align: center;
+        }
+
+        .fidget-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .bubble {
+            aspect-ratio: 1;
+            background: radial-gradient(circle, #ff5252 0%, #b71c1c 100%);
+            border-radius: 50%;
+            border: 2px solid #000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+
+        .bubble.popped {
+            background: #222;
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.8);
+            border-color: #333;
+            transform: scale(0.92);
+        }
+
+        /* Customisation Page Elements */
+        .color-picker-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .color-picker-row input[type="color"] {
+            border: none;
+            background: none;
+            width: 50px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .sticker-shelf {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .sticker-btn {
+            background: #1a1a22;
+            border: 1px solid var(--border);
+            font-size: 1.5rem;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .sticker-btn:active {
+            transform: scale(0.9);
+        }
+
+        .sticker-btn.selected {
+            border-color: var(--accent);
+            background: rgba(255, 42, 42, 0.1);
+        }
+
+        #sticker-status-banner {
+            font-size: 0.8rem;
+            color: var(--success);
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        /* 30-Min Strict Break Interrupter Overlay */
+        .break-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 12, 0.98);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .break-modal {
+            background: #1a0808;
+            border: 2px solid var(--accent);
+            padding: 40px 20px;
+            border-radius: 12px;
+            max-width: 450px;
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        .break-modal h2 {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-top: 0;
+        }
+
+        .break-tracker-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="strict-break-screen" class="break-overlay">
+        <div class="break-modal">
+            <h2>🚨 SYSTEM LOCKOUT 🚨</h2>
+            <p style="font-size: 1.2rem; font-weight: bold;">Continuous 30-Minute Study Cap Reached!</p>
+            <p style="color: var(--text-muted);">Your brain needs recovery to process data effectively. Stand up, stretch your back, drink water, and rest your eyes.</p>
+            <h3 style="color: #fff; font-size: 1.5rem; margin: 20px 0;">Recommended Break: 5 - 10 Mins</h3>
+            <button class="action-btn" onclick="dismissStrictBreak()">Resume Grind ⚡</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>10 <span>PRO</span> PORTAL ⚡</h1>
+        <div class="motto">Stop Wishing. Start Grinding. 🔥</div>
+        
+        <div class="countdown-container">
+            <div class="countdown-title">⏳ Ultimate Boards Countdown (Feb 2027)</div>
+            <div class="countdown-digits">
+                <div class="time-box"><div class="num" id="cd-days">00</div><div class="label">Days</div></div>
+                <div class="time-box"><div class="num" id="cd-hours">00</div><div class="label">Hrs</div></div>
+                <div class="time-box"><div class="num" id="cd-mins">00</div><div class="label">Min</div></div>
+                <div class="time-box"><div class="num" id="cd-secs">00</div><div class="label">Sec</div></div>
+            </div>
+            <div id="break-runtime-info" class="break-tracker-text">Next enforced break warning in: 30m 00s</div>
+        </div>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="showPage('dash-page', this)">🏠 Dash</button>
+        <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syllabus</button>
+        <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A Vault</button>
+        <button class="nav-btn" onclick="showPage('fidget-page', this)">🎮 Fidget</button>
+        <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Customise</button>
+    </nav>
+
+    <div class="main-content">
+
+        <div id="dash-page" class="page active">
+            <div class="card" style="background: linear-gradient(45deg, #1e0505, #000); border-left: 4px solid var(--accent);">
+                <div class="card-stickers"></div>
+                <p style="margin: 0; font-style: italic; color: #ffcccc; font-size: 0.9rem;">
+                    "The pain of discipline is nothing compared to the pain of regret. Every page tracker completed is a step closer to 95%+." 👑
+                </p>
+            </div>
+
+            <div class="card pomodoro-box">
+                <div class="card-stickers"></div>
+                <h2>⏱️ Focus Work Block</h2>
+                <div id="timer-display">25:00</div>
+                <div class="btn-group">
+                    <button class="action-btn" onclick="startTimer()">Start Block 🚀</button>
+                    <button class="action-btn secondary" onclick="pauseTimer()">Pause ⏸️</button>
+                    <button class="action-btn secondary" onclick="resetTimer()">Reset 🔄</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-stickers"></div>
+                <h2>📋 Quick Strategy Checklist</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
+                    ✅ Check your target boxes inside the <strong>Syllabus</strong> tab.<br>
+                    ✅ Paste tricky definitions directly into the <strong>Q&A Vault</strong>.<br>
+                    ✅ Use the <strong>Fidget</strong> grid to refresh when you get stuck!
+                </p>
+            </div>
+        </div>
+
+        <div id="syllabus-page" class="page">
+            <div class="card">
+                <div class="card-stickers"></div>
+                <h2>📈 Master Syllabus Engine</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Track leftover items meticulously across all essential areas.</p>
+                
+                <div class="subject-section">
+                    <div class="subject-heading">📐 Mathematics</div>
+                    <div id="math-chapters"></div>
+                </div>
+
+                <div class="subject-section">
+                    <div class="subject-heading">🧪 Science</div>
+                    <div id="science-chapters"></div>
+                </div>
+
+                <div class="subject-section">
+                    <div class="subject-heading">🌍 Social Science (SST)</div>
+                    <div id="sst-chapters"></div>
+                </div>
+
+                <div class="subject-section">
+                    <div class="subject-heading">📖 English Literature & Lang.</div>
+                    <div id="english-chapters"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="qa-page" class="page">
+            <div class="card">
+                <div class="card-stickers"></div>
+                <h2>🧠 Flash Doubts Log</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Log custom responses or complex formulas here to review regularly.</p>
+                
+                <textarea id="q-text" rows="2" placeholder="🤔 Type or paste question..."></textarea>
+                <textarea id="a-text" rows="4" placeholder="💡 Paste textbook/AI solution framework here..."></textarea>
+                <button class="action-btn" style="width:100%;" onclick="saveToVault()">Secure Log Entry 🔐</button>
+
+                <div id="vault-log" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+
+        <div id="fidget-page" class="page">
+            <div class="card fidget-container">
+                <div class="card-stickers"></div>
+                <h2>🎮 Mindless Fidget Popper</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Tap and pop the glowing nodes to shed layout stress during structural breaks.</p>
+                
+                <div class="fidget-grid" id="pop-grid"></div>
+                
+                <button class="action-btn secondary" style="width: 100%;" onclick="resetBubbles()">Reset All Bubbles 🔄</button>
+            </div>
+        </div>
+
+        <div id="custom-page" class="page">
+            <div class="card">
+                <div class="card-stickers"></div>
+                <h2>🎨 Visual Identity Controls</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Personalize structural highlight elements and layout rules dynamically.</p>
+                
+                <div class="color-picker-row">
+                    <span>🔴 Primary Color (Accent Elements):</span>
+                    <input type="color" id="primary-picker" value="#ff2a2a">
+                </div>
+                
+                <div class="color-picker-row">
+                    <span>⚫ Secondary Color (Buttons & Nodes):</span>
+                    <input type="color" id="secondary-picker" value="#27272a">
+                </div>
+
+                <button class="action-btn secondary" style="width: 100%; margin-top: 5px;" onclick="resetThemeToDefault()">Reset System Themes to Default 🔄</button>
+            </div>
+
+            <div class="card">
+                <div class="card-stickers"></div>
+                <h2>💉 Custom Syllabus Injector</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Inject personalized extra topics or school assignments into your syllabus logs.</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted);">Target Track Category:</label>
+                        <select id="custom-subject-select">
+                            <option value="math">📐 Mathematics</option>
+                            <option value="science">🧪 Science</option>
+                            <option value="sst">🌍 Social Science</option>
+                            <option value="english">📖 English</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--text-muted);">Chapter Title/Concept Track Name:</label>
+                        <input type="text" id="custom-chapter-title" placeholder="e.g., Advanced Calculus Mock Module" class="custom-input">
+                    </div>
+                    <button class="action-btn" style="margin-top: 5px;" onclick="injectCustomChapter()">Inject Chapter Module 🛠️</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-stickers"></div>
+                <h2>🎭 Reward Sticker Arsenal</h2>
+                <p style="color: var(--text-mu
