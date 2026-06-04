@@ -582,4 +582,379 @@
             <div class="card">
                 <div class="card-stickers"></div>
                 <h2>🎭 Reward Sticker Arsenal</h2>
-                <p style="color: var(--text-mu
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Select a badge below, then navigate to any tab and <strong>tap a card block</strong> to stamp it!</p>
+                
+                <div class="sticker-shelf">
+                    <button class="sticker-btn" onclick="setActiveSticker('🔥', this)">🔥</button>
+                    <button class="sticker-btn" onclick="setActiveSticker('👑', this)">👑</button>
+                    <button class="sticker-btn" onclick="setActiveSticker('🎯', this)">🎯</button>
+                    <button class="sticker-btn" onclick="setActiveSticker('💯', this)">💯</button>
+                    <button class="sticker-btn" onclick="setActiveSticker('🚀', this)">🚀</button>
+                    <button class="sticker-btn" onclick="setActiveSticker('⭐', this)">⭐</button>
+                    <button class="sticker-btn" onclick="setActiveSticker('🏆', this)">🏆</button>
+                    <button class="sticker-btn" onclick="setActiveSticker('🧠', this)">🧠</button>
+                </div>
+                <div id="sticker-status-banner">No active badge selected. Stamping deactivated.</div>
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 10px; font-style: italic;">💡 Pro-Tip: Tap an already-stamped sticker on a card to instantly remove it.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* NATIVE AUDIO SYNTHESIS ENGINE (Web Audio API) */
+        const AudioEngine = {
+            ctx: null,
+            init() {
+                try {
+                    if (!this.ctx) {
+                        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    if (this.ctx && this.ctx.state === 'suspended') {
+                        this.ctx.resume();
+                    }
+                } catch (err) {
+                    console.error("Audio Context initialization blocked or unsupported:", err);
+                }
+            },
+            playClick() {
+                this.init();
+                if (!this.ctx) return;
+                const time = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'triangle'; 
+                osc.frequency.setValueAtTime(580, time);
+                osc.frequency.exponentialRampToValueAtTime(280, time + 0.04);
+                
+                gain.gain.setValueAtTime(0.06, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.04);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(time);
+                osc.stop(time + 0.04);
+            },
+            playPop() {
+                this.init();
+                if (!this.ctx) return;
+                const time = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(850, time);
+                osc.frequency.exponentialRampToValueAtTime(140, time + 0.07);
+                
+                gain.gain.setValueAtTime(0.35, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.07);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(time);
+                osc.stop(time + 0.07);
+            },
+            playStamp() {
+                this.init();
+                if (!this.ctx) return;
+                const time = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(220, time);
+                osc.frequency.exponentialRampToValueAtTime(440, time + 0.06);
+                
+                gain.gain.setValueAtTime(0.25, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.06);
+                
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(time);
+                osc.stop(time + 0.06);
+            }
+        };
+
+        // --- GLOBAL AUDIO UNLOCK PATCH ---
+        // Forces the browser to authorize sound on your very first click anywhere on the page
+        document.addEventListener('click', function() {
+            AudioEngine.init();
+        }, { once: true });
+        // ---------------------------------
+
+        // Global Event Interceptor for Button UI Taps
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('button') || e.target.closest('.nav-btn') || e.target.closest('input[type="checkbox"]')) {
+                if (!e.target.classList.contains('bubble') && !e.target.classList.contains('sticker-badge')) {
+                    AudioEngine.playClick();
+                }
+            }
+        });
+
+        // Page Navigation
+        function showPage(pageId, buttonElem) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            buttonElem.classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // Programmatic Syllabus Generator
+        const syllabusData = {
+            math: [
+                "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
+                "Quadratic Equations", "Arithmetic Progressions", "Triangles", 
+                "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry", 
+                "Circles", "Surface Areas and Volumes", "Statistics", "Probability"
+            ],
+            science: [
+                "Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals", 
+                "Carbon and its Compounds", "Life Processes", "Control and Coordination", 
+                "How do Organisms Reproduce?", "Heredity and Evolution", "Light - Reflection and Refraction", 
+                "The Human Eye and the Colorful World", "Electricity", "Magnetic Effects of Electric Current", 
+                "Our Environment"
+            ],
+            sst: [
+                "The Rise of Nationalism in Europe (Hist)", "Nationalism in India (Hist)", "The Making of a Global World (Hist)",
+                "Resources and Development (Geo)", "Forest and Wildlife Resources (Geo)", "Water Resources (Geo)", 
+                "Agriculture (Geo)", "Minerals and Energy Resources (Geo)", "Manufacturing Industries (Geo)",
+                "Power Sharing (Civ)", "Federalism (Civ)", "Gender, Religion and Caste (Civ)", "Political Parties (Civ)", "Outcomes of Democracy (Civ)",
+                "Development (Eco)", "Sectors of the Indian Economy (Eco)", "Money and Credit (Eco)", "Globalization and the Indian Economy (Eco)"
+            ],
+            english: [
+                "Prose: Letter to God / Nelson Mandela / Two Stories", "Prose: From Diary / Glimpses of India / Madam Rides", 
+                "Prose: The Sermon at Benares / The Proposal", "Poetry: Dust of Snow / Fire and Ice / Tiger in Zoo", 
+                "Poetry: How to Tell Wild Animals / Ball Poem / Amanda", "Poetry: Trees / Fog / Custard the Dragon / For Anne Gregory", 
+                "Footprints: Triumph of Surgery / Thief's Story / Midnight Visitor", "Footprints: Question of Trust / Footprints without Feet", 
+                "Footprints: Making of a Scientist / Necklace / Bholi / Book That Saved Earth", "Grammar: Tenses, Modals, Subject-Verb Concord, Reported Speech"
+            ]
+        };
+
+        function populateSyllabus() {
+            for (let key in syllabusData) {
+                const container = document.getElementById(`${key}-chapters`);
+                if (container) {
+                    container.innerHTML = ""; 
+                    syllabusData[key].forEach(chap => {
+                        createSyllabusDOMElement(container, chap, false);
+                    });
+                }
+            }
+        }
+
+        function createSyllabusDOMElement(targetContainer, chapterTitle, isCustom) {
+            const item = document.createElement('div');
+            item.className = 'syllabus-item';
+            item.innerHTML = `
+                <div class="syllabus-header">
+                    <input type="checkbox">
+                    <div class="chapter-title">${chapterTitle} ${isCustom ? '<span style="color:var(--accent); font-size:0.75rem;">[Custom Module]</span>' : ''}</div>
+                </div>
+                <div class="tracker-inputs">
+                    <input type="text" placeholder="⚠️ Leftover parts...">
+                    <input type="text" placeholder="📅 Target Date">
+                </div>
+            `;
+            targetContainer.appendChild(item);
+        }
+        
+        populateSyllabus();
+
+        // Target Board Exam Timeline Countdown (Mid Feb 2027)
+        const targetDate = new Date("February 15, 2027 00:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+            
+            // Defend against negative values post timeline expiration
+            const finalDiff = difference > 0 ? difference : 0;
+
+            const days = Math.floor(finalDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((finalDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((finalDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((finalDiff % (1000 * 60)) / 1000);
+
+            document.getElementById("cd-days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("cd-hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("cd-mins").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("cd-secs").innerText = seconds.toString().padStart(2, '0');
+        }, 1000);
+
+        // Global 30-Minute Strict Break Interrupter
+        let breakTimeCounter = 1800; 
+        setInterval(function() {
+            if (breakTimeCounter > 0) {
+                breakTimeCounter--;
+                let m = Math.floor(breakTimeCounter / 60);
+                let s = breakTimeCounter % 60;
+                document.getElementById("break-runtime-info").innerText = `Next enforced break warning in: ${m}m ${s.toString().padStart(2, '0')}s`;
+            } else {
+                document.getElementById("strict-break-screen").style.display = "flex";
+            }
+        }, 1000);
+
+        function dismissStrictBreak() {
+            document.getElementById("strict-break-screen").style.display = "none";
+            breakTimeCounter = 1800; 
+        }
+
+        // Pomodoro Timer Logic
+        let timeLeft = 1500; 
+        let timerId = null;
+
+        function updateDisplay() {
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('timer-display').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerId === null) {
+                timerId = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(timerId);
+                        alert("Work Block Complete! Go spend some time popping bubbles in the Fidget Zone.");
+                    }
+                }, 1000);
+            }
+        }
+        function pauseTimer() { clearInterval(timerId); timerId = null; }
+        function resetTimer() { pauseTimer(); timeLeft = 1500; updateDisplay(); }
+
+        // Q&A Vault Logic
+        function saveToVault() {
+            const q = document.getElementById('q-text').value;
+            const a = document.getElementById('a-text').value;
+            if(!q.trim() || !a.trim()) return alert("Enter content first!");
+
+            const log = document.getElementById('vault-log');
+            const entry = document.createElement('div');
+            entry.className = 'saved-qa';
+            entry.innerHTML = `<strong>❓ Q:</strong> ${q}<br><br><strong>💡 A:</strong> ${a}`;
+            log.prepend(entry);
+
+            document.getElementById('q-text').value = "";
+            document.getElementById('a-text').value = "";
+        }
+
+        // Interactive Fidget Grid Generation
+        const grid = document.getElementById('pop-grid');
+        for (let i = 0; i < 25; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.onclick = function() {
+                this.classList.toggle('popped');
+                AudioEngine.playPop(); 
+            };
+            grid.appendChild(bubble);
+        }
+
+        function resetBubbles() {
+            document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped'));
+        }
+
+        /* DYNAMIC CUSTOMISATION SCRIPTS */
+        const rootSelector = document.documentElement;
+        
+        document.getElementById('primary-picker').addEventListener('input', (e) => {
+            const val = e.target.value;
+            rootSelector.style.setProperty('--accent', val);
+            rootSelector.style.setProperty('--accent-glow', val + '33'); 
+        });
+
+        document.getElementById('secondary-picker').addEventListener('input', (e) => {
+            rootSelector.style.setProperty('--secondary', e.target.value);
+        });
+
+        function resetThemeToDefault() {
+            rootSelector.style.setProperty('--accent', '#ff2a2a');
+            rootSelector.style.setProperty('--accent-glow', 'rgba(255, 42, 42, 0.2)');
+            rootSelector.style.setProperty('--secondary', '#27272a');
+            document.getElementById('primary-picker').value = '#ff2a2a';
+            document.getElementById('secondary-picker').value = '#27272a';
+        }
+
+        // Custom Chapter Injection
+        function injectCustomChapter() {
+            const subjectKey = document.getElementById('custom-subject-select').value;
+            const titleInput = document.getElementById('custom-chapter-title').value.trim();
+
+            if(!titleInput) {
+                alert("Please declare a track name before injecting.");
+                return;
+            }
+
+            const activeContainer = document.getElementById(`${subjectKey}-chapters`);
+            if (activeContainer) {
+                createSyllabusDOMElement(activeContainer, titleInput, true);
+            }
+
+            document.getElementById('custom-chapter-title').value = "";
+            alert(`Chapter module successfully queued into your active logs!`);
+        }
+
+        // Card Sticker Placement Infrastructure
+        let chosenSticker = null;
+
+        function setActiveSticker(emojiCode, actionElement) {
+            document.querySelectorAll('.sticker-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            if (chosenSticker === emojiCode) {
+                chosenSticker = null;
+                document.getElementById('sticker-status-banner').innerText = "No active badge selected. Stamping deactivated.";
+                document.getElementById('sticker-status-banner').style.color = "var(--text-muted)";
+            } else {
+                chosenSticker = emojiCode;
+                actionElement.classList.add('selected');
+                document.getElementById('sticker-status-banner').innerText = `Sticker Active: [ ${emojiCode} ]. Click any block layout anywhere to stamp it!`;
+                document.getElementById('sticker-status-banner').style.color = "var(--success)";
+            }
+        }
+
+        // Global Event Delegation tracking Card clicks
+        document.querySelector('.main-content').addEventListener('click', function(event) {
+            const targetCard = event.target.closest('.card');
+            
+            if (targetCard) {
+                // Instantly catch and process erasure clicks on existing stickers
+                if (event.target.classList.contains('sticker-badge')) {
+                    event.stopPropagation();
+                    event.target.remove();
+                    AudioEngine.playClick(); 
+                    return;
+                }
+
+                // Append new stamped element if an asset is highlighted
+                if (chosenSticker) {
+                    // ERROR CATCH/PREVENTION: Exit immediately if user is interacting with form controls
+                    if (event.target.closest('input') || event.target.closest('textarea') || event.target.closest('button') || event.target.closest('select')) {
+                        return;
+                    }
+
+                    let stickerBox = targetCard.querySelector('.card-stickers');
+                    if (!stickerBox) {
+                        stickerBox = document.createElement('div');
+                        stickerBox.className = 'card-stickers';
+                        targetCard.insertBefore(stickerBox, targetCard.firstChild);
+                    }
+
+                    const badge = document.createElement('span');
+                    badge.className = 'sticker-badge';
+                    badge.innerText = chosenSticker;
+                    badge.title = "Tap to wipe out badge element";
+                    
+                    stickerBox.appendChild(badge);
+                    AudioEngine.playStamp(); 
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+```
