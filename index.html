@@ -4,1331 +4,666 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal - Max Efficiency</title>
+    <title>10 Pro Portal - Elite Edition</title>
     <style>
         :root {
-            --bg-main: #0a0a0c;
-            --bg-card: #141418;
-            --accent: #ff2a2a;
-            --accent-glow: rgba(255, 42, 42, 0.2);
+            --bg-main: #060608;
+            --bg-card: rgba(20, 20, 26, 0.7);
+            --accent: #ff3333;
+            --accent-glow: rgba(255, 51, 51, 0.25);
             --text-main: #ffffff;
-            --text-muted: #a0a0ab;
-            --border: #27272a;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.07);
             --success: #10b981;
-            --secondary: #27272a;
+            --secondary: #1e1e24;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
         body {
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            padding-bottom: 60px;
+            padding-bottom: 80px;
+            background-image: radial-gradient(circle at top right, rgba(255, 51, 51, 0.05), transparent 400px);
         }
 
-        /* Header & Branding */
+        /* 24-Hour Floating Clock */
+        #global-clock {
+            position: fixed;
+            top: 12px;
+            left: 15px;
+            z-index: 1001;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: rgba(6, 6, 8, 0.75);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        /* Header Layout */
         header {
             text-align: center;
-            padding: 20px 15px;
-            background: linear-gradient(180deg, #1c0b0b 0%, var(--bg-main) 100%);
+            padding: 45px 15px 25px 15px;
+            background: linear-gradient(180deg, rgba(28, 11, 11, 0.4) 0%, var(--bg-main) 100%);
             border-bottom: 1px solid var(--border);
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: 2px;
+            font-size: 1.9rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         header h1 span {
             color: var(--accent);
-            text-shadow: 0 0 10px var(--accent);
+            text-shadow: 0 0 15px var(--accent-glow);
         }
 
         .motto {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin: 5px 0 15px 0;
+            margin: 6px 0 20px 0;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 500;
         }
 
-        /* Countdown Timer */
+        /* Countdown Grid */
         .countdown-container {
-            background: #1a0808;
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            padding: 12px;
+            background: rgba(26, 8, 8, 0.4);
+            border: 1px solid rgba(255, 51, 51, 0.3);
+            border-radius: 16px;
+            padding: 15px;
             margin: 10px auto;
-            max-width: 500px;
-            box-shadow: 0 0 15px var(--accent-glow);
+            max-width: 480px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
         .countdown-title {
             font-size: 0.75rem;
             text-transform: uppercase;
             color: var(--accent);
-            font-weight: bold;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 1.5px;
         }
 
         .countdown-digits {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
+            gap: 8px;
         }
 
         .time-box {
-            background: #000;
-            padding: 8px 0;
-            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 0;
+            border-radius: 10px;
+            border: 1px solid var(--border);
         }
 
         .time-box .num {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-family: monospace;
-            font-weight: bold;
+            font-weight: 800;
         }
 
         .time-box .label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--text-muted);
             text-transform: uppercase;
+            margin-top: 2px;
         }
 
-        /* Navigation Bar */
+        /* Navigation Grid */
         nav {
-            display: flex;
-            justify-content: flex-start;
-            background: var(--bg-card);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: rgba(20, 20, 26, 0.85);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
-            overflow-x: auto;
-            scrollbar-width: none; /* Firefox */
-        }
-        
-        nav::-webkit-scrollbar {
-            display: none; /* Safari/Chrome */
         }
 
         .nav-btn {
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 15px 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            padding: 14px 2px;
+            font-size: 0.75rem;
+            font-weight: 700;
             cursor: pointer;
-            flex-shrink: 0;
             text-align: center;
-            transition: all 0.2s;
-            white-space: nowrap;
+            transition: all 0.2s ease;
         }
 
         .nav-btn.active {
             color: var(--accent);
-            border-bottom: 3px solid var(--accent);
-            background: rgba(255, 42, 42, 0.05);
+            background: rgba(255, 51, 51, 0.04);
+            box-shadow: inset 0 -2px 0 var(--accent);
         }
 
-        /* Content Container */
+        /* Core Structure */
         .main-content {
-            max-width: 600px;
+            max-width: 480px;
             margin: 20px auto;
-            padding: 0 15px;
+            padding: 0 12px;
             box-sizing: border-box;
         }
 
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
+        .page { display: none; }
+        .page.active { display: block; }
 
         .card {
             background: var(--bg-card);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 22px;
             margin-bottom: 20px;
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.05);
         }
 
         .card h2 {
             margin-top: 0;
-            font-size: 1.2rem;
-            border-left: 4px solid var(--accent);
-            padding-left: 10px;
-        }
-
-        /* Sticker Container Styling Inside Cards */
-        .card-stickers {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-            min-height: 24px;
-        }
-
-        .sticker-badge {
-            font-size: 1.3rem;
-            cursor: pointer;
-            user-select: none;
-            animation: stampPop 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes stampPop {
-            0% { transform: scale(3); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Focus System */
-        .pomodoro-box {
-            text-align: center;
-        }
-
-        #timer-display {
-            font-size: 4.5rem;
-            font-family: monospace;
-            font-weight: bold;
-            margin: 10px 0 10px 0;
-        }
-
-        .timer-editor {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .timer-editor input {
-            background: #0d0d11;
-            border: 1px solid var(--border);
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 1rem;
-            width: 80px;
-            text-align: center;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        button.action-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            flex: 1;
-            transition: 0.2s;
-        }
-
-        button.action-btn:active {
-            transform: scale(0.95);
-        }
-
-        button.action-btn.secondary {
-            background: var(--secondary);
-        }
-
-        /* Syllabus Page */
-        .subject-section {
-            margin-bottom: 25px;
-        }
-
-        .subject-heading {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 4px;
-        }
-
-        .syllabus-item {
-            background: #1a1a22;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .syllabus-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .syllabus-header input[type="checkbox"] {
-            transform: scale(1.3);
-            accent-color: var(--accent);
-        }
-
-        .chapter-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .tracker-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .tracker-inputs input, select, .custom-input {
-            background: #0d0d11;
-            border: 1px solid var(--border);
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* Q&A Notebook */
-        textarea {
-            width: 100%;
-            background: #0d0d11;
-            color: white;
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-family: inherit;
-            margin-bottom: 12px;
-            resize: none;
-        }
-
-        .saved-qa {
-            background: #111;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
             border-left: 3px solid var(--accent);
-            padding: 12px;
-            border-radius: 4px;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        /* Games Zone Elements */
-        .fidget-container {
-            text-align: center;
-        }
-
-        .fidget-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .bubble {
-            aspect-ratio: 1;
-            background: radial-gradient(circle, #ff5252 0%, #b71c1c 100%);
-            border-radius: 50%;
-            border: 2px solid #000;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
-            cursor: pointer;
-            transition: all 0.1s ease;
-        }
-
-        .bubble.popped {
-            background: #222;
-            box-shadow: inset 0 4px 6px rgba(0,0,0,0.8);
-            border-color: #333;
-            transform: scale(0.92);
-        }
-
-        /* Tic Tac Toe */
-        .ttt-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            max-width: 240px;
-            margin: 20px auto;
-        }
-
-        .ttt-cell {
-            aspect-ratio: 1;
-            background: #1a1a22;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .ttt-cell:active {
-            background: #27272a;
-            transform: scale(0.95);
-        }
-
-        /* Reaction Tester */
-        .reaction-box {
-            width: 100%;
-            height: 120px;
-            background: #1a1a22;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 15px 0;
-            transition: background 0.1s;
-            user-select: none;
-        }
-
-        .reaction-box.waiting {
-            background: #d97706;
-            border-color: #d97706;
-            color: white;
-        }
-
-        .reaction-box.ready {
-            background: #10b981;
-            border-color: #10b981;
-            color: white;
-            font-size: 1.8rem;
-        }
-
-        /* Pro Calculator Elements */
-        .calc-wrapper {
-            background: #0d0d11;
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.8);
-            max-width: 320px;
-            margin: 0 auto;
-        }
-
-        .calc-display {
-            background: #050506;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: right;
-            border: 1px solid #1a1a22;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 80px;
-            word-wrap: break-word;
-            word-break: break-all;
-        }
-
-        #calc-prev {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            min-height: 20px;
-        }
-
-        #calc-curr {
-            color: #fff;
-            font-size: 2.5rem;
-            font-family: monospace;
-            font-weight: bold;
-        }
-
-        .calc-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-
-        .calc-btn {
-            background: #1a1a22;
-            border: 1px solid #27272a;
-            padding: 16px 0;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: inherit;
-        }
-
-        .calc-btn:active {
-            transform: scale(0.92);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.4);
-        }
-
-        .calc-btn.op {
-            background: #1e0a0a;
-            color: var(--accent);
-            border-color: rgba(255, 42, 42, 0.3);
-        }
-
-        .calc-btn.ac {
-            background: #2a0808;
-            color: #ff5252;
-            border-color: #ff5252;
-        }
-
-        .calc-btn.eq {
-            background: var(--accent);
-            color: white;
-            grid-column: span 2;
-            border-color: var(--accent);
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
-
-        /* Leaderboard / Rank Elements */
-        .leaderboard-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .leader-item {
-            background: #1a1a22;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: transform 0.2s;
-        }
-
-        .leader-item.you {
-            border-color: var(--accent);
-            background: rgba(255, 42, 42, 0.05);
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .leader-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .rank-number {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--text-muted);
-            width: 30px;
-            text-align: center;
-        }
-
-        .leader-item:nth-child(1) .rank-number { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); } /* Gold */
-        .leader-item:nth-child(2) .rank-number { color: #94a3b8; } /* Silver */
-        .leader-item:nth-child(3) .rank-number { color: #b45309; } /* Bronze */
-
-        .leader-details h4 {
-            margin: 0 0 4px 0;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #52525b; /* Offline */
-            display: inline-block;
-        }
-
-        .status-dot.online {
-            background: var(--success);
-            box-shadow: 0 0 8px var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.7; }
-            100% { transform: scale(0.95); opacity: 1; }
-        }
-
-        .leader-stats {
-            display: flex;
-            gap: 15px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .stat-block span {
-            color: white;
-            font-weight: bold;
-        }
-
-        /* Customisation Page Elements */
-        .color-picker-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding-left: 12px;
             margin-bottom: 15px;
         }
 
-        .color-picker-row input[type="color"] {
-            border: none;
-            background: none;
-            width: 50px;
-            height: 40px;
-            cursor: pointer;
-        }
-
-        .sticker-shelf {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .sticker-btn {
-            background: #1a1a22;
+        /* Inputs & Textareas */
+        input[type="text"], input[type="number"], input[type="date"], select, textarea {
+            background: rgba(0, 0, 0, 0.35);
             border: 1px solid var(--border);
-            font-size: 1.5rem;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .sticker-btn:active {
-            transform: scale(0.9);
-        }
-
-        .sticker-btn.selected {
-            border-color: var(--accent);
-            background: rgba(255, 42, 42, 0.1);
-        }
-
-        #sticker-status-banner {
-            font-size: 0.8rem;
-            color: var(--success);
-            margin-top: 8px;
-            font-weight: bold;
-        }
-
-        /* Break Interrupter Overlay */
-        .break-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 12, 0.98);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .break-modal {
-            background: #1a0808;
-            border: 2px solid var(--accent);
-            padding: 40px 20px;
+            color: var(--text-main);
+            padding: 12px;
             border-radius: 12px;
-            max-width: 450px;
-            box-shadow: 0 0 30px var(--accent);
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.2s ease;
         }
 
-        .break-modal h2 {
-            color: var(--accent);
-            font-size: 2rem;
-            margin-top: 0;
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.15);
         }
 
-        .break-tracker-text {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 5px;
+        /* Action Buttons */
+        button.action-btn {
+            background: linear-gradient(135deg, var(--accent), #cc1111);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.2);
+            transition: all 0.2s ease;
         }
+
+        button.action-btn:active { transform: scale(0.97); }
+        button.action-btn.secondary { background: var(--secondary); box-shadow: none; border: 1px solid var(--border); }
+
+        /* Premium Calculator Design */
+        .calc-wrapper {
+            background: linear-gradient(145deg, #16161c, #0c0c0e);
+            padding: 20px;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        #calc-screen {
+            width: 100%;
+            height: 75px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            margin-bottom: 18px;
+            text-align: right;
+            padding: 15px;
+            font-size: 2.2rem;
+            color: #fff;
+            border: 1px solid var(--border);
+            font-family: monospace;
+        }
+
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .btn-calc {
+            height: 58px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.03);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-calc:active { background: var(--accent); transform: scale(0.93); }
+        .btn-calc.op { color: var(--accent); background: rgba(255, 51, 51, 0.05); }
+        .btn-calc.equals { background: var(--accent); color: white; grid-column: span 2; }
+        .btn-calc.clear { color: #94a3b8; }
+
+        /* Calendar Render Items */
+        .cal-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cal-item.urgent {
+            border-left-color: #e11d48;
+            background: linear-gradient(90deg, rgba(225, 29, 72, 0.07), transparent);
+            box-shadow: 0 0 15px rgba(225, 29, 72, 0.1);
+        }
+
+        /* Rec Room Styling */
+        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 15px 0; }
+        .bubble { aspect-ratio: 1; background: radial-gradient(circle, #ff5252 0%, #b71c1c 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; }
+        .bubble.popped { background: #151518; box-shadow: inset 0 4px 8px rgba(0,0,0,0.7); border: none; }
+        
+        .reaction-box { width: 100%; height: 110px; background: #131317; border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 15px 0; cursor: pointer; }
+        .reaction-box.waiting { background: #d97706; }
+        .reaction-box.ready { background: #10b981; font-size: 1.4rem; }
+
+        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 220px; margin: 15px auto; }
+        .ttt-cell { aspect-ratio: 1; background: #131317; border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; cursor: pointer; }
+
+        /* Syllabus Layout */
+        .syllabus-item { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 8px; }
+        .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+        .tracker-inputs input { padding: 6px 10px; font-size: 0.75rem; }
+
+        /* Sticker Container Utilities */
+        .card-stickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; min-height: 10px; }
+        .sticker-badge { font-size: 1.2rem; cursor: pointer; }
+        .sticker-shelf { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .sticker-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-size: 1.3rem; padding: 8px; border-radius: 10px; cursor: pointer; }
+        .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,51,0.1); }
+        
+        /* Layout Blocks */
+        .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6,6,8,0.97); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
+        .break-modal { background: #140505; border: 1px solid var(--accent); padding: 30px 15px; border-radius: 20px; max-width: 400px; box-shadow: 0 0 40px var(--accent-glow); }
     </style>
 </head>
 <body>
 
+    <div id="global-clock">00:00:00</div>
+
     <div id="strict-break-screen" class="break-overlay">
         <div class="break-modal">
-            <h2>🚨 SYSTEM LOCKOUT 🚨</h2>
-            <p style="font-size: 1.2rem; font-weight: bold;">Continuous 30-Minute Study Cap Reached!</p>
-            <p style="color: var(--text-muted);">Your brain needs recovery to process data effectively. Stand up, stretch your back, drink water, and rest your eyes.</p>
-            <h3 style="color: #fff; font-size: 1.5rem; margin: 20px 0;">Recommended Break: 5 - 10 Mins</h3>
-            <button class="action-btn" onclick="dismissStrictBreak()">Resume Grind ⚡</button>
+            <h2 style="color:var(--accent);">🚨 SYSTEM LOCKOUT</h2>
+            <p style="font-weight:700;">30-Minute Continuous Cap Reached!</p>
+            <p style="color:var(--text-muted); font-size:0.85rem;">Stand up, stretch your back, and let your eyes rest completely.</p>
+            <button class="action-btn" onclick="dismissStrictBreak()" style="margin-top:15px;">Resume Grind ⚡</button>
         </div>
     </div>
 
     <header>
-        <h1>10 <span>PRO</span> PORTAL ⚡</h1>
+        <h1>10 <span>Pro</span> Portal</h1>
         <div class="motto">Stop Wishing. Start Grinding. 🔥</div>
         
         <div class="countdown-container">
-            <div class="countdown-title">⏳ Ultimate Boards Countdown (Feb 2027)</div>
+            <div class="countdown-title">⏳ Boards Final Countdown</div>
             <div class="countdown-digits">
                 <div class="time-box"><div class="num" id="cd-days">00</div><div class="label">Days</div></div>
                 <div class="time-box"><div class="num" id="cd-hours">00</div><div class="label">Hrs</div></div>
                 <div class="time-box"><div class="num" id="cd-mins">00</div><div class="label">Min</div></div>
                 <div class="time-box"><div class="num" id="cd-secs">00</div><div class="label">Sec</div></div>
             </div>
-            <div id="break-runtime-info" class="break-tracker-text">Next enforced break warning in: 30m 00s</div>
         </div>
     </header>
 
     <nav>
         <button class="nav-btn active" onclick="showPage('dash-page', this)">🏠 Dash</button>
-        <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syl</button>
-        <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
+        <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syll</button>
         <button class="nav-btn" onclick="showPage('calc-page', this)">🧮 Calc</button>
-        <button class="nav-btn" onclick="showPage('leader-page', this)">🏆 Rank</button>
+        <button class="nav-btn" onclick="showPage('calendar-page', this)">📅 Cal</button>
         <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
-        <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Theme</button>
+        <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
+        <button class="nav-btn" onclick="showPage('custom-page', this)" style="grid-column: span 2;">🎨 Custom</button>
     </nav>
 
     <div class="main-content">
 
         <div id="dash-page" class="page active">
-            <div class="card" style="background: linear-gradient(45deg, #1e0505, #000); border-left: 4px solid var(--accent);">
-                <div class="card-stickers"></div>
-                <p style="margin: 0; font-style: italic; color: #ffcccc; font-size: 0.9rem;">
-                    "The pain of discipline is nothing compared to the pain of regret. Every page tracker completed is a step closer to 95%+." 👑
+            <div class="card" style="background: linear-gradient(135deg, rgba(30,5,5,0.5), rgba(0,0,0,0.3)); border-left: 3px solid var(--accent);">
+                <p style="margin:0; font-style:italic; color:#ffcccc; font-size:0.85rem; line-height:1.5;">
+                    "The pain of discipline is nothing compared to the pain of regret." 👑
                 </p>
             </div>
 
-            <div class="card pomodoro-box">
-                <div class="card-stickers"></div>
+            <div class="card pomodoro-box" style="text-align:center;">
                 <h2>⏱️ Focus Work Block</h2>
-                <div id="timer-display">25:00</div>
+                <div id="timer-display" style="font-size:3.8rem; font-family:monospace; font-weight:800; margin:10px 0; color:white;">25:00</div>
                 
-                <div class="timer-editor">
-                    <input type="number" id="custom-minutes" placeholder="Mins" min="1" value="25">
-                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding: 8px 12px;">Set Time</button>
+                <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-bottom:15px;">
+                    <input type="number" id="custom-minutes" value="25" style="width:70px; text-align:center; padding:6px;">
+                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding:6px 12px; width:auto; font-size:0.8rem;">Set Mins</button>
                 </div>
 
-                <div class="btn-group">
+                <div style="display:flex; gap:8px;">
                     <button class="action-btn" onclick="startTimer()">Start Block 🚀</button>
                     <button class="action-btn secondary" onclick="pauseTimer()">Pause ⏸️</button>
                     <button class="action-btn secondary" onclick="resetTimer()">Reset 🔄</button>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-stickers"></div>
-                <h2>📋 Quick Strategy Checklist</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
-                    ✅ Check your target boxes inside the <strong>Syllabus</strong> tab.<br>
-                    ✅ Paste tricky definitions directly into the <strong>Q&A Vault</strong>.<br>
-                    ✅ Check the <strong>Rank</strong> tab to see who you need to outwork today.<br>
-                    ✅ Hit the <strong>Rec Room</strong> to recharge when you get stuck!
-                </p>
-            </div>
         </div>
 
         <div id="syllabus-page" class="page">
             <div class="card">
-                <div class="card-stickers"></div>
                 <h2>📈 Master Syllabus Engine</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Track leftover items meticulously across all essential areas.</p>
+                <div style="margin-bottom:15px;"><span style="color:var(--accent); font-weight:700;">📐 Math</span><div id="math-chapters"></div></div>
+                <div><span style="color:var(--accent); font-weight:700;">🧪 Science</span><div id="science-chapters"></div></div>
+            </div>
+        </div>
+
+        <div id="calc-page" class="page">
+            <div class="calc-wrapper">
+                <input type="text" id="calc-screen" disabled value="0">
+                <div class="calc-grid">
+                    <button class="btn-calc clear" onclick="clearCalc()">C</button>
+                    <button class="btn-calc op" onclick="append('/')">/</button>
+                    <button class="btn-calc op" onclick="append('*')">×</button>
+                    <button class="btn-calc op" onclick="backspace()">⌫</button>
+                    <button class="btn-calc" onclick="append('7')">7</button>
+                    <button class="btn-calc" onclick="append('8')">8</button>
+                    <button class="btn-calc" onclick="append('9')">9</button>
+                    <button class="btn-calc op" onclick="append('-')">-</button>
+                    <button class="btn-calc" onclick="append('4')">4</button>
+                    <button class="btn-calc" onclick="append('5')">5</button>
+                    <button class="btn-calc" onclick="append('6')">6</button>
+                    <button class="btn-calc op" onclick="append('+')">+</button>
+                    <button class="btn-calc" onclick="append('1')">1</button>
+                    <button class="btn-calc" onclick="append('2')">2</button>
+                    <button class="btn-calc" onclick="append('3')">3</button>
+                    <button class="btn-calc op" onclick="append('.')">.</button>
+                    <button class="btn-calc" onclick="append('0')">0</button>
+                    <button class="btn-calc equals" onclick="calculate()">=</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="calendar-page" class="page">
+            <div class="card">
+                <h2>📅 Smart Schedule Vault</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Dates sync dynamically with your browser memory.</p>
                 
-                <div class="subject-section">
-                    <div class="subject-heading">📐 Mathematics</div>
-                    <div id="math-chapters"></div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+                    <input type="text" id="event-name" placeholder="Target Milestone (e.g. Science Pre-Board)">
+                    <input type="date" id="event-date">
+                    <button class="action-btn" onclick="addEvent()">Lock Date Entry 📌</button>
                 </div>
 
-                <div class="subject-section">
-                    <div class="subject-heading">🧪 Science</div>
-                    <div id="science-chapters"></div>
-                </div>
+                <div id="event-list"></div>
+            </div>
+        </div>
 
-                <div class="subject-section">
-                    <div class="subject-heading">🌍 Social Science (SST)</div>
-                    <div id="sst-chapters"></div>
-                </div>
+        <div id="games-page" class="page">
+            <div class="card fidget-container" style="text-align:center;">
+                <h2>🎮 Fidget Popper</h2>
+                <div class="fidget-grid" id="pop-grid"></div>
+                <button class="action-btn secondary" style="padding:8px;" onclick="resetBubbles()">Reset Wrap 🔄</button>
+            </div>
 
-                <div class="subject-section">
-                    <div class="subject-heading">📖 English Literature & Lang.</div>
-                    <div id="english-chapters"></div>
-                </div>
+            <div class="card" style="text-align:center;">
+                <h2>⚡ Reflex Engine</h2>
+                <div id="reaction-box" class="reaction-box" onclick="clickReaction()">Tap to Engage</div>
+            </div>
+
+            <div class="card" style="text-align:center;">
+                <h2>❌ Tic-Tac-Toe ⭕</h2>
+                <div id="ttt-grid" class="ttt-grid"></div>
+                <button class="action-btn secondary" style="padding:8px;" onclick="resetTTT()">Reset Board 🔄</button>
             </div>
         </div>
 
         <div id="qa-page" class="page">
             <div class="card">
-                <div class="card-stickers"></div>
-                <h2>🧠 Flash Doubts Log</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Log custom responses or complex formulas here to review regularly.</p>
-                
-                <textarea id="q-text" rows="2" placeholder="🤔 Type or paste question..."></textarea>
-                <textarea id="a-text" rows="4" placeholder="💡 Paste textbook/AI solution framework here..."></textarea>
-                <button class="action-btn" style="width:100%;" onclick="saveToVault()">Secure Log Entry 🔐</button>
-
-                <div id="vault-log" style="margin-top: 15px;"></div>
+                <h2>🧠 Concept Doubt Vault</h2>
+                <textarea id="q-text" rows="2" placeholder="Formula or tricky question..."></textarea>
+                <textarea id="a-text" rows="3" placeholder="Core textbook proof/steps..."></textarea>
+                <button class="action-btn" onclick="saveToVault()">Secure Log Entry 🔐</button>
+                <div id="vault-log" style="margin-top:15px;"></div>
             </div>
-        </div>
-
-        <div id="calc-page" class="page">
-            <div class="card" style="border: none; background: transparent; padding: 0;">
-                <h2 style="margin-left: 10px;">🧮 Pro Terminal Calc</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px; margin-left: 10px;">High-speed crunching without leaving your workflow.</p>
-                
-                <div class="calc-wrapper">
-                    <div class="calc-display">
-                        <div id="calc-prev"></div>
-                        <div id="calc-curr">0</div>
-                    </div>
-                    <div class="calc-grid">
-                        <button class="calc-btn ac" onclick="clearCalc()">AC</button>
-                        <button class="calc-btn op" onclick="deleteNumber()">DEL</button>
-                        <button class="calc-btn op" onclick="chooseOperation('÷')">÷</button>
-                        <button class="calc-btn op" onclick="chooseOperation('×')">×</button>
-                        
-                        <button class="calc-btn" onclick="appendNumber('7')">7</button>
-                        <button class="calc-btn" onclick="appendNumber('8')">8</button>
-                        <button class="calc-btn" onclick="appendNumber('9')">9</button>
-                        <button class="calc-btn op" onclick="chooseOperation('-')">−</button>
-                        
-                        <button class="calc-btn" onclick="appendNumber('4')">4</button>
-                        <button class="calc-btn" onclick="appendNumber('5')">5</button>
-                        <button class="calc-btn" onclick="appendNumber('6')">6</button>
-                        <button class="calc-btn op" onclick="chooseOperation('+')">+</button>
-                        
-                        <button class="calc-btn" onclick="appendNumber('1')">1</button>
-                        <button class="calc-btn" onclick="appendNumber('2')">2</button>
-                        <button class="calc-btn" onclick="appendNumber('3')">3</button>
-                        <button class="calc-btn eq" onclick="compute()" style="grid-row: span 2; height: 100%;">=</button>
-                        
-                        <button class="calc-btn" onclick="appendNumber('0')" style="grid-column: span 2;">0</button>
-                        <button class="calc-btn" onclick="appendNumber('.')">.</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="leader-page" class="page">
-            <div class="card">
-                <div class="card-stickers"></div>
-                <h2>🌍 Global Grind Rankings</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">
-                    <strong style="color: var(--accent);">NOTE:</strong> Running in static mode. Displaying simulated competitor data to push your limits. Beat the ghosts! 👻
-                </p>
-
-                <div class="leaderboard-list">
-                    <div class="leader-item">
-                        <div class="leader-left">
-                            <div class="rank-number">1</div>
-                            <div class="leader-details">
-                                <h4>StudyBeast_99 <span class="status-dot online" title="Online"></span></h4>
-                                <div class="leader-stats">
-                                    <div class="stat-block">Time: <span>84h 12m</span></div>
-                                    <div class="stat-block">Cleared: <span>92%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="leader-item">
-                        <div class="leader-left">
-                            <div class="rank-number">2</div>
-                            <div class="leader-details">
-                                <h4>Rahul_Max <span class="status-dot" title="Offline"></span></h4>
-                                <div class="leader-stats">
-                                    <div class="stat-block">Time: <span>71h 45m</span></div>
-                                    <div class="stat-block">Cleared: <span>85%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="leader-item">
-                        <div class="leader-left">
-                            <div class="rank-number">3</div>
-                            <div class="leader-details">
-                                <h4>TopperVibe <span class="status-dot online" title="Online"></span></h4>
-                                <div class="leader-stats">
-                                    <div class="stat-block">Time: <span>68h 30m</span></div>
-                                    <div class="stat-block">Cleared: <span>80%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="leader-item you">
-                        <div class="leader-left">
-                            <div class="rank-number" style="color: var(--accent);">4</div>
-                            <div class="leader-details">
-                                <h4>You (Local) <span class="status-dot online" title="Online"></span></h4>
-                                <div class="leader-stats">
-                                    <div class="stat-block">Time: <span id="user-total-time">0h 0m</span></div>
-                                    <div class="stat-block">Cleared: <span>TBD</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="leader-item">
-                        <div class="leader-left">
-                            <div class="rank-number">5</div>
-                            <div class="leader-details">
-                                <h4>SleepIsMyth <span class="status-dot" title="Offline"></span></h4>
-                                <div class="leader-stats">
-                                    <div class="stat-block">Time: <span>45h 10m</span></div>
-                                    <div class="stat-block">Cleared: <span>61%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div id="games-page" class="page">
-            
-            <div class="card fidget-container">
-                <div class="card-stickers"></div>
-                <h2>🎮 Fidget Popper</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Mindless tapping to shed stress.</p>
-                <div class="fidget-grid" id="pop-grid"></div>
-                <button class="action-btn secondary" style="width: 100%;" onclick="resetBubbles()">Reset Bubbles 🔄</button>
-            </div>
-
-            <div class="card text-center" style="text-align: center;">
-                <div class="card-stickers"></div>
-                <h2>⚡ Reflex Tester</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Tap the box the exact millisecond it turns green!</p>
-                <div id="reaction-box" class="reaction-box" onclick="clickReaction()">Tap to Start</div>
-            </div>
-
-            <div class="card text-center" style="text-align: center;">
-                <div class="card-stickers"></div>
-                <h2>❌ Tic-Tac-Toe ⭕</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Play against yourself or a friend.</p>
-                <div id="ttt-grid" class="ttt-grid"></div>
-                <button class="action-btn secondary" style="width: 100%; margin-top: 10px;" onclick="resetTTT()">Clear Board 🔄</button>
-            </div>
-
         </div>
 
         <div id="custom-page" class="page">
             <div class="card">
-                <div class="card-stickers"></div>
-                <h2>🎨 Visual Identity Controls</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Personalize structural highlight elements and layout rules dynamically.</p>
-                
-                <div class="color-picker-row">
-                    <span>🔴 Primary Color (Accent Elements):</span>
-                    <input type="color" id="primary-picker" value="#ff2a2a">
+                <h2>🎨 Brand Theme</h2>
+                <div style="display:flex; justify-content:between; align-items:center; margin-bottom:10px;">
+                    <span>Primary Neon Highlight:</span>
+                    <input type="color" id="primary-picker" value="#ff3333" style="width:50px; height:35px; background:none; border:none; padding:0;">
                 </div>
-                
-                <div class="color-picker-row">
-                    <span>⚫ Secondary Color (Buttons & Nodes):</span>
-                    <input type="color" id="secondary-picker" value="#27272a">
-                </div>
-
-                <button class="action-btn secondary" style="width: 100%; margin-top: 5px;" onclick="resetThemeToDefault()">Reset System Themes to Default 🔄</button>
             </div>
 
             <div class="card">
-                <div class="card-stickers"></div>
-                <h2>🎭 Reward Sticker Arsenal</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Select a badge below, then navigate to any tab and <strong>tap a card block</strong> to stamp it!</p>
-                
+                <h2>🎭 Reward Stickers</h2>
                 <div class="sticker-shelf">
                     <button class="sticker-btn" onclick="setActiveSticker('🔥', this)">🔥</button>
                     <button class="sticker-btn" onclick="setActiveSticker('👑', this)">👑</button>
                     <button class="sticker-btn" onclick="setActiveSticker('🎯', this)">🎯</button>
                     <button class="sticker-btn" onclick="setActiveSticker('💯', this)">💯</button>
-                    <button class="sticker-btn" onclick="setActiveSticker('🚀', this)">🚀</button>
-                    <button class="sticker-btn" onclick="setActiveSticker('⭐', this)">⭐</button>
-                    <button class="sticker-btn" onclick="setActiveSticker('🏆', this)">🏆</button>
-                    <button class="sticker-btn" onclick="setActiveSticker('🧠', this)">🧠</button>
                 </div>
-                <div id="sticker-status-banner">No active badge selected. Stamping deactivated.</div>
+                <div id="sticker-status-banner" style="font-size:0.75rem; margin-top:8px; color:var(--text-muted);">No sticker active.</div>
             </div>
         </div>
 
     </div>
 
     <script>
-        /* AUDIO SYNTHESIS ENGINE */
-        const AudioEngine = {
-            ctx: null,
-            init() {
-                try {
-                    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
-                } catch (err) {}
-            },
-            playClick() {
-                this.init();
-                if (!this.ctx) return;
-                const t = this.ctx.currentTime;
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(580, t); osc.frequency.exponentialRampToValueAtTime(280, t + 0.04);
-                gain.gain.setValueAtTime(0.06, t); gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
-                osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.04);
-            },
-            playPop() {
-                this.init();
-                if (!this.ctx) return;
-                const t = this.ctx.currentTime;
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sine'; osc.frequency.setValueAtTime(850, t); osc.frequency.exponentialRampToValueAtTime(140, t + 0.07);
-                gain.gain.setValueAtTime(0.35, t); gain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
-                osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.07);
-            }
-        };
+        // --- 24 HOUR LIVE CLOCK SYSTEM ---
+        function updateGlobalClock() {
+            const now = new Date();
+            const hrs = now.getHours().toString().padStart(2, '0');
+            const mins = now.getMinutes().toString().padStart(2, '0');
+            const secs = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('global-clock').innerText = `${hrs}:${mins}:${secs}`;
+        }
+        setInterval(updateGlobalClock, 1000);
+        updateGlobalClock();
 
-        document.addEventListener('click', () => AudioEngine.init(), { once: true });
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('button') || e.target.closest('.nav-btn')) {
-                if (!e.target.classList.contains('bubble') && !e.target.classList.contains('sticker-badge')) AudioEngine.playClick();
-            }
-        });
-
-        // Navigation
-        function showPage(pageId, buttonElem) {
+        // Page Navigation Control
+        function showPage(pageId, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            buttonElem.classList.add('active');
+            btn.classList.add('active');
             window.scrollTo(0,0);
         }
 
-        // Syllabus Data
-        const syllabusData = {
-            math: ["Real Numbers", "Polynomials", "Linear Equations", "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Trigonometry", "Circles", "Surface Areas and Volumes", "Statistics", "Probability"],
-            science: ["Chemical Reactions", "Acids, Bases & Salts", "Metals & Non-metals", "Carbon Compounds", "Life Processes", "Control and Coordination", "Reproduction", "Heredity", "Light", "Human Eye", "Electricity", "Magnetic Effects", "Our Environment"],
-            sst: ["Nationalism in Europe", "Nationalism in India", "Global World", "Resources", "Agriculture", "Manufacturing", "Power Sharing", "Federalism", "Political Parties", "Development", "Sectors of Economy", "Money & Credit"],
-            english: ["Prose", "Poetry", "Footprints Without Feet", "Grammar & Writing Skills"]
-        };
-
-        function populateSyllabus() {
-            for (let key in syllabusData) {
-                const container = document.getElementById(`${key}-chapters`);
-                if (container) {
-                    container.innerHTML = ""; 
-                    syllabusData[key].forEach(chap => {
-                        const item = document.createElement('div');
-                        item.className = 'syllabus-item';
-                        item.innerHTML = `<div class="syllabus-header"><input type="checkbox"><div class="chapter-title">${chap}</div></div><div class="tracker-inputs"><input type="text" placeholder="Leftovers..."><input type="text" placeholder="Target Date"></div>`;
-                        container.appendChild(item);
-                    });
-                }
-            }
-        }
-        populateSyllabus();
-
-        // Countdown
+        // Master Fixed Target Timeline (Mid-Feb 2027)
         const targetDate = new Date("February 15, 2027 00:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-            const finalDiff = difference > 0 ? difference : 0;
+        setInterval(() => {
+            const finalDiff = Math.max(0, targetDate - new Date().getTime());
             document.getElementById("cd-days").innerText = Math.floor(finalDiff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
             document.getElementById("cd-hours").innerText = Math.floor((finalDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
             document.getElementById("cd-mins").innerText = Math.floor((finalDiff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
             document.getElementById("cd-secs").innerText = Math.floor((finalDiff % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // Break & Session Tracker Tracker
-        let breakTimeCounter = 1800; 
-        let userSessionSeconds = 0; // Tracks local user time
-        
-        setInterval(function() {
-            // Strict break logic
-            if (breakTimeCounter > 0) {
-                breakTimeCounter--;
-                let m = Math.floor(breakTimeCounter / 60);
-                let s = breakTimeCounter % 60;
-                document.getElementById("break-runtime-info").innerText = `Next enforced break warning in: ${m}m ${s.toString().padStart(2, '0')}s`;
-            } else {
-                document.getElementById("strict-break-screen").style.display = "flex";
-            }
-
-            // Local user session time logic for Leaderboard
-            userSessionSeconds++;
-            let sessH = Math.floor(userSessionSeconds / 3600);
-            let sessM = Math.floor((userSessionSeconds % 3600) / 60);
-            document.getElementById("user-total-time").innerText = `${sessH}h ${sessM}m`;
-
+        // Continuous Strict Break Controller
+        let breakCounter = 1800;
+        setInterval(() => {
+            if (breakCounter > 0) breakCounter--;
+            else document.getElementById("strict-break-screen").style.display = "flex";
         }, 1000);
-        
-        function dismissStrictBreak() {
-            document.getElementById("strict-break-screen").style.display = "none";
-            breakTimeCounter = 1800; 
-        }
+        function dismissStrictBreak() { document.getElementById("strict-break-screen").style.display = "none"; breakCounter = 1800; }
 
-        // Pomodoro
-        let defaultTime = 1500;
-        let timeLeft = defaultTime; 
-        let timerId = null;
-
+        // Core Pomodoro Engine
+        let defaultTime = 1500, timeLeft = defaultTime, timerId = null;
         function updateDisplay() {
-            let mins = Math.floor(timeLeft / 60);
-            let secs = timeLeft % 60;
-            document.getElementById('timer-display').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('timer-display').innerText = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
         }
         function setCustomTime() {
-            const inputMins = parseInt(document.getElementById('custom-minutes').value);
-            if (inputMins && inputMins > 0) { pauseTimer(); defaultTime = inputMins * 60; timeLeft = defaultTime; updateDisplay(); }
+            const val = parseInt(document.getElementById('custom-minutes').value);
+            if(val > 0) { pauseTimer(); defaultTime = val * 60; timeLeft = defaultTime; updateDisplay(); }
         }
-        function startTimer() {
-            if (timerId === null) {
-                timerId = setInterval(() => {
-                    if (timeLeft > 0) { timeLeft--; updateDisplay(); } 
-                    else { clearInterval(timerId); timerId = null; alert("Focus Block Complete!"); }
-                }, 1000);
-            }
-        }
+        function startTimer() { if (!timerId) { timerId = setInterval(() => { if (timeLeft > 0) { timeLeft--; updateDisplay(); } else { clearInterval(timerId); timerId = null; alert("Focus Block Finished!"); } }, 1000); } }
         function pauseTimer() { clearInterval(timerId); timerId = null; }
         function resetTimer() { pauseTimer(); timeLeft = defaultTime; updateDisplay(); }
 
-        // Q&A Vault
-        function saveToVault() {
-            const q = document.getElementById('q-text').value;
-            const a = document.getElementById('a-text').value;
-            if(!q.trim() || !a.trim()) return;
-            const log = document.getElementById('vault-log');
-            const entry = document.createElement('div');
-            entry.className = 'saved-qa';
-            entry.innerHTML = `<strong>❓ Q:</strong> ${q}<br><br><strong>💡 A:</strong> ${a}`;
-            log.prepend(entry);
-            document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
+        // --- SMART CALENDAR LOGIC WITH PERSISTIST STORAGE ---
+        function addEvent() {
+            const name = document.getElementById('event-name').value.trim();
+            const date = document.getElementById('event-date').value;
+            if(!name || !date) return alert("Please fill details!");
+
+            const events = JSON.parse(localStorage.getItem('portalEvents') || '[]');
+            events.push({ name, date });
+            events.sort((a,b) => new Date(a.date) - new Date(b.date));
+            localStorage.setItem('portalEvents', JSON.stringify(events));
+            
+            renderEvents();
+            document.getElementById('event-name').value = "";
         }
 
-        // --- CALCULATOR LOGIC ---
-        let currentOperand = '0';
-        let previousOperand = '';
-        let operation = undefined;
+        function renderEvents() {
+            const container = document.getElementById('event-list');
+            const events = JSON.parse(localStorage.getItem('portalEvents') || '[]');
+            const today = new Date();
+            today.setHours(0,0,0,0);
 
-        function updateCalcDisplay() {
-            document.getElementById('calc-curr').innerText = currentOperand;
-            if (operation != null) {
-                document.getElementById('calc-prev').innerText = `${previousOperand} ${operation}`;
-            } else {
-                document.getElementById('calc-prev').innerText = '';
-            }
+            container.innerHTML = events.map((e, idx) => {
+                const eventDate = new Date(e.date);
+                eventDate.setHours(0,0,0,0);
+                const dayDiff = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
+                const isUrgent = dayDiff >= 0 && dayDiff <= 3;
+
+                return `
+                    <div class="cal-item ${isUrgent ? 'urgent' : ''}">
+                        <div>
+                            <div class="chapter-title" style="font-weight:700;">${e.name}</div>
+                            <div style="font-size:0.75rem; margin-top:2px; color:${isUrgent ? '#e11d48':'var(--text-muted)'};">
+                                📅 ${e.date} ${isUrgent ? '• 🚨 DEADLINE CRITICAL' : ''}
+                            </div>
+                        </div>
+                        <button onclick="deleteEvent(${idx})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1rem;">×</button>
+                    </div>
+                `;
+            }).join('');
         }
-
-        function clearCalc() {
-            currentOperand = '0';
-            previousOperand = '';
-            operation = undefined;
-            updateCalcDisplay();
+        function deleteEvent(idx) {
+            let events = JSON.parse(localStorage.getItem('portalEvents') || '[]');
+            events.splice(idx, 1);
+            localStorage.setItem('portalEvents', JSON.stringify(events));
+            renderEvents();
         }
+        renderEvents();
 
-        function deleteNumber() {
-            if (currentOperand === '0') return;
-            currentOperand = currentOperand.toString().slice(0, -1);
-            if (currentOperand === '') currentOperand = '0';
-            updateCalcDisplay();
-        }
+        // Calculator Core Logic
+        const scr = document.getElementById('calc-screen');
+        function append(v) { if(scr.value==='0') scr.value=v; else scr.value+=v; }
+        function clearCalc() { scr.value='0'; }
+        function backspace() { scr.value = scr.value.slice(0,-1) || '0'; }
+        function calculate() { try { scr.value = eval(scr.value); } catch { scr.value='Error'; } }
 
-        function appendNumber(number) {
-            if (number === '.' && currentOperand.includes('.')) return;
-            if (currentOperand === '0' && number !== '.') {
-                currentOperand = number.toString();
-            } else {
-                if(currentOperand.length >= 12) return; 
-                currentOperand = currentOperand.toString() + number.toString();
-            }
-            updateCalcDisplay();
-        }
-
-        function chooseOperation(op) {
-            if (currentOperand === '0' && previousOperand === '') return;
-            if (previousOperand !== '') {
-                compute();
-            }
-            operation = op;
-            previousOperand = currentOperand;
-            currentOperand = '0';
-            updateCalcDisplay();
-        }
-
-        function compute() {
-            let computation;
-            const prev = parseFloat(previousOperand);
-            const current = parseFloat(currentOperand);
-            if (isNaN(prev) || isNaN(current)) return;
-            switch (operation) {
-                case '+': computation = prev + current; break;
-                case '-': computation = prev - current; break;
-                case '×': computation = prev * current; break;
-                case '÷': 
-                    if(current === 0) { alert("Error: Division by zero"); clearCalc(); return; }
-                    computation = prev / current; 
-                    break;
-                default: return;
-            }
-            currentOperand = Math.round(computation * 100000000) / 100000000;
-            currentOperand = currentOperand.toString();
-            operation = undefined;
-            previousOperand = '';
-            updateCalcDisplay();
-        }
-
-        // --- GAME 1: BUBBLE POP ---
-        const grid = document.getElementById('pop-grid');
-        for (let i = 0; i < 15; i++) {
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.onclick = function() { this.classList.toggle('popped'); AudioEngine.playPop(); };
-            grid.appendChild(bubble);
-        }
-        function resetBubbles() { document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped')); }
-
-        // --- GAME 2: REFLEX TESTER ---
-        let reactionTimeout;
-        let reactionStart;
-        function clickReaction() {
-            const box = document.getElementById('reaction-box');
-            if (box.classList.contains('ready')) {
-                const time = Date.now() - reactionStart;
-                box.className = 'reaction-box';
-                box.innerText = `⚡ ${time} ms! Tap to replay.`;
-            } else if (box.classList.contains('waiting')) {
-                clearTimeout(reactionTimeout);
-                box.className = 'reaction-box';
-                box.innerText = "Too early! Tap to try again.";
-            } else {
-                box.className = 'reaction-box waiting';
-                box.innerText = "Wait for Green...";
-                const randomDelay = Math.floor(Math.random() * 3000) + 1500;
-                reactionTimeout = setTimeout(() => {
-                    box.className = 'reaction-box ready';
-                    box.innerText = "TAP NOW!";
-                    reactionStart = Date.now();
-                }, randomDelay);
-            }
-        }
-
-        // --- GAME 3: TIC TAC TOE ---
-        let tttBoard = ["", "", "", "", "", "", "", "", ""];
-        let tttPlayer = "❌";
-        
-        function initTTT() {
-            const tttGrid = document.getElementById('ttt-grid');
-            tttGrid.innerHTML = "";
-            tttBoard.forEach((cell, i) => {
-                const el = document.createElement('div');
-                el.className = 'ttt-cell';
-                el.innerText = cell;
-                el.onclick = () => playTTT(i);
-                tttGrid.appendChild(el);
+        // Syllabus Population
+        const chaps = { math: ["Real Numbers", "Polynomials", "Quadratic Equations", "Arithmetic Progressions", "Trigonometry"], science: ["Chemical Reactions", "Acids & Salts", "Life Processes", "Light Reflection", "Electricity"] };
+        function initSyllabus() {
+            ['math', 'science'].forEach(k => {
+                const c = document.getElementById(`${k}-chapters`);
+                c.innerHTML = chaps[k].map(ch => `<div class="syllabus-item"><div style="display:flex; align-items:center; gap:8px;"><input type="checkbox"><span class="chapter-title">${ch}</span></div><div class="tracker-inputs"><input type="text" placeholder="Leftovers..."><input type="text" placeholder="Target"></div></div>`).join('');
             });
         }
-        function playTTT(i) {
-            if (tttBoard[i] !== "") return;
-            tttBoard[i] = tttPlayer;
-            initTTT();
-            if (checkTTTWin()) {
-                setTimeout(() => { alert(`${tttPlayer} Wins!`); resetTTT(); }, 50);
-                return;
-            }
-            if (!tttBoard.includes("")) {
-                setTimeout(() => { alert("It's a Draw!"); resetTTT(); }, 50);
-                return;
-            }
-            tttPlayer = tttPlayer === "❌" ? "⭕" : "❌";
-        }
-        function checkTTTWin() {
-            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-            for (let w of wins) {
-                if (tttBoard[w[0]] && tttBoard[w[0]] === tttBoard[w[1]] && tttBoard[w[1]] === tttBoard[w[2]]) return true;
-            }
-            return false;
-        }
-        function resetTTT() {
-            tttBoard = ["", "", "", "", "", "", "", "", ""];
-            tttPlayer = "❌";
-            initTTT();
-        }
-        initTTT();
+        initSyllabus();
 
-        // Customisation
-        const rootSelector = document.documentElement;
-        document.getElementById('primary-picker').addEventListener('input', (e) => {
-            rootSelector.style.setProperty('--accent', e.target.value);
-            rootSelector.style.setProperty('--accent-glow', e.target.value + '33'); 
-        });
-        document.getElementById('secondary-picker').addEventListener('input', (e) => {
-            rootSelector.style.setProperty('--secondary', e.target.value);
-        });
-        function resetThemeToDefault() {
-            rootSelector.style.setProperty('--accent', '#ff2a2a');
-            rootSelector.style.setProperty('--accent-glow', 'rgba(255, 42, 42, 0.2)');
-            rootSelector.style.setProperty('--secondary', '#27272a');
-            document.getElementById('primary-picker').value = '#ff2a2a';
-            document.getElementById('secondary-picker').value = '#27272a';
+        // Q&A Vault
+        function saveToVault() {
+            const q = document.getElementById('q-text').value, a = document.getElementById('a-text').value;
+            if(!q.trim() || !a.trim()) return;
+            const log = document.getElementById('vault-log');
+            const el = document.createElement('div'); el.className = 'cal-item';
+            el.innerHTML = `<div><strong>Q:</strong> ${q}<br><br><strong>A:</strong> ${a}</div>`;
+            log.prepend(el);
+            document.getElementById('q-text').value=""; document.getElementById('a-text').value="";
         }
 
-        // Stickers
-        let chosenSticker = null;
-        function setActiveSticker(emojiCode, actionElement) {
-            document.querySelectorAll('.sticker-btn').forEach(btn => btn.classList.remove('selected'));
-            if (chosenSticker === emojiCode) {
-                chosenSticker = null;
-                document.getElementById('sticker-status-banner').innerText = "No active badge selected.";
-                document.getElementById('sticker-status-banner').style.color = "var(--text-muted)";
+        // Rec Room Setup (Fidget Popper, Reflex, TTT)
+        const pg = document.getElementById('pop-grid');
+        for(let i=0; i<15; i++) {
+            const b = document.createElement('div'); b.className='bubble';
+            b.onclick = function() { this.classList.toggle('popped'); };
+            pg.appendChild(b);
+        }
+        function resetBubbles() { document.querySelectorAll('.bubble').forEach(b=>b.classList.remove('popped')); }
+
+        let rTimeout, rStart;
+        function clickReaction() {
+            const box = document.getElementById('reaction-box');
+            if(box.classList.contains('ready')) {
+                box.className='reaction-box'; box.innerText=`⚡ ${Date.now() - rStart} ms! Replay?`;
+            } else if(box.classList.contains('waiting')) {
+                clearTimeout(rTimeout); box.className='reaction-box'; box.innerText="Early! Retry.";
             } else {
-                chosenSticker = emojiCode;
-                actionElement.classList.add('selected');
-                document.getElementById('sticker-status-banner').innerText = `Sticker Active: [ ${emojiCode} ]. Tap a card to stamp!`;
-                document.getElementById('sticker-status-banner').style.color = "var(--success)";
+                box.className='reaction-box waiting'; box.innerText="Wait for Green...";
+                rTimeout = setTimeout(() => { box.className='reaction-box ready'; box.innerText='TAP NOW!'; rStart=Date.now(); }, Math.random()*3000 + 1500);
             }
         }
-        document.querySelector('.main-content').addEventListener('click', function(event) {
-            const targetCard = event.target.closest('.card');
-            if (targetCard) {
-                if (event.target.classList.contains('sticker-badge')) {
-                    event.stopPropagation();
-                    event.target.remove();
-                    return;
-                }
-                if (chosenSticker) {
-                    if (event.target.closest('input') || event.target.closest('textarea') || event.target.closest('button') || event.target.closest('select')) return;
-                    let stickerBox = targetCard.querySelector('.card-stickers');
-                    if (!stickerBox) {
-                        stickerBox = document.createElement('div');
-                        stickerBox.className = 'card-stickers';
-                        targetCard.insertBefore(stickerBox, targetCard.firstChild);
-                    }
-                    const badge = document.createElement('span');
-                    badge.className = 'sticker-badge';
-                    badge.innerText = chosenSticker;
-                    stickerBox.appendChild(badge);
-                }
+
+        let tttB = ["","","","","","","","",""], tttP = "❌";
+        function buildTTT() {
+            const g = document.getElementById('ttt-grid'); g.innerHTML="";
+            tttB.forEach((c,i) => {
+                const el = document.createElement('div'); el.className='ttt-cell'; el.innerText=c;
+                el.onclick = () => { if(tttB[i]!=="") return; tttB[i]=tttP; buildTTT(); if(checkW()){ alert(`${tttP} Wins!`); resetTTT(); } else if(!tttB.includes("")){ alert("Draw!"); resetTTT(); } else tttP=tttP==="❌"?"⭕":"❌"; };
+                g.appendChild(el);
+            });
+        }
+        function checkW() {
+            const w = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return w.some(comb => tttB[comb[0]] && tttB[comb[0]]===tttB[comb[1]] && tttB[comb[1]]===tttB[comb[2]]);
+        }
+        function resetTTT() { tttB=["","","","","","","","",""]; tttP="❌"; buildTTT(); }
+        buildTTT();
+
+        // Custom Settings & Decorative Stickers
+        document.getElementById('primary-picker').addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--accent', e.target.value);
+            document.documentElement.style.setProperty('--accent-glow', e.target.value + '44');
+        });
+
+        let chosenSticker = null;
+        function setActiveSticker(emoji, el) {
+            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
+            if(chosenSticker === emoji) { chosenSticker = null; document.getElementById('sticker-status-banner').innerText = "No sticker active."; }
+            else { chosenSticker = emoji; el.classList.add('selected'); document.getElementById('sticker-status-banner').innerText = `Active: ${emoji}. Tap any card block layout to stamp.`; }
+        }
+        document.querySelector('.main-content').addEventListener('click', (e) => {
+            const card = e.target.closest('.card');
+            if(card && chosenSticker) {
+                if(e.target.closest('input') || e.target.closest('textarea') || e.target.closest('button')) return;
+                let box = card.querySelector('.card-stickers');
+                if(!box) { box = document.createElement('div'); box.className='card-stickers'; card.insertBefore(box, card.firstChild); }
+                const b = document.createElement('span'); b.className='sticker-badge'; b.innerText=chosenSticker;
+                b.onclick = (event) => { event.stopPropagation(); b.remove(); };
+                box.appendChild(b);
             }
         });
     </script>
