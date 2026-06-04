@@ -191,7 +191,26 @@
             font-size: 4.5rem;
             font-family: monospace;
             font-weight: bold;
-            margin: 10px 0 20px 0;
+            margin: 10px 0 10px 0;
+        }
+
+        .timer-editor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .timer-editor input {
+            background: #0d0d11;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 80px;
+            text-align: center;
         }
 
         .btn-group {
@@ -209,6 +228,11 @@
             border-radius: 6px;
             cursor: pointer;
             flex: 1;
+            transition: 0.2s;
+        }
+
+        button.action-btn:active {
+            transform: scale(0.95);
         }
 
         button.action-btn.secondary {
@@ -297,7 +321,7 @@
             font-size: 0.9rem;
         }
 
-        /* Fidget Toy Page */
+        /* Games Zone Elements */
         .fidget-container {
             text-align: center;
         }
@@ -324,6 +348,64 @@
             box-shadow: inset 0 4px 6px rgba(0,0,0,0.8);
             border-color: #333;
             transform: scale(0.92);
+        }
+
+        /* Tic Tac Toe */
+        .ttt-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            max-width: 240px;
+            margin: 20px auto;
+        }
+
+        .ttt-cell {
+            aspect-ratio: 1;
+            background: #1a1a22;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .ttt-cell:active {
+            background: #27272a;
+            transform: scale(0.95);
+        }
+
+        /* Reaction Tester */
+        .reaction-box {
+            width: 100%;
+            height: 120px;
+            background: #1a1a22;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: background 0.1s;
+            user-select: none;
+        }
+
+        .reaction-box.waiting {
+            background: #d97706; /* Orange */
+            border-color: #d97706;
+            color: white;
+        }
+
+        .reaction-box.ready {
+            background: #10b981; /* Green */
+            border-color: #10b981;
+            color: white;
+            font-size: 1.8rem;
         }
 
         /* Customisation Page Elements */
@@ -375,7 +457,7 @@
             font-weight: bold;
         }
 
-        /* 30-Min Strict Break Interrupter Overlay */
+        /* Break Interrupter Overlay */
         .break-overlay {
             display: none;
             position: fixed;
@@ -445,9 +527,9 @@
     <nav>
         <button class="nav-btn active" onclick="showPage('dash-page', this)">🏠 Dash</button>
         <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syllabus</button>
-        <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A Vault</button>
-        <button class="nav-btn" onclick="showPage('fidget-page', this)">🎮 Fidget</button>
-        <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Customise</button>
+        <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
+        <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec Room</button>
+        <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Theme</button>
     </nav>
 
     <div class="main-content">
@@ -464,6 +546,12 @@
                 <div class="card-stickers"></div>
                 <h2>⏱️ Focus Work Block</h2>
                 <div id="timer-display">25:00</div>
+                
+                <div class="timer-editor">
+                    <input type="number" id="custom-minutes" placeholder="Mins" min="1" value="25">
+                    <button class="action-btn secondary" onclick="setCustomTime()" style="padding: 8px 12px;">Set Time</button>
+                </div>
+
                 <div class="btn-group">
                     <button class="action-btn" onclick="startTimer()">Start Block 🚀</button>
                     <button class="action-btn secondary" onclick="pauseTimer()">Pause ⏸️</button>
@@ -477,7 +565,7 @@
                 <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
                     ✅ Check your target boxes inside the <strong>Syllabus</strong> tab.<br>
                     ✅ Paste tricky definitions directly into the <strong>Q&A Vault</strong>.<br>
-                    ✅ Use the <strong>Fidget</strong> grid to refresh when you get stuck!
+                    ✅ Hit the <strong>Rec Room</strong> to recharge when you get stuck!
                 </p>
             </div>
         </div>
@@ -507,7 +595,6 @@
                     <div class="subject-heading">📖 English Literature & Lang.</div>
                     <div id="english-chapters"></div>
                 </div>
-
             </div>
         </div>
 
@@ -525,16 +612,31 @@
             </div>
         </div>
 
-        <div id="fidget-page" class="page">
+        <div id="games-page" class="page">
+            
             <div class="card fidget-container">
                 <div class="card-stickers"></div>
-                <h2>🎮 Mindless Fidget Popper</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Tap and pop the glowing nodes to shed layout stress during structural breaks.</p>
-                
+                <h2>🎮 Fidget Popper</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Mindless tapping to shed stress.</p>
                 <div class="fidget-grid" id="pop-grid"></div>
-                
-                <button class="action-btn secondary" style="width: 100%;" onclick="resetBubbles()">Reset All Bubbles 🔄</button>
+                <button class="action-btn secondary" style="width: 100%;" onclick="resetBubbles()">Reset Bubbles 🔄</button>
             </div>
+
+            <div class="card text-center" style="text-align: center;">
+                <div class="card-stickers"></div>
+                <h2>⚡ Reflex Tester</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Tap the box the exact millisecond it turns green!</p>
+                <div id="reaction-box" class="reaction-box" onclick="clickReaction()">Tap to Start</div>
+            </div>
+
+            <div class="card text-center" style="text-align: center;">
+                <div class="card-stickers"></div>
+                <h2>❌ Tic-Tac-Toe ⭕</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Play against yourself or a friend.</p>
+                <div id="ttt-grid" class="ttt-grid"></div>
+                <button class="action-btn secondary" style="width: 100%; margin-top: 10px;" onclick="resetTTT()">Clear Board 🔄</button>
+            </div>
+
         </div>
 
         <div id="custom-page" class="page">
@@ -558,29 +660,6 @@
 
             <div class="card">
                 <div class="card-stickers"></div>
-                <h2>💉 Custom Syllabus Injector</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Inject personalized extra topics or school assignments into your syllabus logs.</p>
-                
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div>
-                        <label style="font-size: 0.8rem; color: var(--text-muted);">Target Track Category:</label>
-                        <select id="custom-subject-select">
-                            <option value="math">📐 Mathematics</option>
-                            <option value="science">🧪 Science</option>
-                            <option value="sst">🌍 Social Science</option>
-                            <option value="english">📖 English</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="font-size: 0.8rem; color: var(--text-muted);">Chapter Title/Concept Track Name:</label>
-                        <input type="text" id="custom-chapter-title" placeholder="e.g., Advanced Calculus Mock Module" class="custom-input">
-                    </div>
-                    <button class="action-btn" style="margin-top: 5px;" onclick="injectCustomChapter()">Inject Chapter Module 🛠️</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-stickers"></div>
                 <h2>🎭 Reward Sticker Arsenal</h2>
                 <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">Select a badge below, then navigate to any tab and <strong>tap a card block</strong> to stamp it!</p>
                 
@@ -595,104 +674,51 @@
                     <button class="sticker-btn" onclick="setActiveSticker('🧠', this)">🧠</button>
                 </div>
                 <div id="sticker-status-banner">No active badge selected. Stamping deactivated.</div>
-                <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 10px; font-style: italic;">💡 Pro-Tip: Tap an already-stamped sticker on a card to instantly remove it.</p>
             </div>
         </div>
 
     </div>
 
     <script>
-        /* NATIVE AUDIO SYNTHESIS ENGINE (Web Audio API) */
+        /* AUDIO SYNTHESIS ENGINE */
         const AudioEngine = {
             ctx: null,
             init() {
                 try {
-                    if (!this.ctx) {
-                        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    }
-                    if (this.ctx && this.ctx.state === 'suspended') {
-                        this.ctx.resume();
-                    }
-                } catch (err) {
-                    console.error("Audio Context initialization blocked or unsupported:", err);
-                }
+                    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+                } catch (err) {}
             },
             playClick() {
                 this.init();
                 if (!this.ctx) return;
-                const time = this.ctx.currentTime;
+                const t = this.ctx.currentTime;
                 const osc = this.ctx.createOscillator();
                 const gain = this.ctx.createGain();
-                
-                osc.type = 'triangle'; 
-                osc.frequency.setValueAtTime(580, time);
-                osc.frequency.exponentialRampToValueAtTime(280, time + 0.04);
-                
-                gain.gain.setValueAtTime(0.06, time);
-                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.04);
-                
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start(time);
-                osc.stop(time + 0.04);
+                osc.type = 'triangle'; osc.frequency.setValueAtTime(580, t); osc.frequency.exponentialRampToValueAtTime(280, t + 0.04);
+                gain.gain.setValueAtTime(0.06, t); gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+                osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.04);
             },
             playPop() {
                 this.init();
                 if (!this.ctx) return;
-                const time = this.ctx.currentTime;
+                const t = this.ctx.currentTime;
                 const osc = this.ctx.createOscillator();
                 const gain = this.ctx.createGain();
-                
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(850, time);
-                osc.frequency.exponentialRampToValueAtTime(140, time + 0.07);
-                
-                gain.gain.setValueAtTime(0.35, time);
-                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.07);
-                
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start(time);
-                osc.stop(time + 0.07);
-            },
-            playStamp() {
-                this.init();
-                if (!this.ctx) return;
-                const time = this.ctx.currentTime;
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(220, time);
-                osc.frequency.exponentialRampToValueAtTime(440, time + 0.06);
-                
-                gain.gain.setValueAtTime(0.25, time);
-                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.06);
-                
-                osc.connect(gain);
-                gain.connect(this.ctx.destination);
-                osc.start(time);
-                osc.stop(time + 0.06);
+                osc.type = 'sine'; osc.frequency.setValueAtTime(850, t); osc.frequency.exponentialRampToValueAtTime(140, t + 0.07);
+                gain.gain.setValueAtTime(0.35, t); gain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+                osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 0.07);
             }
         };
 
-        // --- GLOBAL AUDIO UNLOCK PATCH ---
-        // Forces the browser to authorize sound on your very first click anywhere on the page
-        document.addEventListener('click', function() {
-            AudioEngine.init();
-        }, { once: true });
-        // ---------------------------------
-
-        // Global Event Interceptor for Button UI Taps
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('button') || e.target.closest('.nav-btn') || e.target.closest('input[type="checkbox"]')) {
-                if (!e.target.classList.contains('bubble') && !e.target.classList.contains('sticker-badge')) {
-                    AudioEngine.playClick();
-                }
+        document.addEventListener('click', () => AudioEngine.init(), { once: true });
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('button') || e.target.closest('.nav-btn')) {
+                if (!e.target.classList.contains('bubble') && !e.target.classList.contains('sticker-badge')) AudioEngine.playClick();
             }
         });
 
-        // Page Navigation
+        // Navigation
         function showPage(pageId, buttonElem) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -701,35 +727,12 @@
             window.scrollTo(0,0);
         }
 
-        // Programmatic Syllabus Generator
+        // Syllabus Data
         const syllabusData = {
-            math: [
-                "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
-                "Quadratic Equations", "Arithmetic Progressions", "Triangles", 
-                "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry", 
-                "Circles", "Surface Areas and Volumes", "Statistics", "Probability"
-            ],
-            science: [
-                "Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals", 
-                "Carbon and its Compounds", "Life Processes", "Control and Coordination", 
-                "How do Organisms Reproduce?", "Heredity and Evolution", "Light - Reflection and Refraction", 
-                "The Human Eye and the Colorful World", "Electricity", "Magnetic Effects of Electric Current", 
-                "Our Environment"
-            ],
-            sst: [
-                "The Rise of Nationalism in Europe (Hist)", "Nationalism in India (Hist)", "The Making of a Global World (Hist)",
-                "Resources and Development (Geo)", "Forest and Wildlife Resources (Geo)", "Water Resources (Geo)", 
-                "Agriculture (Geo)", "Minerals and Energy Resources (Geo)", "Manufacturing Industries (Geo)",
-                "Power Sharing (Civ)", "Federalism (Civ)", "Gender, Religion and Caste (Civ)", "Political Parties (Civ)", "Outcomes of Democracy (Civ)",
-                "Development (Eco)", "Sectors of the Indian Economy (Eco)", "Money and Credit (Eco)", "Globalization and the Indian Economy (Eco)"
-            ],
-            english: [
-                "Prose: Letter to God / Nelson Mandela / Two Stories", "Prose: From Diary / Glimpses of India / Madam Rides", 
-                "Prose: The Sermon at Benares / The Proposal", "Poetry: Dust of Snow / Fire and Ice / Tiger in Zoo", 
-                "Poetry: How to Tell Wild Animals / Ball Poem / Amanda", "Poetry: Trees / Fog / Custard the Dragon / For Anne Gregory", 
-                "Footprints: Triumph of Surgery / Thief's Story / Midnight Visitor", "Footprints: Question of Trust / Footprints without Feet", 
-                "Footprints: Making of a Scientist / Necklace / Bholi / Book That Saved Earth", "Grammar: Tenses, Modals, Subject-Verb Concord, Reported Speech"
-            ]
+            math: ["Real Numbers", "Polynomials", "Linear Equations", "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Trigonometry", "Circles", "Surface Areas and Volumes", "Statistics", "Probability"],
+            science: ["Chemical Reactions", "Acids, Bases & Salts", "Metals & Non-metals", "Carbon Compounds", "Life Processes", "Control and Coordination", "Reproduction", "Heredity", "Light", "Human Eye", "Electricity", "Magnetic Effects", "Our Environment"],
+            sst: ["Nationalism in Europe", "Nationalism in India", "Global World", "Resources", "Agriculture", "Manufacturing", "Power Sharing", "Federalism", "Political Parties", "Development", "Sectors of Economy", "Money & Credit"],
+            english: ["Prose", "Poetry", "Footprints Without Feet", "Grammar & Writing Skills"]
         };
 
         function populateSyllabus() {
@@ -738,51 +741,29 @@
                 if (container) {
                     container.innerHTML = ""; 
                     syllabusData[key].forEach(chap => {
-                        createSyllabusDOMElement(container, chap, false);
+                        const item = document.createElement('div');
+                        item.className = 'syllabus-item';
+                        item.innerHTML = `<div class="syllabus-header"><input type="checkbox"><div class="chapter-title">${chap}</div></div><div class="tracker-inputs"><input type="text" placeholder="Leftovers..."><input type="text" placeholder="Target Date"></div>`;
+                        container.appendChild(item);
                     });
                 }
             }
         }
-
-        function createSyllabusDOMElement(targetContainer, chapterTitle, isCustom) {
-            const item = document.createElement('div');
-            item.className = 'syllabus-item';
-            item.innerHTML = `
-                <div class="syllabus-header">
-                    <input type="checkbox">
-                    <div class="chapter-title">${chapterTitle} ${isCustom ? '<span style="color:var(--accent); font-size:0.75rem;">[Custom Module]</span>' : ''}</div>
-                </div>
-                <div class="tracker-inputs">
-                    <input type="text" placeholder="⚠️ Leftover parts...">
-                    <input type="text" placeholder="📅 Target Date">
-                </div>
-            `;
-            targetContainer.appendChild(item);
-        }
-        
         populateSyllabus();
 
-        // Target Board Exam Timeline Countdown (Mid Feb 2027)
+        // Countdown
         const targetDate = new Date("February 15, 2027 00:00:00").getTime();
         setInterval(function() {
             const now = new Date().getTime();
             const difference = targetDate - now;
-            
-            // Defend against negative values post timeline expiration
             const finalDiff = difference > 0 ? difference : 0;
-
-            const days = Math.floor(finalDiff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((finalDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((finalDiff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((finalDiff % (1000 * 60)) / 1000);
-
-            document.getElementById("cd-days").innerText = days.toString().padStart(2, '0');
-            document.getElementById("cd-hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("cd-mins").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("cd-secs").innerText = seconds.toString().padStart(2, '0');
+            document.getElementById("cd-days").innerText = Math.floor(finalDiff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("cd-hours").innerText = Math.floor((finalDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("cd-mins").innerText = Math.floor((finalDiff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("cd-secs").innerText = Math.floor((finalDiff % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // Global 30-Minute Strict Break Interrupter
+        // Break Tracker
         let breakTimeCounter = 1800; 
         setInterval(function() {
             if (breakTimeCounter > 0) {
@@ -794,14 +775,14 @@
                 document.getElementById("strict-break-screen").style.display = "flex";
             }
         }, 1000);
-
         function dismissStrictBreak() {
             document.getElementById("strict-break-screen").style.display = "none";
             breakTimeCounter = 1800; 
         }
 
-        // Pomodoro Timer Logic
-        let timeLeft = 1500; 
+        // Pomodoro
+        let defaultTime = 1500;
+        let timeLeft = defaultTime; 
         let timerId = null;
 
         function updateDisplay() {
@@ -809,68 +790,121 @@
             let secs = timeLeft % 60;
             document.getElementById('timer-display').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
-
+        function setCustomTime() {
+            const inputMins = parseInt(document.getElementById('custom-minutes').value);
+            if (inputMins && inputMins > 0) { pauseTimer(); defaultTime = inputMins * 60; timeLeft = defaultTime; updateDisplay(); }
+        }
         function startTimer() {
             if (timerId === null) {
                 timerId = setInterval(() => {
-                    if (timeLeft > 0) {
-                        timeLeft--;
-                        updateDisplay();
-                    } else {
-                        clearInterval(timerId);
-                        alert("Work Block Complete! Go spend some time popping bubbles in the Fidget Zone.");
-                    }
+                    if (timeLeft > 0) { timeLeft--; updateDisplay(); } 
+                    else { clearInterval(timerId); timerId = null; alert("Focus Block Complete!"); }
                 }, 1000);
             }
         }
         function pauseTimer() { clearInterval(timerId); timerId = null; }
-        function resetTimer() { pauseTimer(); timeLeft = 1500; updateDisplay(); }
+        function resetTimer() { pauseTimer(); timeLeft = defaultTime; updateDisplay(); }
 
-        // Q&A Vault Logic
+        // Q&A Vault
         function saveToVault() {
             const q = document.getElementById('q-text').value;
             const a = document.getElementById('a-text').value;
-            if(!q.trim() || !a.trim()) return alert("Enter content first!");
-
+            if(!q.trim() || !a.trim()) return;
             const log = document.getElementById('vault-log');
             const entry = document.createElement('div');
             entry.className = 'saved-qa';
             entry.innerHTML = `<strong>❓ Q:</strong> ${q}<br><br><strong>💡 A:</strong> ${a}`;
             log.prepend(entry);
-
-            document.getElementById('q-text').value = "";
-            document.getElementById('a-text').value = "";
+            document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
         }
 
-        // Interactive Fidget Grid Generation
+        // --- GAME 1: BUBBLE POP ---
         const grid = document.getElementById('pop-grid');
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 15; i++) {
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
-            bubble.onclick = function() {
-                this.classList.toggle('popped');
-                AudioEngine.playPop(); 
-            };
+            bubble.onclick = function() { this.classList.toggle('popped'); AudioEngine.playPop(); };
             grid.appendChild(bubble);
         }
+        function resetBubbles() { document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped')); }
 
-        function resetBubbles() {
-            document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped'));
+        // --- GAME 2: REFLEX TESTER ---
+        let reactionTimeout;
+        let reactionStart;
+        function clickReaction() {
+            const box = document.getElementById('reaction-box');
+            if (box.classList.contains('ready')) {
+                const time = Date.now() - reactionStart;
+                box.className = 'reaction-box';
+                box.innerText = `⚡ ${time} ms! Tap to replay.`;
+            } else if (box.classList.contains('waiting')) {
+                clearTimeout(reactionTimeout);
+                box.className = 'reaction-box';
+                box.innerText = "Too early! Tap to try again.";
+            } else {
+                box.className = 'reaction-box waiting';
+                box.innerText = "Wait for Green...";
+                const randomDelay = Math.floor(Math.random() * 3000) + 1500;
+                reactionTimeout = setTimeout(() => {
+                    box.className = 'reaction-box ready';
+                    box.innerText = "TAP NOW!";
+                    reactionStart = Date.now();
+                }, randomDelay);
+            }
         }
 
-        /* DYNAMIC CUSTOMISATION SCRIPTS */
-        const rootSelector = document.documentElement;
+        // --- GAME 3: TIC TAC TOE ---
+        let tttBoard = ["", "", "", "", "", "", "", "", ""];
+        let tttPlayer = "❌";
         
-        document.getElementById('primary-picker').addEventListener('input', (e) => {
-            const val = e.target.value;
-            rootSelector.style.setProperty('--accent', val);
-            rootSelector.style.setProperty('--accent-glow', val + '33'); 
-        });
+        function initTTT() {
+            const tttGrid = document.getElementById('ttt-grid');
+            tttGrid.innerHTML = "";
+            tttBoard.forEach((cell, i) => {
+                const el = document.createElement('div');
+                el.className = 'ttt-cell';
+                el.innerText = cell;
+                el.onclick = () => playTTT(i);
+                tttGrid.appendChild(el);
+            });
+        }
+        function playTTT(i) {
+            if (tttBoard[i] !== "") return;
+            tttBoard[i] = tttPlayer;
+            initTTT();
+            if (checkTTTWin()) {
+                setTimeout(() => { alert(`${tttPlayer} Wins!`); resetTTT(); }, 50);
+                return;
+            }
+            if (!tttBoard.includes("")) {
+                setTimeout(() => { alert("It's a Draw!"); resetTTT(); }, 50);
+                return;
+            }
+            tttPlayer = tttPlayer === "❌" ? "⭕" : "❌";
+        }
+        function checkTTTWin() {
+            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            for (let w of wins) {
+                if (tttBoard[w[0]] && tttBoard[w[0]] === tttBoard[w[1]] && tttBoard[w[1]] === tttBoard[w[2]]) return true;
+            }
+            return false;
+        }
+        function resetTTT() {
+            tttBoard = ["", "", "", "", "", "", "", "", ""];
+            tttPlayer = "❌";
+            initTTT();
+        }
+        initTTT();
 
+        // Customisation
+        const rootSelector = document.documentElement;
+        document.getElementById('primary-picker').addEventListener('input', (e) => {
+            rootSelector.style.setProperty('--accent', e.target.value);
+            rootSelector.style.setProperty('--accent-glow', e.target.value + '33'); 
+        });
         document.getElementById('secondary-picker').addEventListener('input', (e) => {
             rootSelector.style.setProperty('--secondary', e.target.value);
         });
-
         function resetThemeToDefault() {
             rootSelector.style.setProperty('--accent', '#ff2a2a');
             rootSelector.style.setProperty('--accent-glow', 'rgba(255, 42, 42, 0.2)');
@@ -879,77 +913,41 @@
             document.getElementById('secondary-picker').value = '#27272a';
         }
 
-        // Custom Chapter Injection
-        function injectCustomChapter() {
-            const subjectKey = document.getElementById('custom-subject-select').value;
-            const titleInput = document.getElementById('custom-chapter-title').value.trim();
-
-            if(!titleInput) {
-                alert("Please declare a track name before injecting.");
-                return;
-            }
-
-            const activeContainer = document.getElementById(`${subjectKey}-chapters`);
-            if (activeContainer) {
-                createSyllabusDOMElement(activeContainer, titleInput, true);
-            }
-
-            document.getElementById('custom-chapter-title').value = "";
-            alert(`Chapter module successfully queued into your active logs!`);
-        }
-
-        // Card Sticker Placement Infrastructure
+        // Stickers
         let chosenSticker = null;
-
         function setActiveSticker(emojiCode, actionElement) {
             document.querySelectorAll('.sticker-btn').forEach(btn => btn.classList.remove('selected'));
-            
             if (chosenSticker === emojiCode) {
                 chosenSticker = null;
-                document.getElementById('sticker-status-banner').innerText = "No active badge selected. Stamping deactivated.";
+                document.getElementById('sticker-status-banner').innerText = "No active badge selected.";
                 document.getElementById('sticker-status-banner').style.color = "var(--text-muted)";
             } else {
                 chosenSticker = emojiCode;
                 actionElement.classList.add('selected');
-                document.getElementById('sticker-status-banner').innerText = `Sticker Active: [ ${emojiCode} ]. Click any block layout anywhere to stamp it!`;
+                document.getElementById('sticker-status-banner').innerText = `Sticker Active: [ ${emojiCode} ]. Tap a card to stamp!`;
                 document.getElementById('sticker-status-banner').style.color = "var(--success)";
             }
         }
-
-        // Global Event Delegation tracking Card clicks
         document.querySelector('.main-content').addEventListener('click', function(event) {
             const targetCard = event.target.closest('.card');
-            
             if (targetCard) {
-                // Instantly catch and process erasure clicks on existing stickers
                 if (event.target.classList.contains('sticker-badge')) {
                     event.stopPropagation();
                     event.target.remove();
-                    AudioEngine.playClick(); 
                     return;
                 }
-
-                // Append new stamped element if an asset is highlighted
                 if (chosenSticker) {
-                    // ERROR CATCH/PREVENTION: Exit immediately if user is interacting with form controls
-                    if (event.target.closest('input') || event.target.closest('textarea') || event.target.closest('button') || event.target.closest('select')) {
-                        return;
-                    }
-
+                    if (event.target.closest('input') || event.target.closest('textarea') || event.target.closest('button') || event.target.closest('select')) return;
                     let stickerBox = targetCard.querySelector('.card-stickers');
                     if (!stickerBox) {
                         stickerBox = document.createElement('div');
                         stickerBox.className = 'card-stickers';
                         targetCard.insertBefore(stickerBox, targetCard.firstChild);
                     }
-
                     const badge = document.createElement('span');
                     badge.className = 'sticker-badge';
                     badge.innerText = chosenSticker;
-                    badge.title = "Tap to wipe out badge element";
-                    
                     stickerBox.appendChild(badge);
-                    AudioEngine.playStamp(); 
                 }
             }
         });
