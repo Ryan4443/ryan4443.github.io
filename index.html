@@ -102,24 +102,29 @@
         /* Navigation Bar */
         nav {
             display: flex;
-            justify-content: space-around;
+            justify-content: flex-start;
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
             overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        nav::-webkit-scrollbar {
+            display: none; /* Safari/Chrome */
         }
 
         .nav-btn {
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 15px 8px;
-            font-size: 0.8rem;
+            padding: 15px 12px;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            flex: 1;
+            flex-shrink: 0;
             text-align: center;
             transition: all 0.2s;
             white-space: nowrap;
@@ -398,13 +403,13 @@
         }
 
         .reaction-box.waiting {
-            background: #d97706; /* Orange */
+            background: #d97706;
             border-color: #d97706;
             color: white;
         }
 
         .reaction-box.ready {
-            background: #10b981; /* Green */
+            background: #10b981;
             border-color: #10b981;
             color: white;
             font-size: 1.8rem;
@@ -496,6 +501,89 @@
             grid-column: span 2;
             border-color: var(--accent);
             box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* Leaderboard / Rank Elements */
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .leader-item {
+            background: #1a1a22;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .leader-item.you {
+            border-color: var(--accent);
+            background: rgba(255, 42, 42, 0.05);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .leader-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .rank-number {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-muted);
+            width: 30px;
+            text-align: center;
+        }
+
+        .leader-item:nth-child(1) .rank-number { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); } /* Gold */
+        .leader-item:nth-child(2) .rank-number { color: #94a3b8; } /* Silver */
+        .leader-item:nth-child(3) .rank-number { color: #b45309; } /* Bronze */
+
+        .leader-details h4 {
+            margin: 0 0 4px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #52525b; /* Offline */
+            display: inline-block;
+        }
+
+        .status-dot.online {
+            background: var(--success);
+            box-shadow: 0 0 8px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(0.95); opacity: 1; }
+        }
+
+        .leader-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .stat-block span {
+            color: white;
+            font-weight: bold;
         }
 
         /* Customisation Page Elements */
@@ -619,6 +707,7 @@
         <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syl</button>
         <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
         <button class="nav-btn" onclick="showPage('calc-page', this)">🧮 Calc</button>
+        <button class="nav-btn" onclick="showPage('leader-page', this)">🏆 Rank</button>
         <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
         <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Theme</button>
     </nav>
@@ -656,6 +745,7 @@
                 <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
                     ✅ Check your target boxes inside the <strong>Syllabus</strong> tab.<br>
                     ✅ Paste tricky definitions directly into the <strong>Q&A Vault</strong>.<br>
+                    ✅ Check the <strong>Rank</strong> tab to see who you need to outwork today.<br>
                     ✅ Hit the <strong>Rec Room</strong> to recharge when you get stuck!
                 </p>
             </div>
@@ -737,6 +827,84 @@
                         <button class="calc-btn" onclick="appendNumber('0')" style="grid-column: span 2;">0</button>
                         <button class="calc-btn" onclick="appendNumber('.')">.</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="leader-page" class="page">
+            <div class="card">
+                <div class="card-stickers"></div>
+                <h2>🌍 Global Grind Rankings</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -5px;">
+                    <strong style="color: var(--accent);">NOTE:</strong> Running in static mode. Displaying simulated competitor data to push your limits. Beat the ghosts! 👻
+                </p>
+
+                <div class="leaderboard-list">
+                    <div class="leader-item">
+                        <div class="leader-left">
+                            <div class="rank-number">1</div>
+                            <div class="leader-details">
+                                <h4>StudyBeast_99 <span class="status-dot online" title="Online"></span></h4>
+                                <div class="leader-stats">
+                                    <div class="stat-block">Time: <span>84h 12m</span></div>
+                                    <div class="stat-block">Cleared: <span>92%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leader-item">
+                        <div class="leader-left">
+                            <div class="rank-number">2</div>
+                            <div class="leader-details">
+                                <h4>Rahul_Max <span class="status-dot" title="Offline"></span></h4>
+                                <div class="leader-stats">
+                                    <div class="stat-block">Time: <span>71h 45m</span></div>
+                                    <div class="stat-block">Cleared: <span>85%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leader-item">
+                        <div class="leader-left">
+                            <div class="rank-number">3</div>
+                            <div class="leader-details">
+                                <h4>TopperVibe <span class="status-dot online" title="Online"></span></h4>
+                                <div class="leader-stats">
+                                    <div class="stat-block">Time: <span>68h 30m</span></div>
+                                    <div class="stat-block">Cleared: <span>80%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leader-item you">
+                        <div class="leader-left">
+                            <div class="rank-number" style="color: var(--accent);">4</div>
+                            <div class="leader-details">
+                                <h4>You (Local) <span class="status-dot online" title="Online"></span></h4>
+                                <div class="leader-stats">
+                                    <div class="stat-block">Time: <span id="user-total-time">0h 0m</span></div>
+                                    <div class="stat-block">Cleared: <span>TBD</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="leader-item">
+                        <div class="leader-left">
+                            <div class="rank-number">5</div>
+                            <div class="leader-details">
+                                <h4>SleepIsMyth <span class="status-dot" title="Offline"></span></h4>
+                                <div class="leader-stats">
+                                    <div class="stat-block">Time: <span>45h 10m</span></div>
+                                    <div class="stat-block">Cleared: <span>61%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -892,9 +1060,12 @@
             document.getElementById("cd-secs").innerText = Math.floor((finalDiff % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // Break Tracker
+        // Break & Session Tracker Tracker
         let breakTimeCounter = 1800; 
+        let userSessionSeconds = 0; // Tracks local user time
+        
         setInterval(function() {
+            // Strict break logic
             if (breakTimeCounter > 0) {
                 breakTimeCounter--;
                 let m = Math.floor(breakTimeCounter / 60);
@@ -903,7 +1074,15 @@
             } else {
                 document.getElementById("strict-break-screen").style.display = "flex";
             }
+
+            // Local user session time logic for Leaderboard
+            userSessionSeconds++;
+            let sessH = Math.floor(userSessionSeconds / 3600);
+            let sessM = Math.floor((userSessionSeconds % 3600) / 60);
+            document.getElementById("user-total-time").innerText = `${sessH}h ${sessM}m`;
+
         }, 1000);
+        
         function dismissStrictBreak() {
             document.getElementById("strict-break-screen").style.display = "none";
             breakTimeCounter = 1800; 
@@ -980,7 +1159,7 @@
             if (currentOperand === '0' && number !== '.') {
                 currentOperand = number.toString();
             } else {
-                if(currentOperand.length >= 12) return; // Prevent overflow
+                if(currentOperand.length >= 12) return; 
                 currentOperand = currentOperand.toString() + number.toString();
             }
             updateCalcDisplay();
@@ -1012,7 +1191,6 @@
                     break;
                 default: return;
             }
-            // Rounding to prevent floating point issues
             currentOperand = Math.round(computation * 100000000) / 100000000;
             currentOperand = currentOperand.toString();
             operation = undefined;
