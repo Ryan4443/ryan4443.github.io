@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal - Elite Terminal Layout</title>
+    <title>10 Pro Portal - Sonic Terminal Layout</title>
     <style>
         :root {
             --bg-main: #030306;
@@ -35,7 +35,6 @@
             background-attachment: fixed;
         }
 
-        /* 24-Hour Floating Clock with Dynamic Glow */
         #global-clock {
             position: fixed;
             top: 12px;
@@ -56,7 +55,6 @@
             box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 1px var(--glass-specular);
         }
 
-        /* Glowing Header Elements */
         header {
             text-align: center;
             padding: 50px 15px 25px 15px;
@@ -82,7 +80,6 @@
             font-weight: 600;
         }
 
-        /* Liquid Glass Card Architecture */
         .card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
             backdrop-filter: blur(25px) saturate(180%);
@@ -107,7 +104,6 @@
             margin-bottom: 18px;
         }
 
-        /* Countdown Grid Setup */
         .countdown-container {
             background: rgba(255, 255, 255, 0.01);
             backdrop-filter: blur(15px);
@@ -134,7 +130,6 @@
         .time-box .num { font-size: 1.6rem; font-family: monospace; font-weight: 900; color: #fff; }
         .time-box .label { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; margin-top: 3px; }
 
-        /* Liquid Navigation Matrix (Optimized 4x2 Responsive Grid) */
         nav {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -169,7 +164,6 @@
             border-bottom-color: var(--accent);
         }
 
-        /* Main Content Container */
         .main-content { max-width: 480px; margin: 25px auto; padding: 0 14px; box-sizing: border-box; }
         .page { display: none; }
         .page.active { display: block; animation: smoothFade 0.4s ease forwards; }
@@ -179,7 +173,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Form Inputs and Interactive Controls */
         input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
@@ -199,7 +192,6 @@
             background: rgba(0, 0, 0, 0.5);
         }
 
-        /* Premium Buttons */
         button.action-btn {
             background: linear-gradient(135deg, var(--accent), #b3002d);
             color: white;
@@ -220,7 +212,6 @@
         button.action-btn.secondary { background: var(--secondary); box-shadow: none; border: 1px solid var(--border); }
         button.action-btn.secondary:active { background: rgba(255,255,255,0.05); }
 
-        /* Liquid Glass High-Fidelity Calculator */
         .calc-wrapper {
             background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,0,0,0.6));
             backdrop-filter: blur(30px);
@@ -263,7 +254,6 @@
         .btn-calc.equals { background: linear-gradient(135deg, var(--accent), #b3002d); color: white; grid-column: span 2; box-shadow: 0 4px 15px var(--accent-glow); }
         .btn-calc.clear { color: var(--text-muted); }
 
-        /* Render Nodes for Lists */
         .cal-item, .syllabus-item, .rank-item {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--border);
@@ -281,7 +271,6 @@
             box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
         }
 
-        /* High-Gloss Rank Podium Cosmetics */
         .rank-badge { font-weight: 900; padding: 4px 12px; border-radius: 10px; font-size: 0.8rem; letter-spacing: 0.5px; }
         .rank-gold { border-left-color: #ffd700 !important; background: linear-gradient(90deg, rgba(255, 215, 0, 0.06), transparent); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
         .badge-gold { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid #ffd700; }
@@ -291,7 +280,6 @@
         .badge-bronze { background: rgba(180, 83, 9, 0.15); color: #f59e0b; border: 1px solid #f59e0b; }
         .badge-standard { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
 
-        /* Games Layout Graphics styling */
         .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 15px 0; }
         .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #800020 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
         .bubble.popped { background: #0c0c10; box-shadow: inset 0 6px 10px rgba(0,0,0,0.8); border: none; }
@@ -303,7 +291,6 @@
         .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 220px; margin: 15px auto; }
         .ttt-cell { aspect-ratio: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; cursor: pointer; }
 
-        /* Sticker Assets System */
         .card-stickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; min-height: 5px; }
         .sticker-badge { font-size: 1.2rem; cursor: pointer; animation: glassStamp 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes glassStamp { 0% { transform: scale(2.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -311,11 +298,9 @@
         .sticker-btn { background: rgba(255,255,255,0.02); border: 1px solid var(--border); font-size: 1.4rem; padding: 10px; border-radius: 14px; cursor: pointer; }
         .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,102,0.1); box-shadow: 0 0 10px var(--accent-glow); }
         
-        /* Syllabus layout grids */
         .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
         .tracker-inputs input { padding: 8px 12px; font-size: 0.8rem; border-radius: 10px; }
 
-        /* Lockout Overlays */
         .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,3,6,0.98); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
         .break-modal { background: rgba(20,10,15,0.6); border: 1px solid var(--accent); padding: 35px 20px; border-radius: 28px; max-width: 400px; backdrop-filter: blur(30px); box-shadow: 0 0 50px var(--accent-glow); }
     </style>
@@ -379,7 +364,7 @@
                 <div id="timer-display" style="font-size:4.2rem; font-family:monospace; font-weight:900; margin:12px 0; color:white; text-shadow:0 0 15px rgba(255,255,255,0.2);">25:00</div>
                 
                 <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:18px;">
-                    <input type="number" id="custom-minutes" value="25" style="width:80px; text-align:center; padding:8px;">
+                    <input type="number" id="custom-minutes" value="25" style="width:80px; text-align:center; padding:8px;" oninput="AudioEngine.playTick()">
                     <button class="action-btn secondary" onclick="setCustomTime()" style="padding:8px 14px; width:auto; font-size:0.8rem;">Update</button>
                 </div>
 
@@ -449,8 +434,7 @@
             <div class="card">
                 <h2>🏆 Live Performance Rankings</h2>
                 <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Global metrics sorted by top academic scores. Open view format.</p>
-                <div id="leaderboard-container">
-                    </div>
+                <div id="leaderboard-container"></div>
             </div>
 
             <div class="card" style="border-color: rgba(255, 51, 102, 0.25);">
@@ -529,13 +513,66 @@
     </div>
 
     <script>
-        /* CORE AUDIO CONTROLLER & PROCEDURAL ALPHA WAVE SYNTHESIS ENGINE */
+        /* --- NATIVE REAL-TIME OSCILLATOR SYNTH AUDIO ENGINE --- */
         const AudioEngine = {
             ctx: null, droneOsc1: null, droneOsc2: null, droneGain: null, isDronePlaying: false,
             init() {
                 try {
                     if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
                     if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+                } catch(e){}
+            },
+            playTone(freq, type, duration, vol) {
+                this.init(); if(!this.ctx) return;
+                try {
+                    const t = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = type || 'sine';
+                    osc.frequency.setValueAtTime(freq, t);
+                    gainNode.gain.setValueAtTime(vol || 0.1, t);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, t + duration);
+                    osc.connect(gainNode);
+                    gainNode.connect(this.ctx.destination);
+                    osc.start(t);
+                    osc.stop(t + duration);
+                } catch(e){}
+            },
+            playClick() { this.playTone(600, 'sine', 0.08, 0.12); },
+            playTick() { this.playTone(900, 'sine', 0.03, 0.05); },
+            playPop() {
+                this.init(); if(!this.ctx) return;
+                try {
+                    const t = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(140, t);
+                    osc.frequency.exponentialRampToValueAtTime(450, t + 0.05);
+                    gainNode.gain.setValueAtTime(0.25, t);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, t + 0.06);
+                    osc.connect(gainNode); gainNode.connect(this.ctx.destination);
+                    osc.start(t); osc.stop(t + 0.06);
+                } catch(e){}
+            },
+            playSuccess() {
+                this.playTone(523.25, 'sine', 0.12, 0.15); // Note C5
+                setTimeout(() => this.playTone(659.25, 'sine', 0.12, 0.15), 80); // Note E5
+                setTimeout(() => this.playTone(783.99, 'sine', 0.25, 0.15), 160); // Note G5
+            },
+            playError() {
+                this.init(); if(!this.ctx) return;
+                try {
+                    const t = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(130, t);
+                    osc.frequency.linearRampToValueAtTime(70, t + 0.25);
+                    gainNode.gain.setValueAtTime(0.2, t);
+                    gainNode.gain.linearRampToValueAtTime(0.00001, t + 0.25);
+                    osc.connect(gainNode); gainNode.connect(this.ctx.destination);
+                    osc.start(t); osc.stop(t + 0.25);
                 } catch(e){}
             },
             toggleAlphaWave() {
@@ -579,14 +616,15 @@
 
         // Router View Controller Configuration
         function showPage(id, btn) {
+            AudioEngine.playClick();
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             btn.classList.add('active');
-            window.scrollTo(0,0); AudioEngine.init();
+            window.scrollTo(0,0);
         }
 
-        // Timeline Countdown Processing (Target mid Feb 2027 Frameworks)
+        // Timeline Countdown
         const targetTimeline = new Date("February 15, 2027 00:00:00").getTime();
         setInterval(() => {
             const delta = Math.max(0, targetTimeline - new Date().getTime());
@@ -596,10 +634,16 @@
             document.getElementById("cd-secs").innerText = Math.floor((delta % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // Strict 30-Minute Break Sentinel Enforcer
+        // Strict Break Sentinel Enforcer
         let breakCounter = 1800;
-        setInterval(() => { if (breakCounter > 0) breakCounter--; else document.getElementById("strict-break-screen").style.display = "flex"; }, 1000);
-        function dismissStrictBreak() { document.getElementById("strict-break-screen").style.display = "none"; breakCounter = 1800; }
+        setInterval(() => { 
+            if (breakCounter > 0) breakCounter--; 
+            else {
+                if(document.getElementById("strict-break-screen").style.display !== "flex") AudioEngine.playError();
+                document.getElementById("strict-break-screen").style.display = "flex"; 
+            }
+        }, 1000);
+        function dismissStrictBreak() { AudioEngine.playSuccess(); document.getElementById("strict-break-screen").style.display = "none"; breakCounter = 1800; }
 
         // Modular Pomodoro Mechanism Engine
         let baseTime = 1500, timeLeft = baseTime, timerSessionId = null;
@@ -607,26 +651,38 @@
             document.getElementById('timer-display').innerText = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
         }
         function setCustomTime() {
+            AudioEngine.playClick();
             const input = parseInt(document.getElementById('custom-minutes').value);
             if(input > 0) { pauseTimer(); baseTime = input * 60; timeLeft = baseTime; updateDisplay(); }
         }
         function startTimer() { 
-            AudioEngine.init();
+            AudioEngine.playClick();
             if (!timerSessionId) { 
-                timerSessionId = setInterval(() => { if (timeLeft > 0) { timeLeft--; updateDisplay(); } else { clearInterval(timerSessionId); timerSessionId = null; alert("Focus Block Complete!"); } }, 1000); 
+                timerSessionId = setInterval(() => { 
+                    if (timeLeft > 0) { 
+                        timeLeft--; updateDisplay(); 
+                        if(timeLeft <= 5 && timeLeft > 0) AudioEngine.playTick(); // Tick warning counts
+                    } else { 
+                        clearInterval(timerSessionId); timerSessionId = null; AudioEngine.playSuccess(); alert("Focus Block Complete!"); 
+                    } 
+                }, 1000); 
             } 
         }
-        function pauseTimer() { clearInterval(timerSessionId); timerSessionId = null; }
-        function resetTimer() { pauseTimer(); timeLeft = baseTime; updateDisplay(); }
+        function pauseTimer() { AudioEngine.playClick(); clearInterval(timerSessionId); timerSessionId = null; }
+        function resetTimer() { AudioEngine.playClick(); pauseTimer(); timeLeft = baseTime; updateDisplay(); }
 
         // Persistent Scratchpad Logic
-        function saveScratchpad() { localStorage.setItem('portalScratchpad', document.getElementById('scratchpad-area').value); }
+        function saveScratchpad() { 
+            AudioEngine.playTick();
+            localStorage.setItem('portalScratchpad', document.getElementById('scratchpad-area').value); 
+        }
         if(localStorage.getItem('portalScratchpad')) { document.getElementById('scratchpad-area').value = localStorage.getItem('portalScratchpad'); }
 
         // LocalStorage Timeline Engine
         function addEvent() {
             const title = document.getElementById('event-name').value.trim(); const timestamp = document.getElementById('event-date').value;
-            if(!title || !timestamp) return alert("Declare all data parameters.");
+            if(!title || !timestamp) { AudioEngine.playError(); return alert("Declare all data parameters."); }
+            AudioEngine.playSuccess();
             const activeEvents = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]'); activeEvents.push({ title, timestamp });
             activeEvents.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem('portalTimelineEvents', JSON.stringify(activeEvents));
             renderEvents(); document.getElementById('event-name').value = "";
@@ -652,12 +708,13 @@
             }).join('');
         }
         function deleteEvent(idx) {
+            AudioEngine.playPop();
             let src = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]'); src.splice(idx, 1);
             localStorage.setItem('portalTimelineEvents', JSON.stringify(src)); renderEvents();
         }
         renderEvents();
 
-        // --- AUTHORIZED HIGHLIGHTED RANKING ENGINE SYSTEMS ---
+        // --- HIGHLIGHTED RANKING ENGINE SYSTEMS ---
         const FA_SECURITY_PIN = "6289";
 
         function commitGradeEntry() {
@@ -665,18 +722,17 @@
             const marksStr = document.getElementById('rank-student-marks').value.trim();
             const inputPIN = document.getElementById('rank-auth-pin').value.trim();
 
-            if(!name || !marksStr) return alert("Aborted: Student metrics fields cannot be blank.");
-            if(inputPIN !== FA_SECURITY_PIN) return alert("Access Denied: Invalid Teacher Security PIN.");
+            if(!name || !marksStr) { AudioEngine.playError(); return alert("Aborted: Student metrics fields cannot be blank."); }
+            if(inputPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Access Denied: Invalid Teacher Security PIN."); }
 
+            AudioEngine.playSuccess();
             const marks = parseFloat(marksStr);
             let roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
             
-            // Overwrite existing student profile if match is hit, else generate fresh log node
             const matchesIndex = roster.findIndex(student => student.name.toLowerCase() === name.toLowerCase());
             if(matchesIndex > -1) roster[matchesIndex].marks = marks;
             else roster.push({ name, marks });
 
-            // Ascending high value sort matrices
             roster.sort((alpha, beta) => beta.marks - alpha.marks);
             localStorage.setItem('portalRanksRoster', JSON.stringify(roster));
             
@@ -718,10 +774,12 @@
         }
 
         function administrativeRevoke(idx) {
+            AudioEngine.playClick();
             const promptPIN = prompt("Enter Teacher Security PIN to purge record node:");
             if(promptPIN === null) return;
-            if(promptPIN !== FA_SECURITY_PIN) return alert("Access Denied: Invalid Security Key.");
+            if(promptPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Access Denied: Invalid Security Key."); }
             
+            AudioEngine.playPop();
             let roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
             roster.splice(idx, 1);
             localStorage.setItem('portalRanksRoster', JSON.stringify(roster));
@@ -731,10 +789,18 @@
 
         // Calculator Engine Logic
         const calcNode = document.getElementById('calc-screen');
-        function append(char) { if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
-        function clearCalc() { calcNode.value = '0'; }
-        function backspace() { calcNode.value = calcNode.value.slice(0, -1) || '0'; }
-        function calculate() { try { calcNode.value = eval(calcNode.value); } catch { calcNode.value = 'Syntax Execution Error'; } }
+        function append(char) { AudioEngine.playClick(); if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
+        function clearCalc() { AudioEngine.playPop(); calcNode.value = '0'; }
+        function backspace() { AudioEngine.playPop(); calcNode.value = calcNode.value.slice(0, -1) || '0'; }
+        function calculate() { 
+            try { 
+                calcNode.value = eval(calcNode.value); 
+                AudioEngine.playSuccess();
+            } catch { 
+                AudioEngine.playError();
+                calcNode.value = 'Syntax Execution Error'; 
+            } 
+        }
 
         // Syllabus Instantiations
         const frameworkDataArray = { 
@@ -747,12 +813,12 @@
                 dom.innerHTML = frameworkDataArray[domainKey].map(nodeTitle => `
                     <div class="syllabus-item">
                         <div style="display:flex; align-items:center; gap:10px;">
-                            <input type="checkbox" style="transform:scale(1.2); accent-color:var(--accent);">
+                            <input type="checkbox" style="transform:scale(1.2); accent-color:var(--accent);" onchange="AudioEngine.playPop()">
                             <span class="chapter-title" style="font-weight:700; color:#fff;">${nodeTitle}</span>
                         </div>
                         <div class="tracker-inputs">
-                            <input type="text" placeholder="Pending Leftover Notes...">
-                            <input type="text" placeholder="Target Date Deadlines">
+                            <input type="text" placeholder="Pending Leftover Notes..." oninput="AudioEngine.playTick()">
+                            <input type="text" placeholder="Target Date Deadlines" oninput="AudioEngine.playTick()">
                         </div>
                     </div>
                 `).join('');
@@ -763,7 +829,8 @@
         // Doubt Vault Modules
         function saveToVault() {
             const queryData = document.getElementById('q-text').value, verificationData = document.getElementById('a-text').value;
-            if(!queryData.trim() || !verificationData.trim()) return;
+            if(!queryData.trim() || !verificationData.trim()) { AudioEngine.playError(); return; }
+            AudioEngine.playSuccess();
             const logElement = document.getElementById('vault-log'); const outputFrame = document.createElement('div'); outputFrame.className = 'cal-item';
             outputFrame.innerHTML = `<div><strong style="color:var(--accent)">Q:</strong> ${queryData}<br><br><strong style="color:#10b981">A:</strong> ${verificationData}</div>`;
             logElement.prepend(outputFrame); document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
@@ -773,18 +840,31 @@
         const wrapperNode = document.getElementById('pop-grid');
         for(let loopIdx = 0; loopIdx < 15; loopIdx++) {
             const bubbleNode = document.createElement('div'); bubbleNode.className = 'bubble';
-            bubbleNode.onclick = function() { this.classList.toggle('popped'); }; wrapperNode.appendChild(bubbleNode);
+            bubbleNode.onclick = function() { AudioEngine.playPop(); this.classList.toggle('popped'); }; wrapperNode.appendChild(bubbleNode);
         }
-        function resetBubbles() { document.querySelectorAll('.bubble').forEach(node => node.classList.remove('popped')); }
+        function resetBubbles() { AudioEngine.playClick(); document.querySelectorAll('.bubble').forEach(node => node.classList.remove('popped')); }
 
         let reactionTaskTimer, speedEvaluationEpoch;
         function clickReaction() {
             const structuralBox = document.getElementById('reaction-box');
-            if(structuralBox.classList.contains('ready')) { structuralBox.className = 'reaction-box'; structuralBox.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Trigger Replay?`; } 
-            else if(structuralBox.classList.contains('waiting')) { clearTimeout(reactionTaskTimer); structuralBox.className = 'reaction-box'; structuralBox.innerText = "Premature Tap! Restarting sequence."; } 
+            if(structuralBox.classList.contains('ready')) { 
+                AudioEngine.playSuccess();
+                structuralBox.className = 'reaction-box'; 
+                structuralBox.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Trigger Replay?`; 
+            } 
+            else if(structuralBox.classList.contains('waiting')) { 
+                AudioEngine.playError();
+                clearTimeout(reactionTaskTimer); 
+                structuralBox.className = 'reaction-box'; 
+                structuralBox.innerText = "Premature Tap! Restarting sequence."; 
+            } 
             else {
+                AudioEngine.playClick();
                 structuralBox.className = 'reaction-box waiting'; structuralBox.innerText = "Awaiting Green Structural Signal Grid...";
-                reactionTaskTimer = setTimeout(() => { structuralBox.className = 'reaction-box ready'; structuralBox.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); }, Math.random() * 3000 + 1500);
+                reactionTaskTimer = setTimeout(() => { 
+                    AudioEngine.playTone(880, 'sine', 0.15, 0.2); // Notify user with a high tone automatically
+                    structuralBox.className = 'reaction-box ready'; structuralBox.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); 
+                }, Math.random() * 3000 + 1500);
             }
         }
 
@@ -794,9 +874,11 @@
             matrixTTT.forEach((tokenValue, gridIndex) => {
                 const functionalCell = document.createElement('div'); functionalCell.className = 'ttt-cell'; functionalCell.innerText = tokenValue;
                 functionalCell.onclick = () => { 
-                    if(matrixTTT[gridIndex] !== "") return; matrixTTT[gridIndex] = statePlayerToken; constructArenaTTT(); 
-                    if(evaluateWinTTT()){ alert(`${statePlayerToken} Secured Match Dominance!`); resetTTT(); } 
-                    else if(!matrixTTT.includes("")){ alert("Stalemate Grid Draw!"); resetTTT(); } 
+                    if(matrixTTT[gridIndex] !== "") { AudioEngine.playError(); return; } 
+                    AudioEngine.playPop();
+                    matrixTTT[gridIndex] = statePlayerToken; constructArenaTTT(); 
+                    if(evaluateWinTTT()){ AudioEngine.playSuccess(); alert(`${statePlayerToken} Secured Match Dominance!`); resetTTT(); } 
+                    else if(!matrixTTT.includes("")){ AudioEngine.playError(); alert("Stalemate Grid Draw!"); resetTTT(); } 
                     else statePlayerToken = statePlayerToken === "❌" ? "⭕" : "❌"; 
                 }; targetedGridNode.appendChild(functionalCell);
             });
@@ -805,18 +887,19 @@
             const alignmentCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
             return alignmentCombos.some(comboLine => matrixTTT[comboLine[0]] && matrixTTT[comboLine[0]] === matrixTTT[comboLine[1]] && matrixTTT[comboLine[1]] === matrixTTT[comboLine[2]]);
         }
-        function resetTTT() { matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
+        function resetTTT() { AudioEngine.playClick(); matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
         constructArenaTTT();
 
-        // Colors modification engines
+        // Style modification picking engines
         const DOMSelector = document.documentElement;
         document.getElementById('primary-picker').addEventListener('input', (event) => {
-            const inputHexColor = event.target.value; DOMSelector.style.setProperty('--accent', inputHexColor); DOMSelector.style.setProperty('--accent-glow', inputHexColor + '66');
+            DOMSelector.style.setProperty('--accent', event.target.value); DOMSelector.style.setProperty('--accent-glow', event.target.value + '66');
         });
         document.getElementById('secondary-picker').addEventListener('input', (event) => {
             DOMSelector.style.setProperty('--secondary', event.target.value); DOMSelector.style.setProperty('--secondary-glow', event.target.value + 'aa');
         });
         function resetStylesToDefault() {
+            AudioEngine.playPop();
             DOMSelector.style.setProperty('--accent', '#ff3336'); DOMSelector.style.setProperty('--accent-glow', 'rgba(255, 51, 102, 0.4)'); DOMSelector.style.setProperty('--secondary', '#1a1a26');
             document.getElementById('primary-picker').value = '#ff3336'; document.getElementById('secondary-picker').value = '#1a1a26';
         }
@@ -824,6 +907,7 @@
         // Badges setup
         let deployedStickerToken = null;
         function setActiveSticker(emojiChar, elementNode) {
+            AudioEngine.playClick();
             document.querySelectorAll('.sticker-btn').forEach(btn => btn.classList.remove('selected'));
             if(deployedStickerToken === emojiChar) { deployedStickerToken = null; document.getElementById('sticker-status-banner').innerText = "Stamping infrastructure standby."; } 
             else { deployedStickerToken = emojiChar; elementNode.classList.add('selected'); document.getElementById('sticker-status-banner').innerText = `Active Array Deployment: [ ${emojiChar} ]. Tap layout containers to stamp.`; }
@@ -832,11 +916,17 @@
             const targetedWorkspaceCard = event.target.closest('.card');
             if(targetedWorkspaceCard && deployedStickerToken) {
                 if(event.target.closest('input') || event.target.closest('textarea') || event.target.closest('button')) return;
+                AudioEngine.playPop();
                 let stampBox = targetedWorkspaceCard.querySelector('.card-stickers');
                 if(!stampBox) { stampBox = document.createElement('div'); stampBox.className = 'card-stickers'; targetedWorkspaceCard.insertBefore(stampBox, targetedWorkspaceCard.firstChild); }
                 const badgeElement = document.createElement('span'); badgeElement.className = 'sticker-badge'; badgeElement.innerText = deployedStickerToken;
-                badgeElement.onclick = (eventCapture) => { eventCapture.stopPropagation(); badgeElement.remove(); }; stampBox.appendChild(badgeElement);
+                badgeElement.onclick = (eventCapture) => { eventCapture.stopPropagation(); AudioEngine.playPop(); badgeElement.remove(); }; stampBox.appendChild(badgeElement);
             }
+        });
+
+        // Global Passive UI Sound Binder for standard input clicks
+        document.querySelectorAll('input, select, textarea').forEach(elem => {
+            elem.addEventListener('click', () => AudioEngine.playTick());
         });
     </script>
 </body>
