@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal - Liquid Glass Masterpiece</title>
+    <title>10 Pro Portal - Elite Terminal Layout</title>
     <style>
         :root {
             --bg-main: #030306;
@@ -26,7 +26,7 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            padding-bottom: 90px;
+            padding-bottom: 120px;
             overflow-x: hidden;
             background-image: 
                 radial-gradient(at 0% 0%, rgba(255, 51, 102, 0.07) 0px, transparent 50%),
@@ -134,7 +134,7 @@
         .time-box .num { font-size: 1.6rem; font-family: monospace; font-weight: 900; color: #fff; }
         .time-box .label { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; margin-top: 3px; }
 
-        /* Liquid Navigation Engine */
+        /* Liquid Navigation Matrix (Optimized 4x2 Responsive Grid) */
         nav {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -152,20 +152,21 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            padding: 16px 2px;
-            font-size: 0.75rem;
+            padding: 14px 2px;
+            font-size: 0.72rem;
             font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 2px solid transparent;
         }
 
         .nav-btn.active {
             color: #ffffff;
             text-shadow: 0 0 10px var(--accent);
             background: rgba(255, 51, 102, 0.06);
-            box-shadow: inset 0 -3px 0 var(--accent);
+            border-bottom-color: var(--accent);
         }
 
         /* Main Content Container */
@@ -179,7 +180,7 @@
         }
 
         /* Form Inputs and Interactive Controls */
-        input[type="text"], input[type="number"], input[type="date"], select, textarea {
+        input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
             color: var(--text-main);
@@ -262,8 +263,8 @@
         .btn-calc.equals { background: linear-gradient(135deg, var(--accent), #b3002d); color: white; grid-column: span 2; box-shadow: 0 4px 15px var(--accent-glow); }
         .btn-calc.clear { color: var(--text-muted); }
 
-        /* Render Nodes for Calendar & Syllabus Lists */
-        .cal-item, .syllabus-item {
+        /* Render Nodes for Lists */
+        .cal-item, .syllabus-item, .rank-item {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--border);
             border-left: 4px solid var(--accent);
@@ -273,14 +274,24 @@
             box-shadow: inset 0 1px 0 var(--glass-specular);
         }
 
-        .cal-item { display: flex; justify-content: space-between; align-items: center; }
+        .cal-item, .rank-item { display: flex; justify-content: space-between; align-items: center; }
         .cal-item.urgent {
             border-left-color: #f43f5e;
             background: linear-gradient(90deg, rgba(244, 63, 94, 0.08), transparent);
             box-shadow: 0 0 20px rgba(244, 63, 94, 0.15);
         }
 
-        /* Rec Room Engine Layout styling */
+        /* High-Gloss Rank Podium Cosmetics */
+        .rank-badge { font-weight: 900; padding: 4px 12px; border-radius: 10px; font-size: 0.8rem; letter-spacing: 0.5px; }
+        .rank-gold { border-left-color: #ffd700 !important; background: linear-gradient(90deg, rgba(255, 215, 0, 0.06), transparent); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
+        .badge-gold { background: rgba(255, 215, 0, 0.15); color: #ffd700; border: 1px solid #ffd700; }
+        .rank-silver { border-left-color: #e2e8f0 !important; background: linear-gradient(90deg, rgba(226, 232, 240, 0.05), transparent); }
+        .badge-silver { background: rgba(226, 232, 240, 0.15); color: #e2e8f0; border: 1px solid #e2e8f0; }
+        .rank-bronze { border-left-color: #b45309 !important; background: linear-gradient(90deg, rgba(180, 83, 9, 0.05), transparent); }
+        .badge-bronze { background: rgba(180, 83, 9, 0.15); color: #f59e0b; border: 1px solid #f59e0b; }
+        .badge-standard { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
+
+        /* Games Layout Graphics styling */
         .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 15px 0; }
         .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #800020 100%); border-radius: 50%; border: 1px solid #000; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
         .bubble.popped { background: #0c0c10; box-shadow: inset 0 6px 10px rgba(0,0,0,0.8); border: none; }
@@ -300,11 +311,11 @@
         .sticker-btn { background: rgba(255,255,255,0.02); border: 1px solid var(--border); font-size: 1.4rem; padding: 10px; border-radius: 14px; cursor: pointer; }
         .sticker-btn.selected { border-color: var(--accent); background: rgba(255,51,102,0.1); box-shadow: 0 0 10px var(--accent-glow); }
         
-        /* Syllabus Components layout grids */
+        /* Syllabus layout grids */
         .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
         .tracker-inputs input { padding: 8px 12px; font-size: 0.8rem; border-radius: 10px; }
 
-        /* Lockout Blocks */
+        /* Lockout Overlays */
         .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3,3,6,0.98); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
         .break-modal { background: rgba(20,10,15,0.6); border: 1px solid var(--accent); padding: 35px 20px; border-radius: 28px; max-width: 400px; backdrop-filter: blur(30px); box-shadow: 0 0 50px var(--accent-glow); }
     </style>
@@ -342,9 +353,10 @@
         <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syll</button>
         <button class="nav-btn" onclick="showPage('calc-page', this)">🧮 Calc</button>
         <button class="nav-btn" onclick="showPage('calendar-page', this)">📅 Cal</button>
+        <button class="nav-btn" onclick="showPage('ranks-page', this)">🏆 Rank</button>
         <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
         <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
-        <button class="nav-btn" onclick="showPage('custom-page', this)" style="grid-column: span 2;">🎨 Custom</button>
+        <button class="nav-btn" onclick="showPage('custom-page', this)">🎨 Style</button>
     </nav>
 
     <div class="main-content">
@@ -386,7 +398,7 @@
 
         <div id="syllabus-page" class="page">
             <div class="card">
-                <h2> Master Syllabus Directory</h2>
+                <h2>📚 Master Syllabus Directory</h2>
                 <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; text-shadow:0 0 8px var(--accent-glow);">📐 Mathematics Target Array</span><div id="math-chapters"></div></div>
                 <div><span style="color:var(--accent); font-weight:800; text-shadow:0 0 8px var(--accent-glow);">🧪 Science Target Array</span><div id="science-chapters"></div></div>
             </div>
@@ -430,6 +442,27 @@
                 </div>
 
                 <div id="event-list"></div>
+            </div>
+        </div>
+
+        <div id="ranks-page" class="page">
+            <div class="card">
+                <h2>🏆 Live Performance Rankings</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Global metrics sorted by top academic scores. Open view format.</p>
+                <div id="leaderboard-container">
+                    </div>
+            </div>
+
+            <div class="card" style="border-color: rgba(255, 51, 102, 0.25);">
+                <h2>🔒 Faculty Override Panel</h2>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:-10px; margin-bottom:15px;">Authorized parameter modification requires Teacher Security PIN authentication.</p>
+                
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <input type="text" id="rank-student-name" placeholder="Student Full Name">
+                    <input type="number" id="rank-student-marks" placeholder="Acquired Score / Marks">
+                    <input type="password" id="rank-auth-pin" placeholder="Enter Teacher 4-Digit Security Key" style="text-align:center; letter-spacing:4px;">
+                    <button class="action-btn" onclick="commitGradeEntry()">Publish Authorized Grade ⚡</button>
+                </div>
             </div>
         </div>
 
@@ -498,12 +531,7 @@
     <script>
         /* CORE AUDIO CONTROLLER & PROCEDURAL ALPHA WAVE SYNTHESIS ENGINE */
         const AudioEngine = {
-            ctx: null,
-            droneOsc1: null,
-            droneOsc2: null,
-            droneGain: null,
-            isDronePlaying: false,
-
+            ctx: null, droneOsc1: null, droneOsc2: null, droneGain: null, isDronePlaying: false,
             init() {
                 try {
                     if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -511,49 +539,24 @@
                 } catch(e){}
             },
             toggleAlphaWave() {
-                this.init();
-                if(!this.ctx) return false;
-
-                if (this.isDronePlaying) {
-                    this.stopAlphaWave();
-                    return false;
-                } else {
+                this.init(); if(!this.ctx) return false;
+                if (this.isDronePlaying) { this.stopAlphaWave(); return false; } 
+                else {
                     const t = this.ctx.currentTime;
                     this.droneGain = this.ctx.createGain();
-                    
-                    // Detune fundamental channels by exact 10Hz to formulate a perfect alpha focus wave matrix
-                    this.droneOsc1 = this.ctx.createOscillator();
-                    this.droneOsc1.type = 'sine';
-                    this.droneOsc1.frequency.setValueAtTime(140, t); // Base Left frequency 140Hz
-
-                    this.droneOsc2 = this.ctx.createOscillator();
-                    this.droneOsc2.type = 'sine';
-                    this.droneOsc2.frequency.setValueAtTime(150, t); // Base Right frequency 150Hz (Creates 10Hz Alpha pulse)
-
-                    this.droneGain.gain.setValueAtTime(0.0, t);
-                    this.droneGain.gain.linearRampToValueAtTime(0.04, t + 2.0); // Soft fade-in envelope
-
-                    this.droneOsc1.connect(this.droneGain);
-                    this.droneOsc2.connect(this.droneGain);
-                    this.droneGain.connect(this.ctx.destination);
-
-                    this.droneOsc1.start(t);
-                    this.droneOsc2.start(t);
-                    this.isDronePlaying = true;
-                    return true;
+                    this.droneOsc1 = this.ctx.createOscillator(); this.droneOsc1.type = 'sine'; this.droneOsc1.frequency.setValueAtTime(140, t);
+                    this.droneOsc2 = this.ctx.createOscillator(); this.droneOsc2.type = 'sine'; this.droneOsc2.frequency.setValueAtTime(150, t);
+                    this.droneGain.gain.setValueAtTime(0.0, t); this.droneGain.gain.linearRampToValueAtTime(0.04, t + 2.0);
+                    this.droneOsc1.connect(this.droneGain); this.droneOsc2.connect(this.droneGain); this.droneGain.connect(this.ctx.destination);
+                    this.droneOsc1.start(t); this.droneOsc2.start(t); this.isDronePlaying = true; return true;
                 }
             },
             stopAlphaWave() {
                 if(this.droneGain && this.ctx) {
                     const t = this.ctx.currentTime;
-                    this.droneGain.gain.cancelScheduledValues(t);
-                    this.droneGain.gain.setValueAtTime(this.droneGain.gain.value, t);
-                    this.droneGain.gain.linearRampToValueAtTime(0.0, t + 0.5); // Smooth release envelope
-                    setTimeout(() => {
-                        try {
-                            this.droneOsc1.stop(); this.droneOsc2.stop();
-                        } catch(e){}
-                    }, 600);
+                    this.droneGain.gain.cancelScheduledValues(t); this.droneGain.gain.setValueAtTime(this.droneGain.gain.value, t);
+                    this.droneGain.gain.linearRampToValueAtTime(0.0, t + 0.5);
+                    setTimeout(() => { try { this.droneOsc1.stop(); this.droneOsc2.stop(); } catch(e){} }, 600);
                 }
                 this.isDronePlaying = false;
             }
@@ -562,13 +565,8 @@
         function toggleAlphaDrone() {
             const btn = document.getElementById('audio-synth-toggle');
             const status = AudioEngine.toggleAlphaWave();
-            if(status) {
-                btn.innerText = "Decommission Focus Synth 🛑";
-                btn.style.borderColor = "var(--accent)";
-            } else {
-                btn.innerText = "Synthesize Focus Wave 🧘";
-                btn.style.borderColor = "var(--border)";
-            }
+            if(status) { btn.innerText = "Decommission Focus Synth 🛑"; btn.style.borderColor = "var(--accent)"; } 
+            else { btn.innerText = "Synthesize Focus Wave 🧘"; btn.style.borderColor = "var(--border)"; }
         }
 
         // 24 Hour Dynamic Synchronous Clock System
@@ -577,17 +575,15 @@
             document.getElementById('global-clock').innerText = 
                 `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
         }
-        setInterval(runGlobalClock, 1000);
-        runGlobalClock();
+        setInterval(runGlobalClock, 1000); runGlobalClock();
 
-        // Interface Router System Configuration
+        // Router View Controller Configuration
         function showPage(id, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             btn.classList.add('active');
-            window.scrollTo(0,0);
-            AudioEngine.init();
+            window.scrollTo(0,0); AudioEngine.init();
         }
 
         // Timeline Countdown Processing (Target mid Feb 2027 Frameworks)
@@ -617,53 +613,37 @@
         function startTimer() { 
             AudioEngine.init();
             if (!timerSessionId) { 
-                timerSessionId = setInterval(() => { 
-                    if (timeLeft > 0) { timeLeft--; updateDisplay(); } 
-                    else { clearInterval(timerSessionId); timerSessionId = null; alert("Focus Block Complete!"); } 
-                }, 1000); 
+                timerSessionId = setInterval(() => { if (timeLeft > 0) { timeLeft--; updateDisplay(); } else { clearInterval(timerSessionId); timerSessionId = null; alert("Focus Block Complete!"); } }, 1000); 
             } 
         }
         function pauseTimer() { clearInterval(timerSessionId); timerSessionId = null; }
         function resetTimer() { pauseTimer(); timeLeft = baseTime; updateDisplay(); }
 
         // Persistent Scratchpad Logic
-        function saveScratchpad() {
-            localStorage.setItem('portalScratchpad', document.getElementById('scratchpad-area').value);
-        }
-        if(localStorage.getItem('portalScratchpad')) {
-            document.getElementById('scratchpad-area').value = localStorage.getItem('portalScratchpad');
-        }
+        function saveScratchpad() { localStorage.setItem('portalScratchpad', document.getElementById('scratchpad-area').value); }
+        if(localStorage.getItem('portalScratchpad')) { document.getElementById('scratchpad-area').value = localStorage.getItem('portalScratchpad'); }
 
-        // LocalStorage Driven Milestone Array Processor Engine
+        // LocalStorage Timeline Engine
         function addEvent() {
-            const title = document.getElementById('event-name').value.trim();
-            const timestamp = document.getElementById('event-date').value;
-            if(!title || !timestamp) return alert("All event parameters must be declared.");
-
-            const activeEvents = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
-            activeEvents.push({ title, timestamp });
-            activeEvents.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp));
-            localStorage.setItem('portalTimelineEvents', JSON.stringify(activeEvents));
-            
-            renderEvents();
-            document.getElementById('event-name').value = "";
+            const title = document.getElementById('event-name').value.trim(); const timestamp = document.getElementById('event-date').value;
+            if(!title || !timestamp) return alert("Declare all data parameters.");
+            const activeEvents = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]'); activeEvents.push({ title, timestamp });
+            activeEvents.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem('portalTimelineEvents', JSON.stringify(activeEvents));
+            renderEvents(); document.getElementById('event-name').value = "";
         }
         function renderEvents() {
-            const container = document.getElementById('event-list');
-            const data = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
+            const container = document.getElementById('event-list'); const data = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
             const referenceDay = new Date(); referenceDay.setHours(0,0,0,0);
-
             container.innerHTML = data.map((item, keyID) => {
                 const targetDay = new Date(item.timestamp); targetDay.setHours(0,0,0,0);
                 const differentialDays = Math.ceil((targetDay - referenceDay) / (1000 * 60 * 60 * 24));
                 const urgentThresholdTriggered = differentialDays >= 0 && differentialDays <= 3;
-
                 return `
                     <div class="cal-item ${urgentThresholdTriggered ? 'urgent' : ''}">
                         <div>
                             <div class="chapter-title" style="font-weight:800; color:#fff;">${item.title}</div>
                             <div style="font-size:0.75rem; margin-top:4px; color:${urgentThresholdTriggered ? '#f43f5e':'var(--text-muted)'}; font-weight:700;">
-                                📅 Scheduled: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 HIGH PRIORITY CRITICAL DEADLINE' : ''}
+                                📅 Scheduled: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 CRITICAL DEADLINE' : ''}
                             </div>
                         </div>
                         <button onclick="deleteEvent(${keyID})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:5px;">×</button>
@@ -672,21 +652,91 @@
             }).join('');
         }
         function deleteEvent(idx) {
-            let src = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]');
-            src.splice(idx, 1);
-            localStorage.setItem('portalTimelineEvents', JSON.stringify(src));
-            renderEvents();
+            let src = JSON.parse(localStorage.getItem('portalTimelineEvents') || '[]'); src.splice(idx, 1);
+            localStorage.setItem('portalTimelineEvents', JSON.stringify(src)); renderEvents();
         }
         renderEvents();
 
-        // High-Fidelity Calculator Engine Matrix logic
+        // --- AUTHORIZED HIGHLIGHTED RANKING ENGINE SYSTEMS ---
+        const FA_SECURITY_PIN = "6289";
+
+        function commitGradeEntry() {
+            const name = document.getElementById('rank-student-name').value.trim();
+            const marksStr = document.getElementById('rank-student-marks').value.trim();
+            const inputPIN = document.getElementById('rank-auth-pin').value.trim();
+
+            if(!name || !marksStr) return alert("Aborted: Student metrics fields cannot be blank.");
+            if(inputPIN !== FA_SECURITY_PIN) return alert("Access Denied: Invalid Teacher Security PIN.");
+
+            const marks = parseFloat(marksStr);
+            let roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
+            
+            // Overwrite existing student profile if match is hit, else generate fresh log node
+            const matchesIndex = roster.findIndex(student => student.name.toLowerCase() === name.toLowerCase());
+            if(matchesIndex > -1) roster[matchesIndex].marks = marks;
+            else roster.push({ name, marks });
+
+            // Ascending high value sort matrices
+            roster.sort((alpha, beta) => beta.marks - alpha.marks);
+            localStorage.setItem('portalRanksRoster', JSON.stringify(roster));
+            
+            renderLeaderboard();
+            document.getElementById('rank-student-name').value = "";
+            document.getElementById('rank-student-marks').value = "";
+            document.getElementById('rank-auth-pin').value = "";
+            alert("Success: Verified score entry published to global ranking matrix!");
+        }
+
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboard-container');
+            const roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
+            
+            if(roster.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.85rem; padding:15px;">No active ranking profiles on record. Use the terminal console below to initiate marks entry.</div>`;
+                return;
+            }
+
+            container.innerHTML = roster.map((student, index) => {
+                let positionalClass = ""; let badgeClass = "badge-standard"; let statusIcon = `Pos ${index + 1}`;
+                if(index === 0) { positionalClass = "rank-gold"; badgeClass = "badge-gold"; statusIcon = "🥇 Rank 1"; }
+                else if(index === 1) { positionalClass = "rank-silver"; badgeClass = "badge-silver"; statusIcon = "🥈 Rank 2"; }
+                else if(index === 2) { positionalClass = "rank-bronze"; badgeClass = "badge-bronze"; statusIcon = "🥉 Rank 3"; }
+
+                return `
+                    <div class="rank-item ${positionalClass}">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <span class="rank-badge ${badgeClass}">${statusIcon}</span>
+                            <span style="font-weight:700; color:#fff;">${student.name}</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <span style="font-family:monospace; font-weight:900; color:var(--accent); font-size:1.1rem;">${student.marks} M</span>
+                            <button onclick="administrativeRevoke(${index})" style="background:transparent; border:none; color:rgba(255,255,255,0.2); cursor:pointer; font-size:0.9rem;">❌</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function administrativeRevoke(idx) {
+            const promptPIN = prompt("Enter Teacher Security PIN to purge record node:");
+            if(promptPIN === null) return;
+            if(promptPIN !== FA_SECURITY_PIN) return alert("Access Denied: Invalid Security Key.");
+            
+            let roster = JSON.parse(localStorage.getItem('portalRanksRoster') || '[]');
+            roster.splice(idx, 1);
+            localStorage.setItem('portalRanksRoster', JSON.stringify(roster));
+            renderLeaderboard();
+        }
+        renderLeaderboard();
+
+        // Calculator Engine Logic
         const calcNode = document.getElementById('calc-screen');
         function append(char) { if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
         function clearCalc() { calcNode.value = '0'; }
         function backspace() { calcNode.value = calcNode.value.slice(0, -1) || '0'; }
         function calculate() { try { calcNode.value = eval(calcNode.value); } catch { calcNode.value = 'Syntax Execution Error'; } }
 
-        // Syllabus Tracker Array Node Instantiations
+        // Syllabus Instantiations
         const frameworkDataArray = { 
             math: ["Real Numbers", "Polynomials", "Linear Equations Systems", "Quadratic Formulations", "Arithmetic Progressions", "Trigonometry Layouts"], 
             science: ["Chemical Equations & Matrix", "Acids, Bases Shells", "Life Micro Processes", "Refractive Optical Systems", "Electrical Circuits"] 
@@ -710,34 +760,29 @@
         }
         setupSyllabusTrackerNodes();
 
-        // Deficit Q&A Vault Ledger Modules
+        // Doubt Vault Modules
         function saveToVault() {
             const queryData = document.getElementById('q-text').value, verificationData = document.getElementById('a-text').value;
             if(!queryData.trim() || !verificationData.trim()) return;
-            const logElement = document.getElementById('vault-log');
-            const outputFrame = document.createElement('div'); outputFrame.className = 'cal-item';
+            const logElement = document.getElementById('vault-log'); const outputFrame = document.createElement('div'); outputFrame.className = 'cal-item';
             outputFrame.innerHTML = `<div><strong style="color:var(--accent)">Q:</strong> ${queryData}<br><br><strong style="color:#10b981">A:</strong> ${verificationData}</div>`;
-            logElement.prepend(outputFrame);
-            document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
+            logElement.prepend(outputFrame); document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
         }
 
-        // Recreation Lounge Implementations (Fidget Popper Engine, Neural Reaction Box, TTT Grid)
+        // Recreation Lounges (Popper, Speed Evaluation, TTT)
         const wrapperNode = document.getElementById('pop-grid');
         for(let loopIdx = 0; loopIdx < 15; loopIdx++) {
             const bubbleNode = document.createElement('div'); bubbleNode.className = 'bubble';
-            bubbleNode.onclick = function() { this.classList.toggle('popped'); };
-            wrapperNode.appendChild(bubbleNode);
+            bubbleNode.onclick = function() { this.classList.toggle('popped'); }; wrapperNode.appendChild(bubbleNode);
         }
         function resetBubbles() { document.querySelectorAll('.bubble').forEach(node => node.classList.remove('popped')); }
 
         let reactionTaskTimer, speedEvaluationEpoch;
         function clickReaction() {
             const structuralBox = document.getElementById('reaction-box');
-            if(structuralBox.classList.contains('ready')) {
-                structuralBox.className = 'reaction-box'; structuralBox.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Trigger Replay?`;
-            } else if(structuralBox.classList.contains('waiting')) {
-                clearTimeout(reactionTaskTimer); structuralBox.className = 'reaction-box'; structuralBox.innerText = "Premature Tap! Restarting sequence.";
-            } else {
+            if(structuralBox.classList.contains('ready')) { structuralBox.className = 'reaction-box'; structuralBox.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Trigger Replay?`; } 
+            else if(structuralBox.classList.contains('waiting')) { clearTimeout(reactionTaskTimer); structuralBox.className = 'reaction-box'; structuralBox.innerText = "Premature Tap! Restarting sequence."; } 
+            else {
                 structuralBox.className = 'reaction-box waiting'; structuralBox.innerText = "Awaiting Green Structural Signal Grid...";
                 reactionTaskTimer = setTimeout(() => { structuralBox.className = 'reaction-box ready'; structuralBox.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); }, Math.random() * 3000 + 1500);
             }
@@ -749,14 +794,11 @@
             matrixTTT.forEach((tokenValue, gridIndex) => {
                 const functionalCell = document.createElement('div'); functionalCell.className = 'ttt-cell'; functionalCell.innerText = tokenValue;
                 functionalCell.onclick = () => { 
-                    if(matrixTTT[gridIndex] !== "") return; 
-                    matrixTTT[gridIndex] = statePlayerToken; 
-                    constructArenaTTT(); 
-                    if(evaluateWinTTT()){ alert(`${statePlayerToken} Secure Match Dominance!`); resetTTT(); } 
+                    if(matrixTTT[gridIndex] !== "") return; matrixTTT[gridIndex] = statePlayerToken; constructArenaTTT(); 
+                    if(evaluateWinTTT()){ alert(`${statePlayerToken} Secured Match Dominance!`); resetTTT(); } 
                     else if(!matrixTTT.includes("")){ alert("Stalemate Grid Draw!"); resetTTT(); } 
                     else statePlayerToken = statePlayerToken === "❌" ? "⭕" : "❌"; 
-                };
-                targetedGridNode.appendChild(functionalCell);
+                }; targetedGridNode.appendChild(functionalCell);
             });
         }
         function evaluateWinTTT() {
@@ -766,39 +808,25 @@
         function resetTTT() { matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
         constructArenaTTT();
 
-        // Chromatic Color Modification Event Engine
+        // Colors modification engines
         const DOMSelector = document.documentElement;
         document.getElementById('primary-picker').addEventListener('input', (event) => {
-            const inputHexColor = event.target.value;
-            DOMSelector.style.setProperty('--accent', inputHexColor);
-            DOMSelector.style.setProperty('--accent-glow', inputHexColor + '66');
+            const inputHexColor = event.target.value; DOMSelector.style.setProperty('--accent', inputHexColor); DOMSelector.style.setProperty('--accent-glow', inputHexColor + '66');
         });
-
         document.getElementById('secondary-picker').addEventListener('input', (event) => {
-            DOMSelector.style.setProperty('--secondary', event.target.value);
-            DOMSelector.style.setProperty('--secondary-glow', event.target.value + 'aa');
+            DOMSelector.style.setProperty('--secondary', event.target.value); DOMSelector.style.setProperty('--secondary-glow', event.target.value + 'aa');
         });
-
         function resetStylesToDefault() {
-            DOMSelector.style.setProperty('--accent', '#ff3336');
-            DOMSelector.style.setProperty('--accent-glow', 'rgba(255, 51, 102, 0.4)');
-            DOMSelector.style.setProperty('--secondary', '#1a1a26');
-            document.getElementById('primary-picker').value = '#ff3336';
-            document.getElementById('secondary-picker').value = '#1a1a26';
+            DOMSelector.style.setProperty('--accent', '#ff3336'); DOMSelector.style.setProperty('--accent-glow', 'rgba(255, 51, 102, 0.4)'); DOMSelector.style.setProperty('--secondary', '#1a1a26');
+            document.getElementById('primary-picker').value = '#ff3336'; document.getElementById('secondary-picker').value = '#1a1a26';
         }
 
-        // Efficiency Reward Sticker Badging Logic Systems
+        // Badges setup
         let deployedStickerToken = null;
         function setActiveSticker(emojiChar, elementNode) {
             document.querySelectorAll('.sticker-btn').forEach(btn => btn.classList.remove('selected'));
-            if(deployedStickerToken === emojiChar) { 
-                deployedStickerToken = null; 
-                document.getElementById('sticker-status-banner').innerText = "Stamping infrastructure standby."; 
-            } else { 
-                deployedStickerToken = emojiChar; 
-                elementNode.classList.add('selected'); 
-                document.getElementById('sticker-status-banner').innerText = `Active Array Deployment: [ ${emojiChar} ]. Tap layout container elements to stamp.`; 
-            }
+            if(deployedStickerToken === emojiChar) { deployedStickerToken = null; document.getElementById('sticker-status-banner').innerText = "Stamping infrastructure standby."; } 
+            else { deployedStickerToken = emojiChar; elementNode.classList.add('selected'); document.getElementById('sticker-status-banner').innerText = `Active Array Deployment: [ ${emojiChar} ]. Tap layout containers to stamp.`; }
         }
         document.querySelector('.main-content').addEventListener('click', (event) => {
             const targetedWorkspaceCard = event.target.closest('.card');
@@ -807,8 +835,7 @@
                 let stampBox = targetedWorkspaceCard.querySelector('.card-stickers');
                 if(!stampBox) { stampBox = document.createElement('div'); stampBox.className = 'card-stickers'; targetedWorkspaceCard.insertBefore(stampBox, targetedWorkspaceCard.firstChild); }
                 const badgeElement = document.createElement('span'); badgeElement.className = 'sticker-badge'; badgeElement.innerText = deployedStickerToken;
-                badgeElement.onclick = (eventCapture) => { eventCapture.stopPropagation(); badgeElement.remove(); };
-                stampBox.appendChild(badgeElement);
+                badgeElement.onclick = (eventCapture) => { eventCapture.stopPropagation(); badgeElement.remove(); }; stampBox.appendChild(badgeElement);
             }
         });
     </script>
