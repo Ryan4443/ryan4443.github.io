@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Liquid Glass Portal</title>
+    <title>AAA Liquid Glass Portal</title>
     <style>
         /* --- LIQUID GLASS NEON VARIABLES --- */
         :root {
-            --accent: #00ffff; /* Electric Cyan */
+            --accent: #00ffff;
             --accent-glow: rgba(0, 255, 255, 0.4);
-            --secondary: #8a2be2; /* Deep Ultraviolet */
+            --secondary: #8a2be2;
             --secondary-glow: rgba(138, 43, 226, 0.4);
             
-            /* Premium Typography Colors */
             --text-heading: #ffffff;
-            --text-main: #f8fafc; /* Softer white for less eye strain */
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
             
-            /* Refined Glass Formula */
-            --glass-bg: rgba(15, 15, 25, 0.35); /* Slightly darker for better contrast */
+            --glass-bg: rgba(15, 15, 25, 0.35);
             --glass-border-light: rgba(255, 255, 255, 0.15);
             --glass-border-dark: rgba(0, 0, 0, 0.4);
             --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             --glass-inset: inset 0 1px 1px rgba(255, 255, 255, 0.1);
             
-            /* Advanced Animation Physics */
+            /* AAA Animation Physics */
+            --aaa-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
             --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         /* --- DYNAMIC BACKGROUNDS --- */
@@ -36,7 +34,7 @@
             color: var(--text-main);
             margin: 0; padding: 0; padding-bottom: 120px;
             overflow-x: hidden;
-            transition: background 0.8s var(--smooth);
+            transition: background 0.8s var(--aaa-ease);
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -47,10 +45,11 @@
         body.bg-vapor { background: linear-gradient(135deg, #1a0b2e 0%, #4b003f 50%, #11011c 100%); }
         body.bg-aurora { background: radial-gradient(circle at 15% 50%, rgba(0, 255, 255, 0.15), transparent 50%), radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.15), transparent 50%), #050510; }
 
-        /* Ambient 3D Neon Orbs */
+        /* Ambient 3D Neon Orbs (Hardware Accelerated) */
         .orb {
             position: fixed; border-radius: 50%; filter: blur(90px); z-index: -1;
             animation: float 14s infinite ease-in-out alternate; opacity: 0.25; pointer-events: none;
+            will-change: transform;
         }
         .orb-cyan { width: 50vw; height: 50vw; background: var(--accent); top: -15%; left: -10%; }
         .orb-violet { width: 60vw; height: 60vw; background: var(--secondary); bottom: -15%; right: -10%; animation-delay: -7s; }
@@ -59,25 +58,20 @@
             0% { transform: translateY(0px) scale(1); }
             100% { transform: translateY(60px) scale(1.05); }
         }
-        
-        /* --- CURSOR LIGHT TRAIL CANVAS --- */
-        #cursor-trail {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 0;
-        }
 
         /* --- GLOBAL TOUCH/TAP WATER RIPPLE --- */
         .global-touch-ring {
             position: fixed; width: 24px; height: 24px; border: 2px solid rgba(0, 255, 255, 0.6);
             border-radius: 50%; transform: translate(-50%, -50%) scale(1); opacity: 0.8;
-            pointer-events: none; z-index: 99999; box-shadow: 0 0 15px var(--accent-glow);
-            animation: ring-expand 0.7s var(--smooth) forwards;
+            pointer-events: none; z-index: 99999;
+            animation: ring-expand 0.6s var(--aaa-ease) forwards;
+            will-change: transform, opacity;
         }
-        @keyframes ring-expand { to { transform: translate(-50%, -50%) scale(5); opacity: 0; border-width: 0px; } }
+        @keyframes ring-expand { to { transform: translate(-50%, -50%) scale(4); opacity: 0; border-width: 0px; } }
 
         .ripple {
             position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.3);
-            transform: scale(0); animation: ripple-animation 0.7s var(--smooth); pointer-events: none; z-index: 99;
+            transform: scale(0); animation: ripple-animation 0.6s var(--aaa-ease); pointer-events: none; z-index: 99;
         }
         @keyframes ripple-animation { to { transform: scale(3.5); opacity: 0; } }
 
@@ -97,13 +91,14 @@
             
             /* Liquid Bulge Effect */
             animation: liquid-edge 10s infinite alternate ease-in-out;
-            transition: transform 0.5s var(--smooth), box-shadow 0.5s var(--smooth);
+            transition: transform 0.5s var(--aaa-ease), box-shadow 0.5s var(--aaa-ease);
+            will-change: transform, border-radius;
         }
 
         /* Micro-interaction: Card Hover Lift */
         .card.glass-panel:hover { 
-            transform: translateY(-4px) scale(1.005); 
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 30px rgba(0, 255, 255, 0.05);
+            transform: translateY(-6px) scale(1.01); 
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 40px rgba(0, 255, 255, 0.08);
         }
 
         @keyframes liquid-edge {
@@ -114,16 +109,40 @@
             100% { border-radius: 24px 26px 22px 26px; }
         }
 
+        /* --- AAA STAGGERED PAGE ANIMATIONS --- */
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        /* Cascade loading for cards inside the active page */
+        .page.active .card { opacity: 0; animation: cascadeIn 0.7s var(--aaa-ease) forwards; }
+        .page.active .card:nth-child(1) { animation-delay: 0.05s; }
+        .page.active .card:nth-child(2) { animation-delay: 0.15s; }
+        .page.active .card:nth-child(3) { animation-delay: 0.25s; }
+        .page.active .card:nth-child(4) { animation-delay: 0.35s; }
+
+        @keyframes cascadeIn {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Timer Breathing Animation */
+        @keyframes breathe {
+            0% { text-shadow: 0 0 20px var(--accent), 0 0 30px var(--secondary); transform: scale(1); }
+            50% { text-shadow: 0 0 40px var(--accent), 0 0 60px var(--secondary), 0 0 10px #fff; transform: scale(1.03); }
+            100% { text-shadow: 0 0 20px var(--accent), 0 0 30px var(--secondary); transform: scale(1); }
+        }
+        #timer-display { animation: breathe 4s infinite ease-in-out; will-change: text-shadow, transform; }
+
+        /* Structure & Layout */
         .password-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(3, 3, 8, 0.85); backdrop-filter: blur(20px);
             z-index: 10000; display: flex; justify-content: center; align-items: center;
-            padding: 24px; box-sizing: border-box; transition: opacity 0.5s var(--smooth);
+            padding: 24px; box-sizing: border-box; transition: opacity 0.5s var(--aaa-ease);
         }
         
-        .password-modal { padding: 48px 32px; max-width: 380px; width: 100%; }
+        .password-modal { padding: 48px 32px; max-width: 380px; width: 100%; opacity: 0; animation: cascadeIn 0.8s var(--aaa-ease) 0.2s forwards; }
         
-        /* Whitespace upgrade: 32px padding instead of 22px */
         .card { padding: 32px; margin-bottom: 24px; }
         .calc-wrapper { padding: 24px; }
         .break-modal { padding: 40px 32px; max-width: 400px; }
@@ -131,8 +150,7 @@
         #global-clock {
             position: fixed; top: 16px; left: 16px; z-index: 1001;
             font-family: 'Courier New', monospace; font-size: 0.95rem; font-weight: 900;
-            color: var(--text-heading); text-shadow: 0 0 15px var(--accent); padding: 10px 20px;
-            letter-spacing: 1px;
+            color: var(--text-heading); text-shadow: 0 0 15px var(--accent); padding: 10px 20px; letter-spacing: 1px;
         }
 
         .system-tagline {
@@ -147,7 +165,7 @@
 
         .card h2 { margin-top: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-heading); letter-spacing: 0.5px; border-left: 4px solid var(--accent); padding-left: 12px; margin-bottom: 24px; text-shadow: 0 0 15px var(--accent-glow); }
 
-        .countdown-container { padding: 20px; margin: 16px auto; max-width: 480px; animation-delay: -2s; }
+        .countdown-container { padding: 20px; margin: 16px auto; max-width: 480px; opacity: 0; animation: cascadeIn 0.8s var(--aaa-ease) forwards; }
         .countdown-title { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: 12px; letter-spacing: 2px; }
         .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         .time-box { background: rgba(255, 255, 255, 0.03); padding: 12px 0; border-radius: 12px; border: 1px solid var(--glass-border-dark); border-top: 1px solid rgba(255,255,255,0.1); }
@@ -156,22 +174,19 @@
 
         nav {
             display: flex; overflow-x: auto; position: sticky; top: 0; z-index: 100; scrollbar-width: none;
-            border-top: none; animation-delay: -4s; margin: 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-top: none; margin: 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); opacity: 0; animation: cascadeIn 0.8s var(--aaa-ease) 0.1s forwards;
         }
         nav::-webkit-scrollbar { display: none; }
 
         .nav-btn {
             background: none; border: none; color: var(--text-muted); padding: 16px 20px; font-size: 0.8rem;
             font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
-            transition: all 0.4s var(--smooth); border-bottom: 3px solid transparent; white-space: nowrap; flex-shrink: 0; position: relative; overflow: hidden;
+            transition: all 0.4s var(--aaa-ease); border-bottom: 3px solid transparent; white-space: nowrap; flex-shrink: 0; position: relative; overflow: hidden;
         }
         .nav-btn:hover { color: var(--text-heading); text-shadow: 0 0 12px var(--accent); }
         .nav-btn.active { color: var(--text-heading); text-shadow: 0 0 15px var(--accent); background: rgba(255,255,255,0.06); border-bottom-color: var(--accent); }
 
         .main-content { max-width: 520px; margin: 32px auto; padding: 0 16px; box-sizing: border-box; z-index: 10; position: relative; }
-        .page { display: none; }
-        .page.active { display: block; animation: smoothFade 0.5s var(--smooth) forwards; }
-        @keyframes smoothFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Liquid Inputs & Buttons */
         input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea {
@@ -180,7 +195,6 @@
             outline: none; transition: all 0.4s var(--spring); font-family: 'Courier New', Courier, monospace;
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
         }
-        /* Micro-interaction: Focus scaling */
         input:focus, select:focus, textarea:focus { 
             border-color: var(--accent); 
             box-shadow: 0 0 20px var(--accent-glow), inset 0 2px 5px rgba(0,0,0,0.5); 
@@ -195,10 +209,11 @@
             padding: 16px; font-size: 0.9rem; font-weight: 800; border-radius: 12px; cursor: pointer;
             width: 100%; text-transform: uppercase; letter-spacing: 1.5px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: all 0.4s var(--spring); backdrop-filter: blur(10px);
+            will-change: transform, box-shadow;
         }
         button.action-btn:hover { 
             background: rgba(0,255,255,0.15); border-color: var(--accent); 
-            box-shadow: 0 8px 25px var(--accent-glow); transform: translateY(-3px) scale(1.01); 
+            box-shadow: 0 8px 25px var(--accent-glow); transform: translateY(-3px) scale(1.02); 
         }
         button.action-btn:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         
@@ -210,10 +225,11 @@
             background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border-dark); 
             border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px; margin-bottom: 12px; 
             backdrop-filter: blur(10px); transition: all 0.4s var(--spring); box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+            will-change: transform;
         }
         .cal-item:hover, .syllabus-item:hover { 
             border-color: var(--accent); box-shadow: 0 8px 20px var(--accent-glow); 
-            transform: translateX(6px) scale(1.01); background: rgba(255,255,255,0.08); 
+            transform: translateX(8px) scale(1.02); background: rgba(255,255,255,0.08); 
         }
         .cal-item { display: flex; justify-content: space-between; align-items: center; }
         .cal-item.urgent { border-left-color: #f43f5e; background: linear-gradient(90deg, rgba(244, 63, 94, 0.1), transparent); }
@@ -225,8 +241,9 @@
             transition: all 0.4s var(--spring); position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;
             text-shadow: 0 2px 6px rgba(0,0,0,0.9); box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            will-change: transform;
         }
-        .bg-option:hover { transform: scale(1.04) translateY(-2px); }
+        .bg-option:hover { transform: scale(1.04) translateY(-3px); }
         .bg-option.active-bg { border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow); }
 
         /* Game Elements */
@@ -235,10 +252,11 @@
             aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #004444 100%); 
             border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; 
             box-shadow: 0 4px 15px var(--accent-glow), inset 0 2px 8px rgba(255,255,255,0.6); 
-            position: relative; overflow: hidden; transition: transform 0.3s var(--spring);
+            position: relative; overflow: hidden; transition: transform 0.4s var(--spring);
+            will-change: transform;
         }
-        .bubble:hover { transform: scale(1.08); }
-        .bubble.popped { background: rgba(0,0,0,0.6); box-shadow: inset 0 6px 20px rgba(0,0,0,0.9); border: 1px solid var(--glass-border-dark); transform: scale(0.95); }
+        .bubble:hover { transform: scale(1.12); }
+        .bubble.popped { background: rgba(0,0,0,0.6); box-shadow: inset 0 6px 20px rgba(0,0,0,0.9); border: 1px solid var(--glass-border-dark); transform: scale(0.9); }
         
         .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 220px; margin: 20px auto; }
         .ttt-cell { 
@@ -246,9 +264,10 @@
             border-radius: 12px; display: flex; align-items: center; justify-content: center; 
             font-size: 2.2rem; font-weight: 900; cursor: pointer; backdrop-filter: blur(10px); 
             position: relative; overflow: hidden; text-shadow: 0 0 20px #fff; 
-            box-shadow: inset 0 2px 8px rgba(255,255,255,0.1), 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.3s var(--spring);
+            box-shadow: inset 0 2px 8px rgba(255,255,255,0.1), 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.4s var(--spring);
+            will-change: transform;
         }
-        .ttt-cell:hover { transform: scale(1.05); }
+        .ttt-cell:hover { transform: scale(1.08); }
 
         .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,16,0.9); backdrop-filter: blur(25px); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 24px; box-sizing: border-box; }
     </style>
@@ -257,11 +276,9 @@
 
     <div class="orb orb-cyan"></div>
     <div class="orb orb-violet"></div>
-    
-    <canvas id="cursor-trail"></canvas>
 
     <div id="password-gate-screen" class="password-overlay">
-        <div class="password-modal glass-panel" style="animation-delay: -1s;">
+        <div class="password-modal glass-panel">
             <h2 style="color:var(--accent); text-shadow: 0 0 20px var(--accent-glow); margin-bottom: 8px; border:none; padding:0; text-align:center;">🔓 SECURE SYNC</h2>
             <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom: 32px; letter-spacing: 0.5px;">Authorization Required. Input Terminal PIN.</p>
             <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:16px; font-size:2rem; margin-bottom: 32px; background:rgba(0,0,0,0.6);" maxlength="4">
@@ -269,8 +286,8 @@
         </div>
     </div>
 
-    <div id="global-clock" class="glass-panel" style="animation-delay: -3s;">00:00:00</div>
-    <div class="system-tagline glass-panel" style="animation-delay: -5s;">Premium Engine Online</div>
+    <div id="global-clock" class="glass-panel">00:00:00</div>
+    <div class="system-tagline glass-panel">AAA Engine Online</div>
 
     <div id="strict-break-screen" class="break-overlay">
         <div class="break-modal glass-panel">
@@ -308,10 +325,10 @@
     <div class="main-content">
 
         <div id="bg-page" class="page">
-            <div class="card glass-panel" style="animation-delay: -1.5s;">
+            <div class="card glass-panel">
                 <h2>🌌 Backdrop Switcher</h2>
                 <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5; margin-top:-10px; margin-bottom:24px;">
-                    Change the background to see the heavy liquid glass refraction adapt instantly. Notice how the light trails interact!
+                    Change the background to see the heavy liquid glass refraction adapt instantly with AAA transition physics.
                 </p>
                 <div class="bg-grid">
                     <div class="bg-option active-bg" style="background:#030308;" onclick="changeBg('bg-void', this)">Deep Void</div>
@@ -323,9 +340,9 @@
         </div>
 
         <div id="dash-page" class="page active">
-            <div class="card glass-panel" style="text-align:center; animation-delay: -2s;">
+            <div class="card glass-panel" style="text-align:center;">
                 <h2>⏱️ Focus Block Timer</h2>
-                <div id="timer-display" style="font-size:5rem; font-family:monospace; font-weight:900; margin:16px 0; color:var(--text-heading); text-shadow:0 0 25px var(--accent), 0 0 45px var(--secondary);">25:00</div>
+                <div id="timer-display" style="font-size:5.5rem; font-family:monospace; font-weight:900; margin:16px 0; color:var(--text-heading);">25:00</div>
                 
                 <div style="display:flex; justify-content:center; align-items:center; gap:12px; margin-bottom:24px;">
                     <input type="number" id="custom-minutes" value="25" style="width:85px; text-align:center; padding:10px;">
@@ -339,20 +356,20 @@
                 </div>
             </div>
 
-            <div class="card glass-panel" style="animation-delay: -3.5s;">
+            <div class="card glass-panel">
                 <h2>🎧 AI Alpha Soundscape</h2>
                 <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5; margin-top:-10px; margin-bottom:24px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
                 <button id="audio-synth-toggle" class="action-btn secondary" onclick="toggleAlphaDrone()">Synthesize Focus Wave 🧘</button>
             </div>
 
-            <div class="card glass-panel" style="animation-delay: -0.5s;">
+            <div class="card glass-panel">
                 <h2>📝 Live Scratchpad Terminal</h2>
                 <textarea id="scratchpad-area" rows="5" placeholder="Type data, raw formulas, or temporary checklists..." oninput="saveScratchpad()"></textarea>
             </div>
         </div>
 
         <div id="syllabus-page" class="page">
-            <div class="card glass-panel" style="animation-delay: -1s;">
+            <div class="card glass-panel">
                 <h2>📚 Master Syllabus Directory</h2>
                 <div style="margin-bottom:24px;"><span style="color:var(--accent); font-weight:800; font-size:0.9rem; letter-spacing:1.5px; text-shadow:0 0 10px var(--accent-glow);">📐 MATHEMATICS ARRAY</span><div id="math-chapters" style="margin-top: 12px;"></div></div>
                 <div style="margin-bottom:24px;"><span style="color:var(--accent); font-weight:800; font-size:0.9rem; letter-spacing:1.5px; text-shadow:0 0 10px var(--accent-glow);">🧪 SCIENCE ARRAY</span><div id="science-chapters" style="margin-top: 12px;"></div></div>
@@ -361,7 +378,7 @@
         </div>
 
         <div id="calendar-page" class="page">
-            <div class="card glass-panel" style="animation-delay: -2s;">
+            <div class="card glass-panel">
                 <h2>📅 Milestone Schedule Vault</h2>
                 <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:24px;">
                     <input type="text" id="event-name" placeholder="Target Objective Summary">
@@ -373,13 +390,13 @@
         </div>
 
         <div id="games-page" class="page">
-            <div class="card glass-panel" style="text-align:center; animation-delay: -1.2s;">
+            <div class="card glass-panel" style="text-align:center;">
                 <h2>🎮 Liquid Fidget Popper</h2>
                 <div class="fidget-grid" id="pop-grid"></div>
                 <button class="action-btn secondary" style="padding:14px; margin-top:10px;" onclick="resetBubbles()">Reset Matrix Wrap 🔄</button>
             </div>
 
-            <div class="card glass-panel" style="text-align:center; animation-delay: -2.4s;">
+            <div class="card glass-panel" style="text-align:center;">
                 <h2>❌ Tic-Tac-Toe Arena ⭕</h2>
                 <div id="ttt-grid" class="ttt-grid"></div>
                 <button class="action-btn secondary" style="padding:14px; margin-top:10px;" onclick="resetTTT()">Reset Match Layout 🔄</button>
@@ -387,7 +404,7 @@
         </div>
 
         <div id="qa-page" class="page">
-            <div class="card glass-panel" style="animation-delay: -3s;">
+            <div class="card glass-panel">
                 <h2>🧠 Concept Deficit Vault</h2>
                 <textarea id="q-text" rows="3" placeholder="Formula layout error / complex doubt statement..." style="margin-bottom:16px;"></textarea>
                 <textarea id="a-text" rows="4" placeholder="Resolved steps, key insights, derived proofs..."></textarea>
@@ -399,50 +416,6 @@
     </div>
 
     <script>
-        /* --- LIGHT TRAIL CANVAS ENGINE --- */
-        const trailCanvas = document.getElementById('cursor-trail');
-        const ctx = trailCanvas.getContext('2d');
-        let cW, cH;
-        
-        function resizeCanvas() { 
-            cW = trailCanvas.width = window.innerWidth; 
-            cH = trailCanvas.height = window.innerHeight; 
-        }
-        window.addEventListener('resize', resizeCanvas); 
-        resizeCanvas();
-
-        const particles = [];
-        function addParticle(x, y) {
-            particles.push({
-                x: x, y: y,
-                size: Math.random() * 20 + 10,
-                life: 1,
-                color: Math.random() > 0.5 ? '0, 255, 255' : '138, 43, 226'
-            });
-        }
-
-        window.addEventListener('mousemove', e => addParticle(e.clientX, e.clientY));
-        window.addEventListener('touchmove', e => {
-            if(e.touches.length > 0) addParticle(e.touches[0].clientX, e.touches[0].clientY);
-        });
-
-        function animateTrail() {
-            ctx.clearRect(0, 0, cW, cH);
-            for(let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${p.color}, ${p.life * 0.4})`;
-                ctx.shadowBlur = 20;
-                ctx.shadowColor = `rgba(${p.color}, ${p.life})`;
-                ctx.fill();
-                p.life -= 0.02; // Smoother fade out
-            }
-            while(particles.length > 0 && particles[0].life <= 0) particles.shift();
-            requestAnimationFrame(animateTrail);
-        }
-        animateTrail();
-
         /* --- GLOBAL LIQUID TAP / BUTTON RIPPLE --- */
         document.addEventListener('mousedown', function(e) {
             const ring = document.createElement("div");
@@ -450,7 +423,7 @@
             ring.style.left = e.clientX + "px";
             ring.style.top = e.clientY + "px";
             document.body.appendChild(ring);
-            setTimeout(() => ring.remove(), 700);
+            setTimeout(() => ring.remove(), 600);
             
             try { AudioEngine.playTick(); } catch(e){}
 
@@ -477,7 +450,7 @@
                 ring.style.left = touch.clientX + "px";
                 ring.style.top = touch.clientY + "px";
                 document.body.appendChild(ring);
-                setTimeout(() => ring.remove(), 700);
+                setTimeout(() => ring.remove(), 600);
             }
         });
 
@@ -586,9 +559,13 @@
 
         function showPage(id, btn) {
             AudioEngine.playClick();
+            
+            // Re-trigger cascade animation
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            
+            const targetPage = document.getElementById(id);
+            targetPage.classList.add('active');
             btn.classList.add('active');
             window.scrollTo(0,0);
         }
