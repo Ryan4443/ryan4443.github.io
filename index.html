@@ -36,20 +36,9 @@
         }
 
         body.bg-void { background-color: #030308; }
-        
-        body.bg-ocean {
-            background: linear-gradient(135deg, #02111d 0%, #033a4c 50%, #011214 100%);
-        }
-        
-        body.bg-vapor {
-            background: linear-gradient(135deg, #1a0b2e 0%, #4b003f 50%, #11011c 100%);
-        }
-
-        body.bg-aurora {
-            background: radial-gradient(circle at 15% 50%, rgba(0, 255, 255, 0.15), transparent 50%),
-                        radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.15), transparent 50%),
-                        #050510;
-        }
+        body.bg-ocean { background: linear-gradient(135deg, #02111d 0%, #033a4c 50%, #011214 100%); }
+        body.bg-vapor { background: linear-gradient(135deg, #1a0b2e 0%, #4b003f 50%, #11011c 100%); }
+        body.bg-aurora { background: radial-gradient(circle at 15% 50%, rgba(0, 255, 255, 0.15), transparent 50%), radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.15), transparent 50%), #050510; }
 
         /* Ambient 3D Neon Orbs (Floating behind the glass) */
         .orb {
@@ -63,6 +52,12 @@
             0% { transform: translateY(0px) scale(1); }
             100% { transform: translateY(60px) scale(1.1); }
         }
+        
+        /* --- CURSOR LIGHT TRAIL CANVAS --- */
+        #cursor-trail {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 0; /* Behind the glass panels */
+        }
 
         /* --- GLOBAL TOUCH/TAP WATER RIPPLE --- */
         .global-touch-ring {
@@ -71,18 +66,15 @@
             pointer-events: none; z-index: 99999; box-shadow: 0 0 10px var(--accent-glow);
             animation: ring-expand 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         }
-        @keyframes ring-expand {
-            to { transform: translate(-50%, -50%) scale(6); opacity: 0; border-width: 0px; }
-        }
+        @keyframes ring-expand { to { transform: translate(-50%, -50%) scale(6); opacity: 0; border-width: 0px; } }
 
-        /* --- BUTTON RIPPLE EFFECT --- */
         .ripple {
             position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
             transform: scale(0); animation: ripple-animation 0.6s linear; pointer-events: none; z-index: 99;
         }
         @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
 
-        /* --- REFINED LIQUID GLASS ENGINE --- */
+        /* --- BULGING LIQUID GLASS ENGINE --- */
         .glass-panel {
             background: linear-gradient(135deg, var(--glass-bg), rgba(10, 10, 20, 0.1));
             backdrop-filter: blur(35px) saturate(120%);
@@ -91,7 +83,23 @@
             border-top: 1px solid var(--glass-border-light);
             border-left: 1px solid var(--glass-border-light);
             box-shadow: var(--glass-shadow), var(--glass-inset);
-            border-radius: 24px; position: relative; overflow: hidden;
+            position: relative; overflow: hidden;
+            z-index: 10; /* Ensures glass sits above the light trail */
+            
+            /* The Organic Liquid Bulge Effect */
+            animation: liquid-edge 8s infinite alternate ease-in-out;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-panel:hover { transform: scale(1.02); }
+
+        /* Smoothly morphs the border-radius to look like shifting liquid */
+        @keyframes liquid-edge {
+            0%   { border-radius: 24px 24px 24px 24px; }
+            25%  { border-radius: 28px 20px 32px 18px; }
+            50%  { border-radius: 20px 30px 18px 32px; }
+            75%  { border-radius: 30px 18px 26px 20px; }
+            100% { border-radius: 22px 26px 20px 28px; }
         }
 
         .password-overlay {
@@ -102,31 +110,29 @@
         }
         
         .password-modal { padding: 45px 30px; max-width: 360px; width: 100%; }
-        .card { padding: 22px; margin-bottom: 20px; transition: all 0.3s ease; }
+        .card { padding: 22px; margin-bottom: 20px; }
         .calc-wrapper { padding: 20px; }
         .break-modal { padding: 35px 24px; max-width: 380px; }
 
         #global-clock {
             position: fixed; top: 14px; left: 15px; z-index: 1001;
             font-family: 'Courier New', monospace; font-size: 0.9rem; font-weight: 900;
-            color: #fff; text-shadow: 0 0 15px var(--accent); padding: 8px 16px; border-radius: 30px;
+            color: #fff; text-shadow: 0 0 15px var(--accent); padding: 8px 16px;
         }
 
         .system-tagline {
             position: fixed; top: 14px; right: 15px; z-index: 1001; font-size: 0.7rem; font-weight: 800;
-            color: var(--text-main); padding: 8px 16px; border-radius: 30px;
+            color: var(--text-main); padding: 8px 16px;
             text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 10px var(--secondary);
         }
 
-        header { text-align: center; padding: 65px 15px 20px 15px; }
+        header { text-align: center; padding: 65px 15px 20px 15px; z-index: 10; position: relative; }
         header h1 { margin: 0; font-size: 2.1rem; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; color: #ffffff; text-shadow: 0 0 20px var(--accent), 0 0 40px var(--secondary); }
         .motto { font-size: 0.72rem; color: var(--accent); margin: 8px 0 22px 0; text-transform: uppercase; letter-spacing: 3px; font-weight: 600; text-shadow: 0 0 8px var(--accent-glow); }
 
         .card h2 { margin-top: 0; font-size: 1.15rem; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 16px; text-shadow: 0 0 10px var(--accent-glow); }
 
-        .countdown-container {
-            border-radius: 16px; padding: 14px; margin: 10px auto; max-width: 480px;
-        }
+        .countdown-container { padding: 14px; margin: 10px auto; max-width: 480px; animation-delay: -2s; }
         .countdown-title { font-size: 0.7rem; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: 8px; letter-spacing: 2px; }
         .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
         .time-box { background: rgba(255, 255, 255, 0.03); padding: 10px 0; border-radius: 10px; border: 1px solid var(--glass-border-dark); border-top: 1px solid rgba(255,255,255,0.1); }
@@ -135,7 +141,7 @@
 
         nav {
             display: flex; overflow-x: auto; position: sticky; top: 0; z-index: 100; scrollbar-width: none;
-            border-radius: 0 0 20px 20px; border-top: none;
+            border-top: none; animation-delay: -4s; margin: 0 14px;
         }
         nav::-webkit-scrollbar { display: none; }
 
@@ -147,7 +153,7 @@
         .nav-btn:hover { color: #fff; text-shadow: 0 0 10px var(--accent); }
         .nav-btn.active { color: #ffffff; text-shadow: 0 0 15px var(--accent); background: rgba(255,255,255,0.05); border-bottom-color: var(--accent); }
 
-        .main-content { max-width: 480px; margin: 25px auto; padding: 0 14px; box-sizing: border-box; }
+        .main-content { max-width: 480px; margin: 25px auto; padding: 0 14px; box-sizing: border-box; z-index: 10; position: relative; }
         .page { display: none; }
         .page.active { display: block; animation: smoothFade 0.4s ease-out forwards; }
         @keyframes smoothFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -206,9 +212,11 @@
 
     <div class="orb orb-cyan"></div>
     <div class="orb orb-violet"></div>
+    
+    <canvas id="cursor-trail"></canvas>
 
     <div id="password-gate-screen" class="password-overlay">
-        <div class="password-modal glass-panel">
+        <div class="password-modal glass-panel" style="animation-delay: -1s;">
             <h2 style="color:var(--accent); text-shadow: 0 0 15px var(--accent); margin-bottom: 6px; border:none; padding:0; text-align:center;">🔓 SECURE SYNC</h2>
             <p style="color:var(--text-muted); font-size:0.82rem; margin-bottom: 24px;">Authorization Required. Input Terminal PIN.</p>
             <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:12px; font-size:1.8rem; margin-bottom: 24px; background:rgba(0,0,0,0.6);" maxlength="4">
@@ -216,8 +224,8 @@
         </div>
     </div>
 
-    <div id="global-clock" class="glass-panel">00:00:00</div>
-    <div class="system-tagline glass-panel">Liquid Engine Online</div>
+    <div id="global-clock" class="glass-panel" style="animation-delay: -3s;">00:00:00</div>
+    <div class="system-tagline glass-panel" style="animation-delay: -5s;">Liquid Engine Online</div>
 
     <div id="strict-break-screen" class="break-overlay">
         <div class="break-modal glass-panel">
@@ -243,7 +251,7 @@
         </div>
     </header>
 
-    <nav class="glass-panel" style="margin: 0 14px;">
+    <nav class="glass-panel">
         <button class="nav-btn active" onclick="showPage('dash-page', this)">🏠 Dash</button>
         <button class="nav-btn" onclick="showPage('bg-page', this)">🌌 Backdrop</button>
         <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syll</button>
@@ -255,10 +263,10 @@
     <div class="main-content">
 
         <div id="bg-page" class="page">
-            <div class="card glass-panel">
+            <div class="card glass-panel" style="animation-delay: -1.5s;">
                 <h2>🌌 Backdrop Switcher</h2>
                 <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">
-                    Change the background to see the heavy liquid glass refraction adapt instantly.
+                    Change the background to see the heavy liquid glass refraction adapt instantly. Notice how the light trails interact!
                 </p>
                 <div class="bg-grid">
                     <div class="bg-option active-bg" style="background:#030308;" onclick="changeBg('bg-void', this)">Deep Void</div>
@@ -270,7 +278,7 @@
         </div>
 
         <div id="dash-page" class="page active">
-            <div class="card glass-panel" style="text-align:center;">
+            <div class="card glass-panel" style="text-align:center; animation-delay: -2s;">
                 <h2>⏱️ Focus Block Timer</h2>
                 <div id="timer-display" style="font-size:4.5rem; font-family:monospace; font-weight:900; margin:10px 0; color:white; text-shadow:0 0 20px var(--accent), 0 0 40px var(--secondary);">25:00</div>
                 
@@ -286,20 +294,20 @@
                 </div>
             </div>
 
-            <div class="card glass-panel">
+            <div class="card glass-panel" style="animation-delay: -3.5s;">
                 <h2>🎧 AI Alpha Soundscape</h2>
                 <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
                 <button id="audio-synth-toggle" class="action-btn secondary" onclick="toggleAlphaDrone()">Synthesize Focus Wave 🧘</button>
             </div>
 
-            <div class="card glass-panel">
+            <div class="card glass-panel" style="animation-delay: -0.5s;">
                 <h2>📝 Live Scratchpad Terminal</h2>
                 <textarea id="scratchpad-area" rows="4" placeholder="Type data, raw formulas, or temporary checklists..." oninput="saveScratchpad()"></textarea>
             </div>
         </div>
 
         <div id="syllabus-page" class="page">
-            <div class="card glass-panel">
+            <div class="card glass-panel" style="animation-delay: -1s;">
                 <h2>📚 Master Syllabus Directory</h2>
                 <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px; text-shadow:0 0 8px var(--accent-glow);">📐 MATHEMATICS ARRAY</span><div id="math-chapters"></div></div>
                 <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px; text-shadow:0 0 8px var(--accent-glow);">🧪 SCIENCE ARRAY</span><div id="science-chapters"></div></div>
@@ -308,7 +316,7 @@
         </div>
 
         <div id="calendar-page" class="page">
-            <div class="card glass-panel">
+            <div class="card glass-panel" style="animation-delay: -2s;">
                 <h2>📅 Milestone Schedule Vault</h2>
                 <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
                     <input type="text" id="event-name" placeholder="Target Objective Summary">
@@ -320,13 +328,13 @@
         </div>
 
         <div id="games-page" class="page">
-            <div class="card glass-panel" style="text-align:center;">
+            <div class="card glass-panel" style="text-align:center; animation-delay: -1.2s;">
                 <h2>🎮 Liquid Fidget Popper</h2>
                 <div class="fidget-grid" id="pop-grid"></div>
                 <button class="action-btn secondary" style="padding:10px;" onclick="resetBubbles()">Reset Matrix Wrap 🔄</button>
             </div>
 
-            <div class="card glass-panel" style="text-align:center;">
+            <div class="card glass-panel" style="text-align:center; animation-delay: -2.4s;">
                 <h2>❌ Tic-Tac-Toe Arena ⭕</h2>
                 <div id="ttt-grid" class="ttt-grid"></div>
                 <button class="action-btn secondary" style="padding:10px;" onclick="resetTTT()">Reset Match Layout 🔄</button>
@@ -334,7 +342,7 @@
         </div>
 
         <div id="qa-page" class="page">
-            <div class="card glass-panel">
+            <div class="card glass-panel" style="animation-delay: -3s;">
                 <h2>🧠 Concept Deficit Vault</h2>
                 <textarea id="q-text" rows="2" placeholder="Formula layout error / complex doubt statement..." style="margin-bottom:10px;"></textarea>
                 <textarea id="a-text" rows="3" placeholder="Resolved steps, key insights, derived proofs..."></textarea>
@@ -346,9 +354,56 @@
     </div>
 
     <script>
+        /* --- LIGHT TRAIL CANVAS ENGINE --- */
+        const trailCanvas = document.getElementById('cursor-trail');
+        const ctx = trailCanvas.getContext('2d');
+        let cW, cH;
+        
+        function resizeCanvas() { 
+            cW = trailCanvas.width = window.innerWidth; 
+            cH = trailCanvas.height = window.innerHeight; 
+        }
+        window.addEventListener('resize', resizeCanvas); 
+        resizeCanvas();
+
+        const particles = [];
+        function addParticle(x, y) {
+            particles.push({
+                x: x, y: y,
+                size: Math.random() * 15 + 10,
+                life: 1,
+                // Randomly alternate between Electric Cyan and Deep Violet
+                color: Math.random() > 0.5 ? '0, 255, 255' : '138, 43, 226'
+            });
+        }
+
+        // Track Mouse & Touch
+        window.addEventListener('mousemove', e => addParticle(e.clientX, e.clientY));
+        window.addEventListener('touchmove', e => {
+            if(e.touches.length > 0) addParticle(e.touches[0].clientX, e.touches[0].clientY);
+        });
+
+        function animateTrail() {
+            ctx.clearRect(0, 0, cW, cH);
+            for(let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${p.color}, ${p.life * 0.4})`;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = `rgba(${p.color}, ${p.life})`;
+                ctx.fill();
+                p.life -= 0.025; // Speed of fade out
+            }
+            // Remove faded particles
+            while(particles.length > 0 && particles[0].life <= 0) particles.shift();
+            requestAnimationFrame(animateTrail);
+        }
+        animateTrail();
+
         /* --- GLOBAL LIQUID TAP / BUTTON RIPPLE --- */
         document.addEventListener('mousedown', function(e) {
-            // 1. Ambient Global Touch Ring (The raindrop effect)
+            // 1. Ambient Global Touch Ring
             const ring = document.createElement("div");
             ring.className = "global-touch-ring";
             ring.style.left = e.clientX + "px";
@@ -356,10 +411,9 @@
             document.body.appendChild(ring);
             setTimeout(() => ring.remove(), 600);
             
-            // Subtle water drop sound on every global tap
             try { AudioEngine.playTick(); } catch(e){}
 
-            // 2. Heavy Button Ripple (If clicking an interactive element)
+            // 2. Heavy Button Ripple
             const target = e.target.closest('button, .bubble, .ttt-cell, .bg-option');
             if (target) {
                 const circle = document.createElement("span");
@@ -375,7 +429,6 @@
             }
         });
         
-        // Also support Mobile Touch
         document.addEventListener('touchstart', function(e) {
             if(e.touches.length > 0) {
                 const touch = e.touches[0];
@@ -391,13 +444,9 @@
         /* --- BACKGROUND SWITCHER LOGIC --- */
         function changeBg(bgClass, btnElement) {
             AudioEngine.playPop();
-            document.body.className = bgClass; // Applies new CSS background class
-            
-            // Update active state on buttons
+            document.body.className = bgClass;
             document.querySelectorAll('.bg-option').forEach(btn => btn.classList.remove('active-bg'));
             btnElement.classList.add('active-bg');
-            
-            // Save preference
             localStorage.setItem('portal_bg_pref', bgClass);
         }
 
@@ -426,7 +475,7 @@
                 } catch(e){}
             },
             playClick() { this.playGlassTone(1200 + Math.random()*200, 'sine', 0.8, 0.15); }, 
-            playTick() { this.playGlassTone(2000, 'sine', 0.1, 0.02); }, // Softer ambient tap
+            playTick() { this.playGlassTone(2000, 'sine', 0.1, 0.02); }, 
             playPop() { this.playGlassTone(800, 'sine', 0.6, 0.2); },
             playSuccess() {
                 this.playGlassTone(880, 'sine', 1.0, 0.15); 
