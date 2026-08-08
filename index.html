@@ -89,33 +89,32 @@
             position: relative; overflow: hidden;
             z-index: 10;
             
-            /* Liquid Bulge Effect */
+            /* Softer, rounder liquid bulge effect */
             animation: liquid-edge 10s infinite alternate ease-in-out;
             transition: transform 0.5s var(--aaa-ease), box-shadow 0.5s var(--aaa-ease);
             will-change: transform, border-radius;
         }
 
-        /* Micro-interaction: Card Hover Lift */
         .card.glass-panel:hover { 
             transform: translateY(-6px) scale(1.01); 
             box-shadow: 0 35px 60px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 0 40px rgba(0, 255, 255, 0.08);
         }
 
+        /* Increased border-radius baseline so there are ZERO sharp corners */
         @keyframes liquid-edge {
-            0%   { border-radius: 24px 24px 24px 24px; }
-            25%  { border-radius: 26px 22px 28px 20px; }
-            50%  { border-radius: 22px 28px 20px 28px; }
-            75%  { border-radius: 28px 20px 24px 22px; }
-            100% { border-radius: 24px 26px 22px 26px; }
+            0%   { border-radius: 34px 34px 34px 34px; }
+            25%  { border-radius: 38px 28px 40px 26px; }
+            50%  { border-radius: 28px 40px 26px 38px; }
+            75%  { border-radius: 40px 26px 34px 30px; }
+            100% { border-radius: 32px 38px 30px 36px; }
         }
 
         /* --- AAA STAGGERED PAGE ANIMATIONS --- */
         .page { display: none; }
         .page.active { display: block; }
         
-        /* Cascade loading for cards inside the active page */
-        .page.active .card { opacity: 0; animation: cascadeIn 0.7s var(--aaa-ease) forwards; }
-        .page.active .card:nth-child(1) { animation-delay: 0.05s; }
+        .page.active .card, .page.active .calc-wrapper { opacity: 0; animation: cascadeIn 0.7s var(--aaa-ease) forwards; }
+        .page.active .card:nth-child(1), .page.active .calc-wrapper { animation-delay: 0.05s; }
         .page.active .card:nth-child(2) { animation-delay: 0.15s; }
         .page.active .card:nth-child(3) { animation-delay: 0.25s; }
         .page.active .card:nth-child(4) { animation-delay: 0.35s; }
@@ -144,18 +143,17 @@
         .password-modal { padding: 48px 32px; max-width: 380px; width: 100%; opacity: 0; animation: cascadeIn 0.8s var(--aaa-ease) 0.2s forwards; }
         
         .card { padding: 32px; margin-bottom: 24px; }
-        .calc-wrapper { padding: 24px; }
         .break-modal { padding: 40px 32px; max-width: 400px; }
 
         #global-clock {
-            position: fixed; top: 16px; left: 16px; z-index: 1001;
+            position: fixed; top: 16px; left: 16px; z-index: 1001; border-radius: 30px;
             font-family: 'Courier New', monospace; font-size: 0.95rem; font-weight: 900;
             color: var(--text-heading); text-shadow: 0 0 15px var(--accent); padding: 10px 20px; letter-spacing: 1px;
         }
 
         .system-tagline {
             position: fixed; top: 16px; right: 16px; z-index: 1001; font-size: 0.75rem; font-weight: 800;
-            color: var(--text-heading); padding: 10px 20px;
+            color: var(--text-heading); padding: 10px 20px; border-radius: 30px;
             text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 0 15px var(--secondary);
         }
 
@@ -163,18 +161,24 @@
         header h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; color: var(--text-heading); text-shadow: 0 0 25px var(--accent), 0 0 45px var(--secondary); }
         .motto { font-size: 0.8rem; color: var(--accent); margin: 12px 0 32px 0; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; text-shadow: 0 0 10px var(--accent-glow); }
 
-        .card h2 { margin-top: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-heading); letter-spacing: 0.5px; border-left: 4px solid var(--accent); padding-left: 12px; margin-bottom: 24px; text-shadow: 0 0 15px var(--accent-glow); }
+        .card h2 { margin-top: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-heading); letter-spacing: 0.5px; border-left: 4px solid var(--accent); padding-left: 12px; margin-bottom: 24px; text-shadow: 0 0 15px var(--accent-glow); border-radius: 2px; }
 
         .countdown-container { padding: 20px; margin: 16px auto; max-width: 480px; opacity: 0; animation: cascadeIn 0.8s var(--aaa-ease) forwards; }
         .countdown-title { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: 12px; letter-spacing: 2px; }
         .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .time-box { background: rgba(255, 255, 255, 0.03); padding: 12px 0; border-radius: 12px; border: 1px solid var(--glass-border-dark); border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        /* Softer time boxes */
+        .time-box { background: rgba(255, 255, 255, 0.03); padding: 12px 0; border-radius: 16px; border: 1px solid var(--glass-border-dark); border-top: 1px solid rgba(255,255,255,0.1); }
         .time-box .num { font-size: 1.6rem; font-family: monospace; font-weight: 900; color: var(--text-heading); text-shadow: 0 0 12px var(--accent); }
         .time-box .label { font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 1px;}
 
+        /* Made Nav a floating, completely round pill */
         nav {
-            display: flex; overflow-x: auto; position: sticky; top: 0; z-index: 100; scrollbar-width: none;
-            border-top: none; margin: 0 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); opacity: 0; animation: cascadeIn 0.8s var(--aaa-ease) 0.1s forwards;
+            display: flex; overflow-x: auto; position: sticky; top: 16px; z-index: 100; scrollbar-width: none;
+            margin: 0 16px 24px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); opacity: 0; 
+            animation: cascadeIn 0.8s var(--aaa-ease) 0.1s forwards;
+            border-radius: 30px; /* Floating pill shape */
+            border: 1px solid var(--glass-border-light);
         }
         nav::-webkit-scrollbar { display: none; }
 
@@ -188,10 +192,11 @@
 
         .main-content { max-width: 520px; margin: 32px auto; padding: 0 16px; box-sizing: border-box; z-index: 10; position: relative; }
 
-        /* Liquid Inputs & Buttons */
+        /* Liquid Inputs & Buttons - Fully Rounded Edges */
         input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea {
             background: rgba(0, 0, 0, 0.4); border: 1px solid var(--glass-border-dark); color: var(--text-main);
-            padding: 14px 16px; border-radius: 12px; font-size: 0.95rem; width: 100%; box-sizing: border-box;
+            padding: 14px 16px; border-radius: 20px; /* Extra round */
+            font-size: 0.95rem; width: 100%; box-sizing: border-box;
             outline: none; transition: all 0.4s var(--spring); font-family: 'Courier New', Courier, monospace;
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
         }
@@ -206,8 +211,9 @@
         button.action-btn {
             background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03)); color: var(--text-heading); 
             border: 1px solid var(--glass-border-dark); border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light);
-            padding: 16px; font-size: 0.9rem; font-weight: 800; border-radius: 12px; cursor: pointer;
-            width: 100%; text-transform: uppercase; letter-spacing: 1.5px;
+            padding: 16px; font-size: 0.9rem; font-weight: 800; 
+            border-radius: 20px; /* Extra round */
+            cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1.5px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.3); transition: all 0.4s var(--spring); backdrop-filter: blur(10px);
             will-change: transform, box-shadow;
         }
@@ -223,7 +229,9 @@
         /* Liquid List Items */
         .cal-item, .syllabus-item { 
             background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border-dark); 
-            border-left: 4px solid var(--accent); border-radius: 12px; padding: 16px; margin-bottom: 12px; 
+            border-left: 4px solid var(--accent); 
+            border-radius: 20px; /* Extra round */
+            padding: 16px; margin-bottom: 12px; 
             backdrop-filter: blur(10px); transition: all 0.4s var(--spring); box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
             will-change: transform;
         }
@@ -234,10 +242,28 @@
         .cal-item { display: flex; justify-content: space-between; align-items: center; }
         .cal-item.urgent { border-left-color: #f43f5e; background: linear-gradient(90deg, rgba(244, 63, 94, 0.1), transparent); }
 
+        /* RESTORED: CALCULATOR STYLES */
+        .calc-wrapper { padding: 24px; }
+        #calc-screen { width: 100%; height: 70px; background: rgba(0, 0, 0, 0.6); border-radius: 20px; margin-bottom: 16px; text-align: right; padding: 15px; font-size: 2.2rem; color: #fff; text-shadow: 0 0 15px var(--accent); border: 1px solid var(--glass-border-light); font-family: monospace; box-shadow: inset 0 0 20px rgba(0,255,255,0.2); }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .btn-calc { height: 55px; border-radius: 20px; border: 1px solid var(--glass-border-dark); border-top: 1px solid rgba(255,255,255,0.2); border-left: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: all 0.3s var(--aaa-ease); backdrop-filter: blur(10px); will-change: transform; }
+        .btn-calc:hover { background: var(--accent-glow); border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); transform: scale(1.05); }
+        .btn-calc:active { background: var(--accent); transform: scale(0.94); }
+        .btn-calc.op { color: var(--accent); background: rgba(0, 255, 255, 0.1); }
+        .btn-calc.equals { background: var(--secondary-glow); color: white; grid-column: span 2; border-color: var(--secondary); }
+        .btn-calc.clear { color: #ff3366; text-shadow: 0 0 8px rgba(255,51,102,0.8); }
+
+        /* RESTORED: METRICS STYLES */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        .stat-card { background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border-dark); padding: 14px; border-radius: 20px; text-align: center; border-top: 1px solid var(--glass-border-light); transition: transform 0.3s var(--aaa-ease); }
+        .stat-card:hover { transform: translateY(-3px) scale(1.02); border-color: var(--accent); box-shadow: 0 10px 20px var(--accent-glow); }
+        .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--accent); font-family: monospace; text-shadow: 0 0 15px var(--accent); }
+        .stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
+
         /* Background Switcher Options */
         .bg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
         .bg-option {
-            height: 85px; border-radius: 12px; cursor: pointer; border: 2px solid transparent;
+            height: 85px; border-radius: 20px; cursor: pointer; border: 2px solid transparent;
             transition: all 0.4s var(--spring); position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;
             text-shadow: 0 2px 6px rgba(0,0,0,0.9); box-shadow: 0 6px 15px rgba(0,0,0,0.4);
@@ -261,7 +287,7 @@
         .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 220px; margin: 20px auto; }
         .ttt-cell { 
             aspect-ratio: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border-light); 
-            border-radius: 12px; display: flex; align-items: center; justify-content: center; 
+            border-radius: 20px; display: flex; align-items: center; justify-content: center; 
             font-size: 2.2rem; font-weight: 900; cursor: pointer; backdrop-filter: blur(10px); 
             position: relative; overflow: hidden; text-shadow: 0 0 20px #fff; 
             box-shadow: inset 0 2px 8px rgba(255,255,255,0.1), 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.4s var(--spring);
@@ -317,27 +343,14 @@
         <button class="nav-btn active" onclick="showPage('dash-page', this)">🏠 Dash</button>
         <button class="nav-btn" onclick="showPage('bg-page', this)">🌌 Backdrop</button>
         <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syll</button>
+        <button class="nav-btn" onclick="showPage('calc-page', this)">🧮 Calc</button>
         <button class="nav-btn" onclick="showPage('calendar-page', this)">📅 Cal</button>
         <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
         <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
+        <button class="nav-btn" onclick="showPage('metrics-page', this)">📊 Metrics</button>
     </nav>
 
     <div class="main-content">
-
-        <div id="bg-page" class="page">
-            <div class="card glass-panel">
-                <h2>🌌 Backdrop Switcher</h2>
-                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5; margin-top:-10px; margin-bottom:24px;">
-                    Change the background to see the heavy liquid glass refraction adapt instantly with AAA transition physics.
-                </p>
-                <div class="bg-grid">
-                    <div class="bg-option active-bg" style="background:#030308;" onclick="changeBg('bg-void', this)">Deep Void</div>
-                    <div class="bg-option" style="background:linear-gradient(135deg, #02111d, #033a4c);" onclick="changeBg('bg-ocean', this)">Abyssal Ocean</div>
-                    <div class="bg-option" style="background:linear-gradient(135deg, #1a0b2e, #4b003f);" onclick="changeBg('bg-vapor', this)">Neon Vapor</div>
-                    <div class="bg-option" style="background:radial-gradient(circle at 50% 50%, #1a1a3a, #050510);" onclick="changeBg('bg-aurora', this)">Aurora Mesh</div>
-                </div>
-            </div>
-        </div>
 
         <div id="dash-page" class="page active">
             <div class="card glass-panel" style="text-align:center;">
@@ -368,12 +381,53 @@
             </div>
         </div>
 
+        <div id="bg-page" class="page">
+            <div class="card glass-panel">
+                <h2>🌌 Backdrop Switcher</h2>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5; margin-top:-10px; margin-bottom:24px;">
+                    Change the background to see the heavy liquid glass refraction adapt instantly with AAA transition physics.
+                </p>
+                <div class="bg-grid">
+                    <div class="bg-option active-bg" style="background:#030308;" onclick="changeBg('bg-void', this)">Deep Void</div>
+                    <div class="bg-option" style="background:linear-gradient(135deg, #02111d, #033a4c);" onclick="changeBg('bg-ocean', this)">Abyssal Ocean</div>
+                    <div class="bg-option" style="background:linear-gradient(135deg, #1a0b2e, #4b003f);" onclick="changeBg('bg-vapor', this)">Neon Vapor</div>
+                    <div class="bg-option" style="background:radial-gradient(circle at 50% 50%, #1a1a3a, #050510);" onclick="changeBg('bg-aurora', this)">Aurora Mesh</div>
+                </div>
+            </div>
+        </div>
+
         <div id="syllabus-page" class="page">
             <div class="card glass-panel">
                 <h2>📚 Master Syllabus Directory</h2>
                 <div style="margin-bottom:24px;"><span style="color:var(--accent); font-weight:800; font-size:0.9rem; letter-spacing:1.5px; text-shadow:0 0 10px var(--accent-glow);">📐 MATHEMATICS ARRAY</span><div id="math-chapters" style="margin-top: 12px;"></div></div>
                 <div style="margin-bottom:24px;"><span style="color:var(--accent); font-weight:800; font-size:0.9rem; letter-spacing:1.5px; text-shadow:0 0 10px var(--accent-glow);">🧪 SCIENCE ARRAY</span><div id="science-chapters" style="margin-top: 12px;"></div></div>
                 <div><span style="color:var(--accent); font-weight:800; font-size:0.9rem; letter-spacing:1.5px; text-shadow:0 0 10px var(--accent-glow);">🌍 SOCIAL SCIENCE ARRAY</span><div id="social-chapters" style="margin-top: 12px;"></div></div>
+            </div>
+        </div>
+
+        <div id="calc-page" class="page">
+            <div class="calc-wrapper glass-panel">
+                <input type="text" id="calc-screen" disabled value="0">
+                <div class="calc-grid">
+                    <button class="btn-calc clear" onclick="clearCalc()">C</button>
+                    <button class="btn-calc op" onclick="append('/')">/</button>
+                    <button class="btn-calc op" onclick="append('*')">×</button>
+                    <button class="btn-calc op" onclick="backspace()">⌫</button>
+                    <button class="btn-calc" onclick="append('7')">7</button>
+                    <button class="btn-calc" onclick="append('8')">8</button>
+                    <button class="btn-calc" onclick="append('9')">9</button>
+                    <button class="btn-calc op" onclick="append('-')">-</button>
+                    <button class="btn-calc" onclick="append('4')">4</button>
+                    <button class="btn-calc" onclick="append('5')">5</button>
+                    <button class="btn-calc" onclick="append('6')">6</button>
+                    <button class="btn-calc op" onclick="append('+')">+</button>
+                    <button class="btn-calc" onclick="append('1')">1</button>
+                    <button class="btn-calc" onclick="append('2')">2</button>
+                    <button class="btn-calc" onclick="append('3')">3</button>
+                    <button class="btn-calc op" onclick="append('.')">.</button>
+                    <button class="btn-calc" onclick="append('0')">0</button>
+                    <button class="btn-calc equals" onclick="calculate()">=</button>
+                </div>
             </div>
         </div>
 
@@ -410,6 +464,35 @@
                 <textarea id="a-text" rows="4" placeholder="Resolved steps, key insights, derived proofs..."></textarea>
                 <button class="action-btn" onclick="saveToVault()" style="margin-top:20px;">Commit Matrix Log 🔐</button>
                 <div id="vault-log" style="margin-top:24px;"></div>
+            </div>
+        </div>
+
+        <div id="metrics-page" class="page">
+            <div class="card glass-panel">
+                <h2>📊 Dynamic System Workspace</h2>
+                <p style="color:var(--text-muted); font-size:0.85rem; margin-top:-10px; margin-bottom:15px;">Real-time analytical output from cached structural configuration fields.</p>
+                
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-completed-chapters">0</div>
+                        <div class="stat-label">Modules Clear</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-events">0</div>
+                        <div class="stat-label">Milestones</div>
+                    </div>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-qa-count">0</div>
+                        <div class="stat-label">Vault Logs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-notes-len">0</div>
+                        <div class="stat-label">Chars Logged</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -543,7 +626,7 @@
         /* --- INITIALIZATION --- */
         function initializeSystemWorkspace() {
             document.getElementById('scratchpad-area').value = localStorage.getItem('portal_global_scratchpad') || "";
-            renderEvents(); setupSyllabusTrackerNodes();
+            renderEvents(); setupSyllabusTrackerNodes(); calculateSystemMetrics();
             
             const savedBg = localStorage.getItem('portal_bg_pref');
             if(savedBg) {
@@ -555,7 +638,7 @@
             }
         }
 
-        function saveScratchpad() { localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value); }
+        function saveScratchpad() { localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value); calculateSystemMetrics(); }
 
         function showPage(id, btn) {
             AudioEngine.playClick();
@@ -567,6 +650,8 @@
             const targetPage = document.getElementById(id);
             targetPage.classList.add('active');
             btn.classList.add('active');
+            
+            if(id === 'metrics-page') calculateSystemMetrics();
             window.scrollTo(0,0);
         }
 
@@ -621,6 +706,33 @@
         function pauseTimer() { AudioEngine.playClick(); clearInterval(timerSessionId); timerSessionId = null; }
         function resetTimer() { AudioEngine.playClick(); pauseTimer(); timeLeft = baseTime; updateDisplay(); }
 
+        /* --- RESTORED: CALCULATOR LOGIC --- */
+        const calcNode = document.getElementById('calc-screen');
+        function append(char) { AudioEngine.playClick(); if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
+        function clearCalc() { AudioEngine.playPop(); calcNode.value = '0'; }
+        function backspace() { AudioEngine.playPop(); calcNode.value = calcNode.value.slice(0, -1) || '0'; }
+        function calculate() { 
+            try { calcNode.value = eval(calcNode.value); AudioEngine.playSuccess(); } 
+            catch { AudioEngine.playError(); calcNode.value = 'Execution Mismatch'; } 
+        }
+
+        /* --- RESTORED: METRICS LOGIC --- */
+        function calculateSystemMetrics() {
+            const syllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
+            let clearCount = 0;
+            for(let node in syllabusStates) { if(syllabusStates[node].checked) clearCount++; }
+            document.getElementById('stat-completed-chapters').innerText = clearCount;
+
+            const eventStorage = JSON.parse(localStorage.getItem('portal_global_events') || '[]');
+            document.getElementById('stat-total-events').innerText = eventStorage.length;
+
+            const qaStorage = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
+            document.getElementById('stat-qa-count').innerText = qaStorage.length;
+            
+            const scratchText = localStorage.getItem('portal_global_scratchpad') || "";
+            document.getElementById('stat-notes-len').innerText = scratchText.length;
+        }
+
         function addEvent() {
             const title = document.getElementById('event-name').value.trim(); const timestamp = document.getElementById('event-date').value;
             if(!title || !timestamp) { AudioEngine.playError(); return; }
@@ -628,7 +740,7 @@
             const storageKey = 'portal_global_events';
             const currentList = JSON.parse(localStorage.getItem(storageKey) || '[]'); currentList.push({ title, timestamp });
             currentList.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem(storageKey, JSON.stringify(currentList));
-            renderEvents(); document.getElementById('event-name').value = "";
+            renderEvents(); calculateSystemMetrics(); document.getElementById('event-name').value = "";
         }
         function renderEvents() {
             const container = document.getElementById('event-list');
@@ -655,7 +767,7 @@
         function deleteEvent(idx) {
             AudioEngine.playPop();
             let src = JSON.parse(localStorage.getItem('portal_global_events') || '[]'); src.splice(idx, 1);
-            localStorage.setItem('portal_global_events', JSON.stringify(src)); renderEvents();
+            localStorage.setItem('portal_global_events', JSON.stringify(src)); renderEvents(); calculateSystemMetrics();
         }
 
         const frameworkDataArray = { 
@@ -686,6 +798,7 @@
             let savedSyllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
             savedSyllabusStates[id] = { checked: document.getElementById(`check_${id}`).checked };
             localStorage.setItem('portal_global_syllabus', JSON.stringify(savedSyllabusStates));
+            calculateSystemMetrics();
         }
 
         function saveToVault() {
@@ -695,7 +808,7 @@
             let currentLogs = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
             currentLogs.push({ q: queryData, a: verificationData });
             localStorage.setItem('portal_global_qa_vault', JSON.stringify(currentLogs));
-            renderQAVault();
+            renderQAVault(); calculateSystemMetrics();
             document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
         }
         function renderQAVault() {
