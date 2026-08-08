@@ -3,92 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liquid Glass Pro Portal</title>
+    <title>Refined Liquid Glass Portal</title>
     <style>
         /* --- LIQUID GLASS NEON VARIABLES --- */
         :root {
-            --bg-main: #050510;
-            --bg-card: rgba(20, 20, 35, 0.4);
             --accent: #00ffff; /* Electric Cyan */
-            --accent-glow: rgba(0, 255, 255, 0.4);
+            --accent-glow: rgba(0, 255, 255, 0.5);
             --secondary: #8a2be2; /* Deep Ultraviolet */
-            --secondary-glow: rgba(138, 43, 226, 0.3);
+            --secondary-glow: rgba(138, 43, 226, 0.4);
             --text-main: #ffffff;
             --text-muted: #a0a0c0;
-            --border-light: rgba(0, 255, 255, 0.5);
-            --border-dark: rgba(255, 255, 255, 0.05);
-            --glass-specular: rgba(255, 255, 255, 0.1);
             --success: #00ffcc;
+            
+            /* Refined Glass Formula */
+            --glass-bg: rgba(20, 20, 35, 0.25);
+            --glass-border-light: rgba(255, 255, 255, 0.15);
+            --glass-border-dark: rgba(255, 255, 255, 0.02);
+            --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            --glass-inset: inset 0 0 20px rgba(255, 255, 255, 0.03);
         }
 
+        /* --- DYNAMIC BACKGROUNDS --- */
         body {
             font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-main);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            padding-bottom: 120px;
+            margin: 0; padding: 0; padding-bottom: 120px;
             overflow-x: hidden;
+            transition: background 0.8s ease;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
         }
 
-        /* Ambient 3D Neon Orbs */
+        body.bg-void { background-color: #030308; }
+        
+        body.bg-ocean {
+            background: linear-gradient(135deg, #02111d 0%, #033a4c 50%, #011214 100%);
+        }
+        
+        body.bg-vapor {
+            background: linear-gradient(135deg, #1a0b2e 0%, #4b003f 50%, #11011c 100%);
+        }
+
+        body.bg-aurora {
+            background: radial-gradient(circle at 15% 50%, rgba(0, 255, 255, 0.15), transparent 50%),
+                        radial-gradient(circle at 85% 30%, rgba(138, 43, 226, 0.15), transparent 50%),
+                        #050510;
+        }
+
+        /* Ambient 3D Neon Orbs (Floating behind the glass) */
         .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            animation: float 10s infinite ease-in-out alternate;
-            opacity: 0.2;
-            pointer-events: none;
+            position: fixed; border-radius: 50%; filter: blur(90px); z-index: -1;
+            animation: float 12s infinite ease-in-out alternate; opacity: 0.35; pointer-events: none;
         }
-        .orb-cyan {
-            width: 50vw; height: 50vw;
-            background: var(--accent);
-            top: -10%; left: -10%;
-        }
-        .orb-violet {
-            width: 60vw; height: 60vw;
-            background: var(--secondary);
-            bottom: -10%; right: -10%;
-            animation-delay: -5s;
-        }
+        .orb-cyan { width: 50vw; height: 50vw; background: var(--accent); top: -15%; left: -10%; }
+        .orb-violet { width: 60vw; height: 60vw; background: var(--secondary); bottom: -15%; right: -10%; animation-delay: -6s; }
 
         @keyframes float {
             0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(50px) scale(1.1); }
+            100% { transform: translateY(60px) scale(1.1); }
         }
 
-        /* --- LIQUID RIPPLE EFFECT --- */
+        /* --- GLOBAL TOUCH/TAP WATER RIPPLE --- */
+        .global-touch-ring {
+            position: fixed; width: 20px; height: 20px; border: 2px solid rgba(0, 255, 255, 0.8);
+            border-radius: 50%; transform: translate(-50%, -50%) scale(1); opacity: 0.8;
+            pointer-events: none; z-index: 99999; box-shadow: 0 0 10px var(--accent-glow);
+            animation: ring-expand 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+        @keyframes ring-expand {
+            to { transform: translate(-50%, -50%) scale(6); opacity: 0; border-width: 0px; }
+        }
+
+        /* --- BUTTON RIPPLE EFFECT --- */
         .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(0, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-            pointer-events: none;
-            z-index: 99;
+            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
+            transform: scale(0); animation: ripple-animation 0.6s linear; pointer-events: none; z-index: 99;
         }
         @keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
 
-        /* Security Gate Shield Overlay */
-        .password-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 16, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 10000; display: flex; justify-content: center; align-items: center; text-align: center;
-            padding: 20px; box-sizing: border-box; transition: opacity 0.4s ease;
+        /* --- REFINED LIQUID GLASS ENGINE --- */
+        .glass-panel {
+            background: linear-gradient(135deg, var(--glass-bg), rgba(10, 10, 20, 0.1));
+            backdrop-filter: blur(35px) saturate(120%);
+            -webkit-backdrop-filter: blur(35px) saturate(120%);
+            border: 1px solid var(--glass-border-dark);
+            border-top: 1px solid var(--glass-border-light);
+            border-left: 1px solid var(--glass-border-light);
+            box-shadow: var(--glass-shadow), var(--glass-inset);
+            border-radius: 24px; position: relative; overflow: hidden;
         }
 
-        .password-modal, .break-modal, .card, .calc-wrapper {
-            background: var(--bg-card);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border-dark);
-            border-top: 1px solid var(--border-light);
-            border-left: 1px solid var(--border-light);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 0 20px var(--secondary-glow);
-            border-radius: 24px;
-            position: relative;
+        .password-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 8, 0.7); backdrop-filter: blur(15px);
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            padding: 20px; box-sizing: border-box; transition: opacity 0.4s ease;
         }
         
         .password-modal { padding: 45px 30px; max-width: 360px; width: 100%; }
@@ -99,20 +109,13 @@
         #global-clock {
             position: fixed; top: 14px; left: 15px; z-index: 1001;
             font-family: 'Courier New', monospace; font-size: 0.9rem; font-weight: 900;
-            color: #fff; text-shadow: 0 0 15px var(--accent);
-            background: rgba(5, 5, 16, 0.5); padding: 8px 16px;
-            border-radius: 30px; border: 1px solid var(--border-light);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0,255,255,0.2), inset 0 1px 1px var(--glass-specular);
+            color: #fff; text-shadow: 0 0 15px var(--accent); padding: 8px 16px; border-radius: 30px;
         }
 
         .system-tagline {
-            position: fixed; top: 14px; right: 15px; z-index: 1001;
-            font-size: 0.7rem; font-weight: 800; color: var(--text-main);
-            background: var(--secondary-glow); padding: 8px 16px; border-radius: 30px;
-            border: 1px solid var(--secondary); backdrop-filter: blur(20px);
-            text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 0 0 10px var(--secondary);
+            position: fixed; top: 14px; right: 15px; z-index: 1001; font-size: 0.7rem; font-weight: 800;
+            color: var(--text-main); padding: 8px 16px; border-radius: 30px;
+            text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 10px var(--secondary);
         }
 
         header { text-align: center; padding: 65px 15px 20px 15px; }
@@ -122,23 +125,17 @@
         .card h2 { margin-top: 0; font-size: 1.15rem; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 16px; text-shadow: 0 0 10px var(--accent-glow); }
 
         .countdown-container {
-            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px);
-            border: 1px solid var(--border-light); border-radius: 16px; padding: 14px; margin: 10px auto; max-width: 480px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+            border-radius: 16px; padding: 14px; margin: 10px auto; max-width: 480px;
         }
         .countdown-title { font-size: 0.7rem; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: 8px; letter-spacing: 2px; }
         .countdown-digits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .time-box { background: rgba(255, 255, 255, 0.05); padding: 10px 0; border-radius: 10px; border: 1px solid var(--border-dark); border-top: 1px solid rgba(255,255,255,0.2); }
+        .time-box { background: rgba(255, 255, 255, 0.03); padding: 10px 0; border-radius: 10px; border: 1px solid var(--glass-border-dark); border-top: 1px solid rgba(255,255,255,0.1); }
         .time-box .num { font-size: 1.5rem; font-family: monospace; font-weight: 900; color: #fff; text-shadow: 0 0 10px var(--accent); }
         .time-box .label { font-size: 0.52rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
 
-        /* Sleek Fixed Horizontal Scroll Navigation Row */
         nav {
-            display: flex; overflow-x: auto;
-            background: rgba(10, 10, 25, 0.6); backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%); border-bottom: 1px solid var(--border-light);
-            border-top: 1px solid var(--border-dark);
-            position: sticky; top: 0; z-index: 100; box-shadow: 0 10px 30px rgba(0,255,255,0.1); scrollbar-width: none;
+            display: flex; overflow-x: auto; position: sticky; top: 0; z-index: 100; scrollbar-width: none;
+            border-radius: 0 0 20px 20px; border-top: none;
         }
         nav::-webkit-scrollbar { display: none; }
 
@@ -148,123 +145,94 @@
             transition: all 0.3s ease; border-bottom: 2px solid transparent; white-space: nowrap; flex-shrink: 0; position: relative; overflow: hidden;
         }
         .nav-btn:hover { color: #fff; text-shadow: 0 0 10px var(--accent); }
-        .nav-btn.active { color: #ffffff; text-shadow: 0 0 15px var(--accent); background: var(--accent-glow); border-bottom-color: var(--accent); }
+        .nav-btn.active { color: #ffffff; text-shadow: 0 0 15px var(--accent); background: rgba(255,255,255,0.05); border-bottom-color: var(--accent); }
 
         .main-content { max-width: 480px; margin: 25px auto; padding: 0 14px; box-sizing: border-box; }
         .page { display: none; }
         .page.active { display: block; animation: smoothFade 0.4s ease-out forwards; }
-        @keyframes smoothFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes smoothFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Glass Inputs */
+        /* Liquid Inputs & Buttons */
         input[type="text"], input[type="number"], input[type="date"], input[type="password"], select, textarea {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-dark); color: var(--text-main);
+            background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border-dark); color: var(--text-main);
             padding: 12px 14px; border-radius: 12px; font-size: 0.88rem; width: 100%; box-sizing: border-box;
             outline: none; transition: all 0.3s ease; font-family: 'Courier New', Courier, monospace;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); background: rgba(0, 255, 255, 0.05); }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow), inset 0 2px 5px rgba(0,0,0,0.5); background: rgba(0, 255, 255, 0.05); }
 
-        /* Liquid Glass Buttons */
         button { position: relative; overflow: hidden; }
         button.action-btn {
-            background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid var(--border-dark);
-            border-top: 1px solid var(--border-light); border-left: 1px solid var(--border-light);
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)); color: white; 
+            border: 1px solid var(--glass-border-dark); border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light);
             padding: 14px; font-size: 0.85rem; font-weight: 800; border-radius: 12px; cursor: pointer;
             width: 100%; text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease; backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; backdrop-filter: blur(10px);
         }
-        button.action-btn:hover { background: var(--accent-glow); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-2px); }
-        button.action-btn:active { transform: scale(0.98); }
-        button.action-btn.secondary { background: var(--secondary-glow); border-top: 1px solid var(--secondary); border-left: 1px solid var(--secondary); }
-        button.action-btn.secondary:hover { background: rgba(138,43,226,0.6); box-shadow: 0 0 20px var(--secondary-glow); }
+        button.action-btn:hover { background: rgba(0,255,255,0.15); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-2px); }
+        button.action-btn:active { transform: scale(0.96); }
+        button.action-btn.secondary { background: rgba(138,43,226,0.15); border-top: 1px solid rgba(138,43,226,0.5); border-left: 1px solid rgba(138,43,226,0.5); }
+        button.action-btn.secondary:hover { background: rgba(138,43,226,0.3); box-shadow: 0 0 20px var(--secondary-glow); }
 
-        /* Calculator overrides */
-        #calc-screen { width: 100%; height: 70px; background: rgba(0, 0, 0, 0.6); border-radius: 14px; margin-bottom: 16px; text-align: right; padding: 15px; font-size: 2.2rem; color: #fff; text-shadow: 0 0 15px var(--accent); border: 1px solid var(--border-light); font-family: monospace; box-shadow: inset 0 0 20px rgba(0,255,255,0.2); }
-        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .btn-calc {
-            height: 55px; border-radius: 12px; border: 1px solid var(--border-dark); border-top: 1px solid rgba(255,255,255,0.2); border-left: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05); color: white; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; backdrop-filter: blur(10px);
+        /* Liquid List Items */
+        .cal-item, .syllabus-item { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border-dark); border-left: 3px solid var(--accent); border-radius: 12px; padding: 14px; margin-bottom: 10px; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .cal-item:hover, .syllabus-item:hover { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); transform: translateX(5px); background: rgba(255,255,255,0.08); }
+        .cal-item { display: flex; justify-content: space-between; align-items: center; }
+        .cal-item.urgent { border-left-color: #ff3366; background: linear-gradient(90deg, rgba(255, 51, 102, 0.1), transparent); }
+
+        /* Background Switcher Options */
+        .bg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .bg-option {
+            height: 80px; border-radius: 12px; cursor: pointer; border: 2px solid transparent;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        .btn-calc:hover { background: var(--accent-glow); border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
-        .btn-calc:active { background: var(--accent); transform: scale(0.94); }
-        .btn-calc.op { color: var(--accent); background: rgba(0, 255, 255, 0.1); }
-        .btn-calc.equals { background: var(--secondary-glow); color: white; grid-column: span 2; border-color: var(--secondary); }
-        .btn-calc.clear { color: #ff3366; text-shadow: 0 0 8px rgba(255,51,102,0.8); }
+        .bg-option:hover { transform: scale(1.05); }
+        .bg-option.active-bg { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
 
-        /* List Items */
-        .cal-item, .syllabus-item, .rank-item { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-dark); border-left: 3px solid var(--accent); border-radius: 12px; padding: 14px; margin-bottom: 10px; backdrop-filter: blur(5px); transition: all 0.3s ease; }
-        .cal-item:hover, .syllabus-item:hover { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); transform: translateX(5px); }
-        .cal-item, .rank-item { display: flex; justify-content: space-between; align-items: center; }
-        .cal-item.urgent { border-left-color: #ff3366; background: linear-gradient(90deg, rgba(255, 51, 102, 0.15), transparent); }
-
-        .rank-badge { font-weight: 900; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; text-transform: uppercase; }
-        .rank-gold { border-left-color: #ffd700 !important; background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), transparent); }
-        .badge-gold { background: rgba(255, 215, 0, 0.2); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.5); text-shadow: 0 0 10px #ffd700; }
-        .rank-silver { border-left-color: #e2e8f0 !important; }
-        .badge-silver { background: rgba(226, 232, 240, 0.2); color: #e2e8f0; border: 1px solid rgba(226, 232, 240, 0.5); }
-        .badge-standard { background: rgba(255,255,255,0.08); color: var(--text-muted); }
-
-        /* Games */
+        /* Game Elements */
         .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 15px 0; }
-        .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #004444 100%); border-radius: 50%; border: 1px solid var(--border-light); cursor: pointer; box-shadow: 0 0 10px var(--accent-glow); position: relative; overflow: hidden; }
-        .bubble.popped { background: #050510; box-shadow: inset 0 4px 15px rgba(0,0,0,0.8); border: 1px solid var(--border-dark); }
+        .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #004444 100%); border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); cursor: pointer; box-shadow: 0 0 10px var(--accent-glow), inset 0 2px 5px rgba(255,255,255,0.5); position: relative; overflow: hidden; }
+        .bubble.popped { background: rgba(0,0,0,0.5); box-shadow: inset 0 4px 15px rgba(0,0,0,0.8); border: 1px solid var(--glass-border-dark); }
         
-        .reaction-box { width: 100%; height: 100px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-weight: 800; cursor: pointer; position: relative; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,255,255,0.1); transition: all 0.2s; }
-        .reaction-box.waiting { background: rgba(138,43,226,0.4); border-color: var(--secondary); text-shadow: 0 0 10px var(--secondary); }
-        .reaction-box.ready { background: rgba(0,255,204,0.4); border-color: var(--success); font-size: 1.2rem; text-shadow: 0 0 15px var(--success); box-shadow: 0 0 30px rgba(0,255,204,0.4); }
-
         .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 200px; margin: 15px auto; }
-        .ttt-cell { aspect-ratio: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 900; cursor: pointer; backdrop-filter: blur(10px); position: relative; overflow: hidden; text-shadow: 0 0 15px #fff; }
-
-        /* Stickers */
-        .card-stickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; min-height: 5px; }
-        .sticker-badge { font-size: 1.1rem; animation: glassStamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards; filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); }
-        @keyframes glassStamp { 0% { transform: scale(3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        .sticker-shelf { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-        .sticker-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border-dark); font-size: 1.3rem; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(5px); }
-        .sticker-btn.selected { border-color: var(--accent); background: var(--accent-glow); box-shadow: 0 0 20px var(--accent-glow); transform: scale(1.1); }
-        
-        .tracker-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .tracker-inputs input { padding: 6px 10px; font-size: 0.78rem; border-radius: 8px; }
+        .ttt-cell { aspect-ratio: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 900; cursor: pointer; backdrop-filter: blur(10px); position: relative; overflow: hidden; text-shadow: 0 0 15px #fff; box-shadow: inset 0 2px 5px rgba(255,255,255,0.1); }
 
         .break-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,16,0.9); backdrop-filter: blur(20px); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
-
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
-        .stat-card { background: rgba(0,0,0,0.4); border: 1px solid var(--border-dark); padding: 14px; border-radius: 12px; text-align: center; border-top: 1px solid var(--border-light); }
-        .stat-value { font-size: 1.6rem; font-weight: 900; color: var(--accent); font-family: monospace; text-shadow: 0 0 15px var(--accent); }
-        .stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
     </style>
 </head>
-<body>
+<body class="bg-void">
 
     <div class="orb orb-cyan"></div>
     <div class="orb orb-violet"></div>
 
     <div id="password-gate-screen" class="password-overlay">
-        <div class="password-modal">
+        <div class="password-modal glass-panel">
             <h2 style="color:var(--accent); text-shadow: 0 0 15px var(--accent); margin-bottom: 6px; border:none; padding:0; text-align:center;">🔓 SECURE SYNC</h2>
             <p style="color:var(--text-muted); font-size:0.82rem; margin-bottom: 24px;">Authorization Required. Input Terminal PIN.</p>
-            <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:12px; font-size:1.8rem; margin-bottom: 24px; background:rgba(0,0,0,0.6); box-shadow:inset 0 0 10px var(--accent-glow);" maxlength="4" oninput="AudioEngine.playTick()">
+            <input type="password" id="gate-pin" placeholder="••••" style="text-align:center; letter-spacing:12px; font-size:1.8rem; margin-bottom: 24px; background:rgba(0,0,0,0.6);" maxlength="4">
             <button class="action-btn" onclick="verifyGatePassword()">Synchronize Matrix ⚡</button>
         </div>
     </div>
 
-    <div id="global-clock">00:00:00</div>
-    <div class="system-tagline">Liquid Node Online</div>
+    <div id="global-clock" class="glass-panel">00:00:00</div>
+    <div class="system-tagline glass-panel">Liquid Engine Online</div>
 
     <div id="strict-break-screen" class="break-overlay">
-        <div class="break-modal">
+        <div class="break-modal glass-panel">
             <h2 style="color:#ff3366; text-shadow: 0 0 15px #ff3366; border:none; padding:0; text-align:center;">🚨 SYSTEM LOCKOUT</h2>
             <p style="font-weight:800; font-size:1rem; color:#fff;">30-Min Continuous Grind Block Reached!</p>
-            <p style="color:var(--text-muted); font-size:0.82rem; line-height:1.5; margin-bottom: 20px;">Your brain requires recovery intervals to process architecture. Stand up, stretch, hydrate, and look away from the terminal screen.</p>
+            <p style="color:var(--text-muted); font-size:0.82rem; line-height:1.5; margin-bottom: 20px;">Your brain requires recovery intervals. Stand up, stretch, and look away from the terminal screen.</p>
             <button class="action-btn" style="border-color:#ff3366; background:rgba(255,51,102,0.1);" onclick="dismissStrictBreak()">Resume Grind ⚡</button>
         </div>
     </div>
 
     <header>
         <h1>10 <span style="color: var(--accent); text-shadow: 0 0 20px var(--accent-glow);">Pro</span> Portal</h1>
-        <div class="motto">Stop Wishing. Start Grinding. 🌊</div>
+        <div class="motto">Refined. Fluid. Focused. 🌊</div>
         
-        <div class="countdown-container">
+        <div class="countdown-container glass-panel">
             <div class="countdown-title">⏳ Board Exams Ultimate Countdown</div>
             <div class="countdown-digits">
                 <div class="time-box"><div class="num" id="cd-days">00</div><div class="label">Days</div></div>
@@ -275,51 +243,39 @@
         </div>
     </header>
 
-    <nav>
+    <nav class="glass-panel" style="margin: 0 14px;">
         <button class="nav-btn active" onclick="showPage('dash-page', this)">🏠 Dash</button>
+        <button class="nav-btn" onclick="showPage('bg-page', this)">🌌 Backdrop</button>
         <button class="nav-btn" onclick="showPage('syllabus-page', this)">📚 Syll</button>
-        <button class="nav-btn" onclick="showPage('calc-page', this)">🧮 Calc</button>
         <button class="nav-btn" onclick="showPage('calendar-page', this)">📅 Cal</button>
-        <button class="nav-btn" onclick="showPage('ranks-page', this)">🏆 Rank</button>
         <button class="nav-btn" onclick="showPage('games-page', this)">🎮 Rec</button>
         <button class="nav-btn" onclick="showPage('qa-page', this)">🧠 Q&A</button>
-        <button class="nav-btn" onclick="showPage('metrics-page', this)">📊 Metrics</button>
     </nav>
 
     <div class="main-content">
 
-        <div id="dash-page" class="page active">
-            <div class="card" style="background: linear-gradient(135deg, rgba(0,255,255,0.08), rgba(0,0,0,0.3)); border-left-color: var(--accent);">
-                <div class="card-stickers" id="stickers-dash-quote"></div>
-                <p style="margin:0; font-style:italic; color:#e0ffff; font-size:0.85rem; line-height:1.6; text-shadow:0 0 5px rgba(0,255,255,0.3);">
-                    "The pain of discipline is nothing compared to the pain of regret. Complete the checklist items and engineer your future layout." 👑
+        <div id="bg-page" class="page">
+            <div class="card glass-panel">
+                <h2>🌌 Backdrop Switcher</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">
+                    Change the background to see the heavy liquid glass refraction adapt instantly.
                 </p>
-            </div>
-
-            <div class="card" onclick="applyStickerToCard('dash-quote')">
-                <h2>🏆 Gamified Reward Sticker Shelf</h2>
-                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:12px;">Earn anchors. Select a sticker and tap the milestone card above to apply.</p>
-                <div class="sticker-shelf">
-                    <button class="sticker-btn" onclick="selectRewardSticker('🔥', this, event)">🔥</button>
-                    <button class="sticker-btn" onclick="selectRewardSticker('👑', this, event)">👑</button>
-                    <button class="sticker-btn" onclick="selectRewardSticker('⚡', this, event)">⚡</button>
-                    <button class="sticker-btn" onclick="selectRewardSticker('💯', this, event)">💯</button>
-                    <button class="sticker-btn" onclick="selectRewardSticker('🎯', this, event)">🎯</button>
+                <div class="bg-grid">
+                    <div class="bg-option active-bg" style="background:#030308;" onclick="changeBg('bg-void', this)">Deep Void</div>
+                    <div class="bg-option" style="background:linear-gradient(135deg, #02111d, #033a4c);" onclick="changeBg('bg-ocean', this)">Abyssal Ocean</div>
+                    <div class="bg-option" style="background:linear-gradient(135deg, #1a0b2e, #4b003f);" onclick="changeBg('bg-vapor', this)">Neon Vapor</div>
+                    <div class="bg-option" style="background:radial-gradient(circle at 50% 50%, #1a1a3a, #050510);" onclick="changeBg('bg-aurora', this)">Aurora Mesh</div>
                 </div>
             </div>
+        </div>
 
-            <div class="card">
-                <h2>🎧 AI Alpha Soundscape</h2>
-                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
-                <button id="audio-synth-toggle" class="action-btn secondary" onclick="toggleAlphaDrone()">Synthesize Focus Wave 🧘</button>
-            </div>
-
-            <div class="card" style="text-align:center;">
+        <div id="dash-page" class="page active">
+            <div class="card glass-panel" style="text-align:center;">
                 <h2>⏱️ Focus Block Timer</h2>
                 <div id="timer-display" style="font-size:4.5rem; font-family:monospace; font-weight:900; margin:10px 0; color:white; text-shadow:0 0 20px var(--accent), 0 0 40px var(--secondary);">25:00</div>
                 
                 <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:16px;">
-                    <input type="number" id="custom-minutes" value="25" style="width:75px; text-align:center; padding:6px;" oninput="AudioEngine.playTick()">
+                    <input type="number" id="custom-minutes" value="25" style="width:75px; text-align:center; padding:6px;">
                     <button class="action-btn secondary" onclick="setCustomTime()" style="padding:8px 12px; width:auto; font-size:0.78rem;">Update</button>
                 </div>
 
@@ -330,14 +286,20 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card glass-panel">
+                <h2>🎧 AI Alpha Soundscape</h2>
+                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Generate procedural 10Hz binaural waves for neural synchronization.</p>
+                <button id="audio-synth-toggle" class="action-btn secondary" onclick="toggleAlphaDrone()">Synthesize Focus Wave 🧘</button>
+            </div>
+
+            <div class="card glass-panel">
                 <h2>📝 Live Scratchpad Terminal</h2>
-                <textarea id="scratchpad-area" rows="4" placeholder="Type data, raw formulas, or temporary checklists... Automatically cached to terminal local environments." oninput="saveScratchpad()"></textarea>
+                <textarea id="scratchpad-area" rows="4" placeholder="Type data, raw formulas, or temporary checklists..." oninput="saveScratchpad()"></textarea>
             </div>
         </div>
 
         <div id="syllabus-page" class="page">
-            <div class="card">
+            <div class="card glass-panel">
                 <h2>📚 Master Syllabus Directory</h2>
                 <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px; text-shadow:0 0 8px var(--accent-glow);">📐 MATHEMATICS ARRAY</span><div id="math-chapters"></div></div>
                 <div style="margin-bottom:18px;"><span style="color:var(--accent); font-weight:800; font-size:0.85rem; letter-spacing:1px; text-shadow:0 0 8px var(--accent-glow);">🧪 SCIENCE ARRAY</span><div id="science-chapters"></div></div>
@@ -345,79 +307,26 @@
             </div>
         </div>
 
-        <div id="calc-page" class="page">
-            <div class="calc-wrapper">
-                <input type="text" id="calc-screen" disabled value="0">
-                <div class="calc-grid">
-                    <button class="btn-calc clear" onclick="clearCalc()">C</button>
-                    <button class="btn-calc op" onclick="append('/')">/</button>
-                    <button class="btn-calc op" onclick="append('*')">×</button>
-                    <button class="btn-calc op" onclick="backspace()">⌫</button>
-                    <button class="btn-calc" onclick="append('7')">7</button>
-                    <button class="btn-calc" onclick="append('8')">8</button>
-                    <button class="btn-calc" onclick="append('9')">9</button>
-                    <button class="btn-calc op" onclick="append('-')">-</button>
-                    <button class="btn-calc" onclick="append('4')">4</button>
-                    <button class="btn-calc" onclick="append('5')">5</button>
-                    <button class="btn-calc" onclick="append('6')">6</button>
-                    <button class="btn-calc op" onclick="append('+')">+</button>
-                    <button class="btn-calc" onclick="append('1')">1</button>
-                    <button class="btn-calc" onclick="append('2')">2</button>
-                    <button class="btn-calc" onclick="append('3')">3</button>
-                    <button class="btn-calc op" onclick="append('.')">.</button>
-                    <button class="btn-calc" onclick="append('0')">0</button>
-                    <button class="btn-calc equals" onclick="calculate()">=</button>
-                </div>
-            </div>
-        </div>
-
         <div id="calendar-page" class="page">
-            <div class="card">
+            <div class="card glass-panel">
                 <h2>📅 Milestone Schedule Vault</h2>
-                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Flags critical items within a 3-day target parameter automatically.</p>
-                
                 <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
                     <input type="text" id="event-name" placeholder="Target Objective Summary">
                     <input type="date" id="event-date">
                     <button class="action-btn" onclick="addEvent()">Lock Event Stream 📌</button>
                 </div>
-
                 <div id="event-list"></div>
             </div>
         </div>
 
-        <div id="ranks-page" class="page">
-            <div class="card">
-                <h2>🏆 Live Performance Rankings</h2>
-                <div id="leaderboard-container"></div>
-            </div>
-
-            <div class="card" style="border-color: rgba(138, 43, 226, 0.4);">
-                <h2>🔒 Faculty Override Panel</h2>
-                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Modifications require validation via Faculty Security PIN.</p>
-                
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                    <input type="text" id="rank-student-name" placeholder="Student Full Name">
-                    <input type="number" id="rank-student-marks" placeholder="Acquired Score / Marks">
-                    <input type="password" id="rank-auth-pin" placeholder="Enter Teacher 4-Digit Security Key" style="text-align:center; letter-spacing:4px;">
-                    <button class="action-btn secondary" onclick="commitGradeEntry()">Publish Authorized Grade ⚡</button>
-                </div>
-            </div>
-        </div>
-
         <div id="games-page" class="page">
-            <div class="card" style="text-align:center;">
-                <h2>🎮 Stress Fidget Popper</h2>
+            <div class="card glass-panel" style="text-align:center;">
+                <h2>🎮 Liquid Fidget Popper</h2>
                 <div class="fidget-grid" id="pop-grid"></div>
                 <button class="action-btn secondary" style="padding:10px;" onclick="resetBubbles()">Reset Matrix Wrap 🔄</button>
             </div>
 
-            <div class="card" style="text-align:center;">
-                <h2>⚡ Neural Reflex Engine</h2>
-                <div id="reaction-box" class="reaction-box" onclick="clickReaction()">Click To Initialize</div>
-            </div>
-
-            <div class="card" style="text-align:center;">
+            <div class="card glass-panel" style="text-align:center;">
                 <h2>❌ Tic-Tac-Toe Arena ⭕</h2>
                 <div id="ttt-grid" class="ttt-grid"></div>
                 <button class="action-btn secondary" style="padding:10px;" onclick="resetTTT()">Reset Match Layout 🔄</button>
@@ -425,7 +334,7 @@
         </div>
 
         <div id="qa-page" class="page">
-            <div class="card">
+            <div class="card glass-panel">
                 <h2>🧠 Concept Deficit Vault</h2>
                 <textarea id="q-text" rows="2" placeholder="Formula layout error / complex doubt statement..." style="margin-bottom:10px;"></textarea>
                 <textarea id="a-text" rows="3" placeholder="Resolved steps, key insights, derived proofs..."></textarea>
@@ -434,70 +343,63 @@
             </div>
         </div>
 
-        <div id="metrics-page" class="page">
-            <div class="card">
-                <h2>📊 Dynamic System Workspace Summary</h2>
-                <p style="color:var(--text-muted); font-size:0.78rem; margin-top:-10px; margin-bottom:15px;">Real-time analytical output from cached structural configuration fields.</p>
-                
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="stat-completed-chapters">0</div>
-                        <div class="stat-label">Syllabus Modules Clear</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="stat-total-events">0</div>
-                        <div class="stat-label">Locked Milestones</div>
-                    </div>
-                </div>
-
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="stat-total-stickers">0</div>
-                        <div class="stat-label">Earned Stickers</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="stat-qa-count">0</div>
-                        <div class="stat-label">Deficit Vault Logs</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1"></script>
-
     <script>
-        /* --- APPWRITE CLOUD CLIENT CORE INITIALIZATION --- */
-        const { Client, Databases, ID } = Appwrite;
-        const appwriteClient = new Client()
-            .setEndpoint('https://cloud.appwrite.io/v1') 
-            .setProject('6a21bad3002cb6968d08');
+        /* --- GLOBAL LIQUID TAP / BUTTON RIPPLE --- */
+        document.addEventListener('mousedown', function(e) {
+            // 1. Ambient Global Touch Ring (The raindrop effect)
+            const ring = document.createElement("div");
+            ring.className = "global-touch-ring";
+            ring.style.left = e.clientX + "px";
+            ring.style.top = e.clientY + "px";
+            document.body.appendChild(ring);
+            setTimeout(() => ring.remove(), 600);
+            
+            // Subtle water drop sound on every global tap
+            try { AudioEngine.playTick(); } catch(e){}
 
-        const appwriteDB = new Databases(appwriteClient);
-        const DATABASE_ID = '6a21bbd60013b6cecd39';
-        const COLLECTION_ID = 'leaderboard';
-
-        /* --- GLOBAL LIQUID RIPPLE INJECTION --- */
-        function createRipple(event) {
-            const button = event.currentTarget;
-            const circle = document.createElement("span");
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
-            circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
-            circle.classList.add("ripple");
-            const ripple = button.querySelector(".ripple");
-            if (ripple) ripple.remove();
-            button.appendChild(circle);
-        }
-
-        // Attach ripple to all interactive buttons
-        document.addEventListener('click', function(e) {
-            const target = e.target.closest('button, .bubble, .ttt-cell, .reaction-box');
-            if (target) createRipple({ currentTarget: target, clientX: e.clientX, clientY: e.clientY });
+            // 2. Heavy Button Ripple (If clicking an interactive element)
+            const target = e.target.closest('button, .bubble, .ttt-cell, .bg-option');
+            if (target) {
+                const circle = document.createElement("span");
+                const diameter = Math.max(target.clientWidth, target.clientHeight);
+                const radius = diameter / 2;
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${e.clientX - target.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${e.clientY - target.getBoundingClientRect().top - radius}px`;
+                circle.classList.add("ripple");
+                const existingRipple = target.querySelector(".ripple");
+                if (existingRipple) existingRipple.remove();
+                target.appendChild(circle);
+            }
         });
+        
+        // Also support Mobile Touch
+        document.addEventListener('touchstart', function(e) {
+            if(e.touches.length > 0) {
+                const touch = e.touches[0];
+                const ring = document.createElement("div");
+                ring.className = "global-touch-ring";
+                ring.style.left = touch.clientX + "px";
+                ring.style.top = touch.clientY + "px";
+                document.body.appendChild(ring);
+                setTimeout(() => ring.remove(), 600);
+            }
+        });
+
+        /* --- BACKGROUND SWITCHER LOGIC --- */
+        function changeBg(bgClass, btnElement) {
+            AudioEngine.playPop();
+            document.body.className = bgClass; // Applies new CSS background class
+            
+            // Update active state on buttons
+            document.querySelectorAll('.bg-option').forEach(btn => btn.classList.remove('active-bg'));
+            btnElement.classList.add('active-bg');
+            
+            // Save preference
+            localStorage.setItem('portal_bg_pref', bgClass);
+        }
 
         /* --- GLASS CHIME AUDIO ARCHITECTURE --- */
         const AudioEngine = {
@@ -517,17 +419,15 @@
                     osc.type = type || 'sine';
                     osc.frequency.setValueAtTime(freq, t);
                     gainNode.gain.setValueAtTime(0, t);
-                    gainNode.gain.linearRampToValueAtTime(vol || 0.15, t + 0.02); // Quick attack
-                    gainNode.gain.exponentialRampToValueAtTime(0.00001, t + duration); // Smooth glass fade
-                    osc.connect(gainNode);
-                    gainNode.connect(this.ctx.destination);
-                    osc.start(t);
-                    osc.stop(t + duration);
+                    gainNode.gain.linearRampToValueAtTime(vol || 0.15, t + 0.02);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, t + duration);
+                    osc.connect(gainNode); gainNode.connect(this.ctx.destination);
+                    osc.start(t); osc.stop(t + duration);
                 } catch(e){}
             },
-            playClick() { this.playGlassTone(1200 + Math.random()*200, 'sine', 0.8, 0.15); }, // Clicky glass chime
-            playTick() { this.playGlassTone(1800, 'sine', 0.2, 0.05); }, // Small glass tap
-            playPop() { this.playGlassTone(800, 'sine', 0.6, 0.2); }, // Liquid pop
+            playClick() { this.playGlassTone(1200 + Math.random()*200, 'sine', 0.8, 0.15); }, 
+            playTick() { this.playGlassTone(2000, 'sine', 0.1, 0.02); }, // Softer ambient tap
+            playPop() { this.playGlassTone(800, 'sine', 0.6, 0.2); },
             playSuccess() {
                 this.playGlassTone(880, 'sine', 1.0, 0.15); 
                 setTimeout(() => this.playGlassTone(1108.73, 'sine', 1.0, 0.15), 100); 
@@ -574,96 +474,41 @@
                 initializeSystemWorkspace();
             } else {
                 AudioEngine.playError();
-                alert("Security Core Failure: Access Terminated.");
                 document.getElementById('gate-pin').value = "";
             }
         }
 
-        /* --- GLOBAL DATA ARCHIVE REPOSITORY SYSTEM --- */
-        let activelySelectedSticker = "";
-
+        /* --- INITIALIZATION --- */
         function initializeSystemWorkspace() {
             document.getElementById('scratchpad-area').value = localStorage.getItem('portal_global_scratchpad') || "";
-            renderEvents();
-            setupSyllabusTrackerNodes();
-            renderActiveStickers();
-            calculateSystemMetrics();
-            syncLiveLeaderboard();
-        }
-
-        function saveScratchpad() { 
-            localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value); 
-        }
-
-        /* --- STICKER APPRAISAL SUBSYSTEMS --- */
-        function selectRewardSticker(sticker, btnElement, event) {
-            event.stopPropagation();
-            AudioEngine.playClick();
-            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
-            activelySelectedSticker = sticker;
-            btnElement.classList.add('selected');
-        }
-
-        function applyStickerToCard(cardId) {
-            if(!activelySelectedSticker) return;
-            AudioEngine.playSuccess();
+            renderEvents(); setupSyllabusTrackerNodes();
             
-            const storageKey = `portal_global_stickers_${cardId}`;
-            let activeArray = JSON.parse(localStorage.getItem(storageKey) || '[]');
-            activeArray.push(activelySelectedSticker);
-            localStorage.setItem(storageKey, JSON.stringify(activeArray));
-            
-            renderActiveStickers();
-            calculateSystemMetrics();
-            activelySelectedSticker = "";
-            document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('selected'));
+            // Load saved background preference
+            const savedBg = localStorage.getItem('portal_bg_pref');
+            if(savedBg) {
+                document.body.className = savedBg;
+                document.querySelectorAll('.bg-option').forEach(btn => {
+                    btn.classList.remove('active-bg');
+                    if(btn.getAttribute('onclick').includes(savedBg)) btn.classList.add('active-bg');
+                });
+            }
         }
 
-        function renderActiveStickers() {
-            const targets = ['dash-quote'];
-            targets.forEach(cardId => {
-                const storageKey = `portal_global_stickers_${cardId}`;
-                const array = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                const domNode = document.getElementById(`stickers-${cardId}`);
-                if(domNode) {
-                    domNode.innerHTML = array.map(stk => `<span class="sticker-badge">${stk}</span>`).join('');
-                }
-            });
-        }
+        function saveScratchpad() { localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value); }
 
-        /* --- ANALYTICAL TELEMETRY GENERATION MODULE --- */
-        function calculateSystemMetrics() {
-            const syllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
-            let clearCount = 0;
-            for(let node in syllabusStates) { if(syllabusStates[node].checked) clearCount++; }
-            document.getElementById('stat-completed-chapters').innerText = clearCount;
-
-            const eventStorage = JSON.parse(localStorage.getItem('portal_global_events') || '[]');
-            document.getElementById('stat-total-events').innerText = eventStorage.length;
-
-            const stickerStorage = JSON.parse(localStorage.getItem('portal_global_stickers_dash-quote') || '[]');
-            document.getElementById('stat-total-stickers').innerText = stickerStorage.length;
-
-            const qaStorage = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
-            document.getElementById('stat-qa-count').innerText = qaStorage.length;
-        }
-
-        /* --- NAVIGATION INTERFACE PLATFORMS --- */
         function showPage(id, btn) {
             AudioEngine.playClick();
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             btn.classList.add('active');
-            if(id === 'metrics-page') calculateSystemMetrics();
             window.scrollTo(0,0);
         }
 
         function toggleAlphaDrone() {
             const btn = document.getElementById('audio-synth-toggle');
-            const status = AudioEngine.toggleAlphaWave();
-            if(status) { btn.innerText = "Decommission Focus Synth 🛑"; btn.style.borderColor = "var(--accent)"; } 
-            else { btn.innerText = "Synthesize Focus Wave 🧘"; btn.style.borderColor = "var(--border-dark)"; }
+            if(AudioEngine.toggleAlphaWave()) { btn.innerText = "Decommission Focus Synth 🛑"; btn.style.borderColor = "var(--accent)"; } 
+            else { btn.innerText = "Synthesize Focus Wave 🧘"; btn.style.borderColor = "var(--glass-border-dark)"; }
         }
 
         function runGlobalClock() {
@@ -693,9 +538,7 @@
         function dismissStrictBreak() { AudioEngine.playSuccess(); document.getElementById("strict-break-screen").style.display = "none"; breakCounter = 1800; }
 
         let baseTime = 1500, timeLeft = baseTime, timerSessionId = null;
-        function updateDisplay() {
-            document.getElementById('timer-display').innerText = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
-        }
+        function updateDisplay() { document.getElementById('timer-display').innerText = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`; }
         function setCustomTime() {
             AudioEngine.playClick();
             const input = parseInt(document.getElementById('custom-minutes').value);
@@ -705,12 +548,8 @@
             AudioEngine.playClick();
             if (!timerSessionId) { 
                 timerSessionId = setInterval(() => { 
-                    if (timeLeft > 0) { 
-                        timeLeft--; updateDisplay(); 
-                        if(timeLeft <= 5 && timeLeft > 0) AudioEngine.playTick(); 
-                    } else { 
-                        clearInterval(timerSessionId); timerSessionId = null; AudioEngine.playSuccess(); alert("Focus Block Complete!"); 
-                    } 
+                    if (timeLeft > 0) { timeLeft--; updateDisplay(); if(timeLeft <= 5 && timeLeft > 0) AudioEngine.playTick(); } 
+                    else { clearInterval(timerSessionId); timerSessionId = null; AudioEngine.playSuccess(); alert("Focus Block Complete!"); } 
                 }, 1000); 
             } 
         }
@@ -719,9 +558,8 @@
 
         function addEvent() {
             const title = document.getElementById('event-name').value.trim(); const timestamp = document.getElementById('event-date').value;
-            if(!title || !timestamp) { AudioEngine.playError(); return alert("Declare all criteria components."); }
+            if(!title || !timestamp) { AudioEngine.playError(); return; }
             AudioEngine.playSuccess();
-            
             const storageKey = 'portal_global_events';
             const currentList = JSON.parse(localStorage.getItem(storageKey) || '[]'); currentList.push({ title, timestamp });
             currentList.sort((x, y) => new Date(x.timestamp) - new Date(y.timestamp)); localStorage.setItem(storageKey, JSON.stringify(currentList));
@@ -730,7 +568,6 @@
         function renderEvents() {
             const container = document.getElementById('event-list');
             if(!container) return;
-            
             const data = JSON.parse(localStorage.getItem('portal_global_events') || '[]');
             const referenceDay = new Date(); referenceDay.setHours(0,0,0,0);
             container.innerHTML = data.map((item, keyID) => {
@@ -741,8 +578,8 @@
                     <div class="cal-item ${urgentThresholdTriggered ? 'urgent' : ''}">
                         <div>
                             <div style="font-weight:800; color:#fff;">${escapeHTML(item.title)}</div>
-                            <div style="font-size:0.72rem; margin-top:4px; color:${urgentThresholdTriggered ? '#ff3366':'var(--text-muted)'}; font-weight:700;">
-                                📅 Target: ${item.timestamp} ${urgentThresholdTriggered ? ' • 🚨 CRITICAL DEADLINE' : ''}
+                            <div style="font-size:0.72rem; margin-top:4px; color:${urgentThresholdTriggered ? '#ff3366':'var(--text-muted)'};">
+                                📅 Target: ${item.timestamp}
                             </div>
                         </div>
                         <button onclick="deleteEvent(${keyID})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem; padding:5px;">×</button>
@@ -756,137 +593,33 @@
             localStorage.setItem('portal_global_events', JSON.stringify(src)); renderEvents();
         }
 
-        /* --- INTEGRATED CLOUD LEADERBOARD CONTROLLERS --- */
-        const FA_SECURITY_PIN = "6289";
-
-        async function syncLiveLeaderboard() {
-            try {
-                await renderLeaderboard();
-                appwriteClient.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID}.documents`, response => {
-                    renderLeaderboard();
-                });
-            } catch (error) {
-                console.error("Database initialization matrix fault:", error);
-            }
-        }
-
-        async function commitGradeEntry() {
-            const name = document.getElementById('rank-student-name').value.trim();
-            const marksStr = document.getElementById('rank-student-marks').value.trim();
-            const inputPIN = document.getElementById('rank-auth-pin').value.trim();
-
-            if(!name || !marksStr) { AudioEngine.playError(); return alert("Metric data fields cannot be blank."); }
-            if(inputPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Access Aborted: Invalid PIN Verification."); }
-
-            AudioEngine.playSuccess();
-            const marks = parseFloat(marksStr);
-
-            try {
-                await appwriteDB.createDocument(DATABASE_ID, COLLECTION_ID, ID.unique(), { name: name, marks: marks });
-                document.getElementById('rank-student-name').value = "";
-                document.getElementById('rank-student-marks').value = "";
-                document.getElementById('rank-auth-pin').value = "";
-            } catch (err) {
-                console.error("Cloud synchronization breakdown:", err);
-                alert("Failed to sync records to the cloud layout. Check console permissions.");
-            }
-        }
-
-        async function renderLeaderboard() {
-            const container = document.getElementById('leaderboard-container');
-            if(!container) return;
-            
-            try {
-                const response = await appwriteDB.listDocuments(DATABASE_ID, COLLECTION_ID);
-                const roster = response.documents.sort((alpha, beta) => beta.marks - alpha.marks);
-                
-                if(roster.length === 0) {
-                    container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:0.82rem; padding:15px;">No active entries detected inside performance cache rows.</div>`;
-                    return;
-                }
-
-                container.innerHTML = roster.map((student, index) => {
-                    let positionalClass = ""; let badgeClass = "badge-standard"; let statusIcon = `Pos ${index + 1}`;
-                    if(index === 0) { positionalClass = "rank-gold"; badgeClass = "badge-gold"; statusIcon = "🥇 Rank 1"; }
-                    else if(index === 1) { positionalClass = "rank-silver"; badgeClass = "badge-silver"; statusIcon = "🥈 Rank 2"; }
-
-                    return `
-                        <div class="rank-item ${positionalClass}">
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <span class="rank-badge ${badgeClass}">${statusIcon}</span>
-                                <span style="font-weight:700; color:#fff;">${escapeHTML(student.name)}</span>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:10px;">
-                                <span style="font-family:monospace; font-weight:900; color:var(--accent); text-shadow:0 0 10px var(--accent-glow);">${student.marks} M</span>
-                                <button onclick="administrativeRevoke('${student.$id}')" style="background:transparent; border:none; color:rgba(255,255,255,0.15); cursor:pointer;">❌</button>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            } catch (error) {
-                console.error("Error drawing live leaderboards:", error);
-                container.innerHTML = `<div style="text-align:center; color:var(--accent); font-size:0.82rem; padding:15px;">Cloud synchronization failure.</div>`;
-            }
-        }
-
-        async function administrativeRevoke(documentId) {
-            const promptPIN = prompt("Enter Teacher Security PIN to purge row entries:");
-            if(promptPIN === null) return;
-            if(promptPIN !== FA_SECURITY_PIN) { AudioEngine.playError(); return alert("Purge Rejected."); }
-            
-            AudioEngine.playPop();
-            try { await appwriteDB.deleteDocument(DATABASE_ID, COLLECTION_ID, documentId); } 
-            catch(err) { alert("Could not process record destruction inside cloud collection layers."); }
-        }
-
-        /* --- BASIC ARITHMETIC CORE MODULES --- */
-        const calcNode = document.getElementById('calc-screen');
-        function append(char) { AudioEngine.playClick(); if(calcNode.value === '0') calcNode.value = char; else calcNode.value += char; }
-        function clearCalc() { AudioEngine.playPop(); calcNode.value = '0'; }
-        function backspace() { AudioEngine.playPop(); calcNode.value = calcNode.value.slice(0, -1) || '0'; }
-        function calculate() { 
-            try { calcNode.value = eval(calcNode.value); AudioEngine.playSuccess(); } 
-            catch { AudioEngine.playError(); calcNode.value = 'Execution Mismatch'; } 
-        }
-
-        /* --- COMPREHENSIVE SUBJECT CONFIGURATION ARRAYS --- */
         const frameworkDataArray = { 
-            math: ["Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry", "Circles", "Areas Related to Circles", "Surface Areas and Volumes", "Statistics", "Probability"], 
-            science: ["Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals", "Carbon and its Compounds", "Life Processes", "Control and Coordination", "How do Organisms Reproduce?", "Heredity and Evolution", "Light - Reflection and Refraction", "Human Eye and Colourful World", "Electricity", "Magnetic Effects of Electric Current", "Our Environment"],
-            social: ["The Rise of Nationalism in Europe", "Nationalism in India", "The Making of a Global World", "The Age of Industrialisation", "Print Culture and the Modern World", "Resources and Development", "Forest and Wildlife Resources", "Water Resources", "Agriculture", "Minerals and Energy Resources", "Manufacturing Industries", "Lifelines of National Economy", "Power Sharing", "Federalism", "Gender, Religion and Caste", "Political Parties", "Outcomes of Democracy", "Development", "Sectors of the Indian Economy", "Money and Credit", "Globalisation and the Indian Economy"]
+            math: ["Real Numbers", "Polynomials", "Quadratic Equations", "Triangles", "Statistics", "Probability"], 
+            science: ["Chemical Reactions", "Acids & Bases", "Life Processes", "Electricity", "Magnetic Effects"],
+            social: ["Nationalism in Europe", "Nationalism in India", "Resources", "Power Sharing", "Sectors of Economy"]
         };
-
         function setupSyllabusTrackerNodes() {
             const savedSyllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
-
             ['math', 'science', 'social'].forEach(domainKey => {
                 const dom = document.getElementById(`${domainKey}-chapters`);
                 if(!dom) return;
                 dom.innerHTML = frameworkDataArray[domainKey].map((nodeTitle, idx) => {
                     const uniqueId = `${domainKey}_ch_${idx}`;
                     const isChecked = savedSyllabusStates[uniqueId]?.checked ? 'checked' : '';
-                    const noteText = savedSyllabusStates[uniqueId]?.note || '';
-                    const dateText = savedSyllabusStates[uniqueId]?.date || '';
-
                     return `
                         <div class="syllabus-item">
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <input type="checkbox" id="check_${uniqueId}" ${isChecked} style="transform:scale(1.15); accent-color:var(--accent);" onchange="updateSyllabusState('${uniqueId}')">
                                 <span style="font-weight:700; color:#fff; font-size:0.9rem;">${nodeTitle}</span>
                             </div>
-                            <div class="tracker-inputs">
-                                <input type="text" id="note_${uniqueId}" value="${escapeHTML(noteText)}" placeholder="Leftover Notes..." oninput="updateSyllabusState('${uniqueId}')">
-                                <input type="text" id="date_${uniqueId}" value="${escapeHTML(dateText)}" placeholder="Target Date Metrics" oninput="updateSyllabusState('${uniqueId}')">
-                            </div>
                         </div>
                     `;
                 }).join('');
             });
         }
-
         function updateSyllabusState(id) {
             let savedSyllabusStates = JSON.parse(localStorage.getItem('portal_global_syllabus') || '{}');
-            savedSyllabusStates[id] = { checked: document.getElementById(`check_${id}`).checked, note: document.getElementById(`note_${id}`).value.trim(), date: document.getElementById(`date_${id}`).value.trim() };
+            savedSyllabusStates[id] = { checked: document.getElementById(`check_${id}`).checked };
             localStorage.setItem('portal_global_syllabus', JSON.stringify(savedSyllabusStates));
         }
 
@@ -894,11 +627,9 @@
             const queryData = document.getElementById('q-text').value, verificationData = document.getElementById('a-text').value;
             if(!queryData.trim() || !verificationData.trim()) { AudioEngine.playError(); return; }
             AudioEngine.playSuccess();
-            
             let currentLogs = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
             currentLogs.push({ q: queryData, a: verificationData });
             localStorage.setItem('portal_global_qa_vault', JSON.stringify(currentLogs));
-
             renderQAVault();
             document.getElementById('q-text').value = ""; document.getElementById('a-text').value = "";
         }
@@ -907,12 +638,10 @@
             if(!container) return;
             const currentLogs = JSON.parse(localStorage.getItem('portal_global_qa_vault') || '[]');
             container.innerHTML = currentLogs.map(item => `
-                <div class="cal-item">
-                    <div>
-                        <strong style="color:var(--accent); text-shadow:0 0 5px var(--accent-glow);">Q:</strong> ${escapeHTML(item.q)}<br><br>
-                        <strong style="color:var(--success); text-shadow:0 0 5px rgba(0,255,204,0.4);">A:</strong> ${escapeHTML(item.a)}
-                    </div>
-                </div>
+                <div class="cal-item"><div>
+                    <strong style="color:var(--accent);">Q:</strong> ${escapeHTML(item.q)}<br><br>
+                    <strong style="color:var(--success);">A:</strong> ${escapeHTML(item.a)}
+                </div></div>
             `).reverse().join('');
         }
         renderQAVault();
@@ -924,24 +653,6 @@
         }
         function resetBubbles() { AudioEngine.playClick(); document.querySelectorAll('.bubble').forEach(node => node.classList.remove('popped')); }
 
-        let reactionTaskTimer, speedEvaluationEpoch;
-        function clickReaction() {
-            const box = document.getElementById('reaction-box');
-            if(box.classList.contains('ready')) { 
-                AudioEngine.playSuccess(); box.className = 'reaction-box'; 
-                box.innerText = `⚡ ${Date.now() - speedEvaluationEpoch} ms! Replay?`; 
-            } else if(box.classList.contains('waiting')) { 
-                AudioEngine.playError(); clearTimeout(reactionTaskTimer); box.className = 'reaction-box'; 
-                box.innerText = "Premature Tap! Restarting matrix cycle."; 
-            } else {
-                AudioEngine.playClick(); box.className = 'reaction-box waiting'; box.innerText = "Awaiting Green Signal...";
-                reactionTaskTimer = setTimeout(() => { 
-                    AudioEngine.playGlassTone(880, 'sine', 0.15, 0.15); 
-                    box.className = 'reaction-box ready'; box.innerText = 'TAP TERMINAL NOW!'; speedEvaluationEpoch = Date.now(); 
-                }, Math.random() * 2500 + 1500);
-            }
-        }
-
         let matrixTTT = ["","","","","","","","",""], statePlayerToken = "❌";
         function constructArenaTTT() {
             const targetedGridNode = document.getElementById('ttt-grid'); if(!targetedGridNode) return; targetedGridNode.innerHTML = "";
@@ -951,20 +662,19 @@
                     if(matrixTTT[gridIndex] !== "") { AudioEngine.playError(); return; } AudioEngine.playPop();
                     matrixTTT[gridIndex] = statePlayerToken; constructArenaTTT(); 
                     if(evaluateWinTTT()){ AudioEngine.playSuccess(); alert(`${statePlayerToken} Won!`); resetTTT(); } 
-                    else if(!matrixTTT.includes("")){ AudioEngine.playError(); alert("Draw!"); resetTTT(); } 
+                    else if(!matrixTTT.includes("")){ AudioEngine.playError(); resetTTT(); } 
                     else statePlayerToken = statePlayerToken === "❌" ? "⭕" : "❌"; 
                 }; targetedGridNode.appendChild(functionalCell);
             });
         }
         function evaluateWinTTT() {
-            const alignmentCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-            return alignmentCombos.some(comboLine => matrixTTT[comboLine[0]] && matrixTTT[comboLine[0]] === matrixTTT[comboLine[1]] && matrixTTT[comboLine[1]] === matrixTTT[comboLine[2]]);
+            const combos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return combos.some(c => matrixTTT[c[0]] && matrixTTT[c[0]] === matrixTTT[c[1]] && matrixTTT[c[1]] === matrixTTT[c[2]]);
         }
         function resetTTT() { AudioEngine.playClick(); matrixTTT = ["","","","","","","","",""]; statePlayerToken = "❌"; constructArenaTTT(); }
         constructArenaTTT();
 
         function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
-
         document.getElementById('gate-pin').addEventListener('keypress', function(e) { if(e.key === 'Enter') verifyGatePassword(); });
     </script>
 </body>
