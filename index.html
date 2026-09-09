@@ -265,20 +265,20 @@
                     </div>
                     
                     <div class="prompt-chips">
-                        <span class="prompt-chip" onclick="quickAsk('hi')">👋 Say Hi</span>
-                        <span class="prompt-chip" onclick="quickAsk('Explain why respiration is an exothermic reaction')">🧪 Respiration Eq</span>
-                        <span class="prompt-chip" onclick="quickAsk('State and derive the Quadratic Formula')">📐 Quadratic Derivation</span>
-                        <span class="prompt-chip" onclick="quickAsk('Give 3 key points for Nationalism in India')">📜 Nationalism</span>
+                        <span class="prompt-chip" onclick="quickAsk('tell me herons formula with step-by-step example')">📐 Heron's Formula</span>
+                        <span class="prompt-chip" onclick="quickAsk('Explain why respiration is an exothermic reaction with balanced equation')">🧪 Respiration Eq</span>
+                        <span class="prompt-chip" onclick="quickAsk('State and derive the Quadratic Formula')">📐 Quadratic Roots</span>
+                        <span class="prompt-chip" onclick="quickAsk('Give all electricity formulas for Class 10')">⚡ Electricity Laws</span>
                     </div>
 
                     <div class="chat-log" id="chat-stream">
                         <div class="chat-bubble bubble-ai">
-                            <strong>AI:</strong> Ready! I am connected to Gemini and have built-in Class 10 Board knowledge.
+                            <strong>AI:</strong> Ready! I am connected to Gemini 2.0 and have built-in Class 10 Board knowledge. Ask any formula, proof, or question!
                         </div>
                     </div>
 
                     <div style="display:flex; gap:8px;">
-                        <input type="text" id="chat-input" placeholder="Type hi, or ask formulas, doubts, derivations..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                        <input type="text" id="chat-input" placeholder="Ask Heron's formula, respiration equation, quadratic proof..." onkeypress="if(event.key==='Enter') sendChatMessage()">
                         <button class="btn primary" onclick="sendChatMessage()">Send ⚡</button>
                     </div>
                 </div>
@@ -410,27 +410,35 @@
         function pauseTimer() { clearInterval(timerId); timerId = null; }
         function resetTimer() { pauseTimer(); currentSecs = baseSecs; updateTimerUI(); }
 
-        function getBuiltInAnswer(query) {
+        /* --- DETAILED ACADEMIC FORMULAS (OFFLINE BACKUP) --- */
+        function getDetailedAnswer(query) {
             const q = query.toLowerCase();
-            if(q === 'hi' || q === 'hello' || q === 'hey') {
-                return "Hello! I am your Class 10 study companion. Ask me any concept, formula, or board exam question in Math, Science, or Social Science!";
+            
+            if (q.includes('heron')) {
+                return "📐 Heron's Formula (Area of a Triangle):\n\nHeron's formula is used to calculate the area of any triangle when all three sides (a, b, c) are known without needing the height.\n\nStep 1: Calculate the Semi-Perimeter (s):\n   s = (a + b + c) / 2\n\nStep 2: Calculate the Area:\n   Area = √[ s(s - a)(s - b)(s - c) ]\n\n• a, b, c = lengths of the 3 sides\n• s = semi-perimeter\n\nExample:\nIf a = 5, b = 6, c = 7:\ns = (5 + 6 + 7) / 2 = 9\nArea = √[ 9(9 - 5)(9 - 6)(9 - 7) ] = √[ 9 × 4 × 3 × 2 ] = √216 = 6√6 ≈ 14.7 sq units.";
             }
-            if(q.includes('respiration') || q.includes('exothermic')) {
-                return "Respiration is considered an exothermic reaction because glucose combines with oxygen in cells and releases heat energy (ATP).\n\nReaction:\nC₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energy";
+            if (q.includes('quadratic')) {
+                return "📐 Quadratic Equation & Quadratic Formula:\n\nStandard Form: ax² + bx + c = 0 (where a ≠ 0)\n\n1. Discriminant (D):\n   D = b² - 4ac\n   • If D > 0: Two distinct real roots\n   • If D = 0: Two equal real roots\n   • If D < 0: No real roots\n\n2. Quadratic Formula for roots (x):\n   x = (-b ± √(b² - 4ac)) / (2a)";
             }
-            if(q.includes('quadratic')) {
-                return "For ax² + bx + c = 0:\nDiscriminant D = b² - 4ac\nRoots formula: x = (-b ± √D) / (2a)";
+            if (q.includes('respiration') || q.includes('exothermic')) {
+                return "🧪 Respiration as an Exothermic Reaction:\n\nRespiration is considered an exothermic reaction because glucose combines with oxygen in the body's cells and breaks down into carbon dioxide and water along with the release of large amounts of energy (ATP).\n\nBalanced Chemical Equation:\nC₆H₁₂O₆(aq) + 6O₂(g) → 6CO₂(g) + 6H₂O(l) + Energy (ATP)";
             }
-            if(q.includes('nationalism') || q.includes('india')) {
-                return "Key Dates in Nationalism in India:\n• 1919: Rowlatt Act & Jallianwala Bagh\n• 1920: Non-Cooperation Movement\n• 1922: Chauri Chaura incident\n• 1930: Dandi Salt March";
+            if (q.includes('electricity') || q.includes('ohm')) {
+                return "⚡ Key Electricity Formulas (Class 10):\n\n• Ohm's Law: V = I × R\n• Resistance & Resistivity: R = ρ(L / A)\n• Series Equivalent: R = R₁ + R₂ + R₃\n• Parallel Equivalent: 1/R = 1/R₁ + 1/R₂ + 1/R₃\n• Electric Power: P = VI = I²R = V² / R\n• Joule's Heating Law: H = I²Rt";
             }
-            return `Key Board Prep Insight for "${query}":\n• Focus on NCERT textbook definitions.\n• State formulas and step-by-step calculations with units.\n• Use headings and bullet points in theoretical answers.`;
+            if (q.includes('mirror') || q.includes('lens')) {
+                return "🔍 Optics Formulas (Class 10):\n\n• Mirror Formula: 1/f = 1/v + 1/u\n• Mirror Magnification: m = -v/u = h'/h\n\n• Lens Formula: 1/f = 1/v - 1/u\n• Lens Magnification: m = v/u = h'/h\n• Power of Lens: P = 1 / f (in meters), Unit: Dioptre (D)";
+            }
+            if (q === 'hi' || q === 'hello') {
+                return "Hello! I am your Class 10 study assistant. Ask me about Heron's formula, respiration, quadratic roots, electricity laws, or history!";
+            }
+            return `Class 10 Concept Summary for "${query}":\n• Definitions must match exact NCERT keywords.\n• For numericals, write the formula, step-by-step substitution, and final units.\n• Draw clean, labelled diagrams where required.`;
         }
 
         let lastAiAnswer = "";
         function configureKey() {
             const current = localStorage.getItem('portal_gemini_api_key') || '';
-            const key = prompt("Enter Google Gemini API Key:", current);
+            const key = prompt("Enter Google Gemini API Key for live AI answers:", current);
             if(key !== null) {
                 localStorage.setItem('portal_gemini_api_key', key.trim());
                 alert("API Key saved to browser storage!");
@@ -438,7 +446,7 @@
         }
         function quickAsk(text) { document.getElementById('chat-input').value = text; sendChatMessage(); }
 
-        /* --- FIXED DUAL-ENDPOINT AUTO-FALLBACK FUNCTION --- */
+        /* --- ACTIVE GEMINI 2.0 FLASH CHAT ENGINE --- */
         async function sendChatMessage() {
             const input = document.getElementById('chat-input');
             const q = input.value.trim();
@@ -461,20 +469,20 @@
             const apiKey = (localStorage.getItem('portal_gemini_api_key') || '').trim();
 
             if(!apiKey) {
-                setTimeout(() => {
-                    lastAiAnswer = getBuiltInAnswer(q);
-                    aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
-                    stream.scrollTop = stream.scrollHeight;
-                }, 250);
+                lastAiAnswer = getDetailedAnswer(q);
+                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:var(--text-muted);">(Tip: Click 🔑 API Key at the top right to enable live real-time AI answers!)</small>`;
+                stream.scrollTop = stream.scrollHeight;
                 return;
             }
 
+            // Current active Gemini 2.0 Flash endpoint
             const endpoints = [
-                `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`
             ];
 
             let success = false;
+            let apiErrorMessage = "";
 
             for (const url of endpoints) {
                 try {
@@ -482,25 +490,35 @@
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            contents: [{ parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Provide a clear, precise, step-by-step answer:\n\n${q}` }] }]
+                            contents: [{
+                                parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Explain in detail with formulas, step-by-step working, and clean formatting:\n\n${q}` }]
+                            }]
                         })
                     });
 
                     const data = await res.json();
 
-                    if (!data.error && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                    if (data.error) {
+                        apiErrorMessage = data.error.message;
+                        continue;
+                    }
+
+                    if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
                         lastAiAnswer = data.candidates[0].content.parts[0].text;
                         aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
                         success = true;
                         break;
                     }
-                } catch (err) {}
+                } catch (err) {
+                    apiErrorMessage = err.message;
+                }
             }
 
             if (!success) {
-                lastAiAnswer = getBuiltInAnswer(q);
-                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
+                lastAiAnswer = getDetailedAnswer(q);
+                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:#f43f5e;">[API Notice: ${apiErrorMessage || 'Model unavailable'}. Displayed local proof instead.]</small>`;
             }
+
             stream.scrollTop = stream.scrollHeight;
         }
 
