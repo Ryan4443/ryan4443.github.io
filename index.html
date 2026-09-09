@@ -273,7 +273,7 @@
 
                     <div class="chat-log" id="chat-stream">
                         <div class="chat-bubble bubble-ai">
-                            <strong>AI:</strong> Ready! I am connected to Gemini 2.0 and have built-in Class 10 Board knowledge. Ask any formula, proof, or question!
+                            <strong>AI:</strong> Ready! Powered by Gemini 3.6 Flash. Ask any derivation, formula, or board question!
                         </div>
                     </div>
 
@@ -446,7 +446,7 @@
         }
         function quickAsk(text) { document.getElementById('chat-input').value = text; sendChatMessage(); }
 
-        /* --- ACTIVE GEMINI 2.0 FLASH CHAT ENGINE --- */
+        /* --- ACTIVE GEMINI 3.6 FLASH CHAT ENGINE --- */
         async function sendChatMessage() {
             const input = document.getElementById('chat-input');
             const q = input.value.trim();
@@ -470,15 +470,15 @@
 
             if(!apiKey) {
                 lastAiAnswer = getDetailedAnswer(q);
-                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:var(--text-muted);">(Tip: Click 🔑 API Key at the top right to enable live real-time AI answers!)</small>`;
+                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:var(--text-muted);">(Tip: Click 🔑 API Key at the top right to connect live Gemini AI answers!)</small>`;
                 stream.scrollTop = stream.scrollHeight;
                 return;
             }
 
-            // Current active Gemini 2.0 Flash endpoint
+            // Endpoints: gemini-3.6-flash, fallback to gemini-3.5-flash
             const endpoints = [
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`
             ];
 
             let success = false;
@@ -491,6 +491,7 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             contents: [{
+                                role: "user",
                                 parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Explain in detail with formulas, step-by-step working, and clean formatting:\n\n${q}` }]
                             }]
                         })
