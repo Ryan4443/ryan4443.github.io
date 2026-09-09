@@ -3,45 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal | Glass Workspace</title>
+    <title>10 Pro Portal | Apple-Grade Liquid Glass</title>
     <style>
+        /* --- LIQUID GLASS NEON TOKENS (VISION OS / iOS) --- */
         :root {
             --accent: #00f2fe;
             --accent-soft: rgba(0, 242, 254, 0.18);
             --accent-glow: rgba(0, 242, 254, 0.35);
             --secondary: #9d4edd;
+            --secondary-glow: rgba(157, 78, 221, 0.35);
+            --text-heading: #ffffff;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --danger: #f43f5e;
             --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(13, 17, 30, 0.65);
             --glass-card-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(18, 23, 40, 0.75);
             --glass-rim-top: rgba(255, 255, 255, 0.35);
             --glass-rim-bottom: rgba(0, 0, 0, 0.4);
             --glass-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.55), 0 0 1px 1px rgba(255, 255, 255, 0.08);
             --glass-inset: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 -1px 1px rgba(0, 0, 0, 0.3);
-            --text-heading: #ffffff;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
             --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
             --smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
             color: var(--text-main);
             background-color: #03050c;
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            transition: background 0.6s var(--smooth);
         }
 
+        /* --- AMBIENT HARDWARE-ACCELERATED LIQUID ORBS --- */
         .ambient-mesh {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; overflow: hidden; transform: translate3d(0, 0, 0);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
         }
         .liquid-orb {
-            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
-            animation: drift 18s infinite alternate ease-in-out; will-change: transform;
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.32;
+            will-change: transform;
+            animation: drift 18s infinite alternate ease-in-out;
         }
         .orb-1 { width: 65vw; height: 65vw; background: radial-gradient(circle, #00f2fe 0%, transparent 70%); top: -15%; left: -15%; }
         .orb-2 { width: 75vw; height: 75vw; background: radial-gradient(circle, #7928ca 0%, transparent 70%); bottom: -20%; right: -15%; animation-delay: -9s; }
@@ -50,8 +72,53 @@
             100% { transform: translate3d(40px, 50px, 0) scale(1.08); }
         }
 
-        #cursor-trail { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        /* Background Themes */
+        body.bg-void { background: #03040b; }
+        body.bg-ocean { background: radial-gradient(circle at 10% 20%, #032b43 0%, #02121e 60%, #01080d 100%); }
+        body.bg-vapor { background: radial-gradient(circle at 90% 10%, #3c096c 0%, #170326 60%, #090110 100%); }
+        body.bg-aurora { background: linear-gradient(135deg, #051622 0%, #1a0826 50%, #030712 100%); }
 
+        #cursor-trail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* --- GLOBAL TOUCH & WATER RIPPLE ENGINE --- */
+        .global-touch-ring {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(0, 242, 254, 0.7);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 99999;
+            box-shadow: 0 0 15px var(--accent-glow);
+            animation: ring-expand 0.65s var(--smooth) forwards;
+        }
+        @keyframes ring-expand {
+            to { transform: translate(-50%, -50%) scale(5); opacity: 0; border-width: 0px; }
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(0);
+            animation: ripple-animation 0.65s var(--smooth);
+            pointer-events: none;
+            z-index: 99;
+        }
+        @keyframes ripple-animation {
+            to { transform: scale(3.5); opacity: 0; }
+        }
+
+        /* --- SPECULAR LIQUID GLASS PANELS --- */
         .glass-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(20px) saturate(190%);
@@ -64,125 +131,412 @@
             border-radius: 20px;
             position: relative;
             z-index: 2;
-            transition: transform 0.3s var(--smooth), box-shadow 0.3s var(--smooth);
+            transition: transform 0.3s var(--smooth), box-shadow 0.3s var(--smooth), background 0.3s var(--smooth);
         }
         .glass-panel:hover {
             background: var(--glass-card-hover);
             box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 242, 254, 0.12), var(--glass-inset);
         }
 
+        /* --- TOP DOCKED PERSISTENT ROW NAVBAR --- */
         .top-navbar-wrapper {
-            position: sticky; top: 0; z-index: 1000; padding: 10px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 16px;
             background: rgba(3, 5, 12, 0.72);
             backdrop-filter: blur(24px) saturate(190%);
             -webkit-backdrop-filter: blur(24px) saturate(190%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
         }
         .brand-badge {
-            font-weight: 900; font-size: 1.05rem; color: #fff;
-            display: flex; align-items: center; gap: 6px; white-space: nowrap;
+            font-weight: 900;
+            font-size: 1.05rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
         }
-        .brand-badge span { color: var(--accent); }
+        .brand-badge span {
+            background: linear-gradient(135deg, var(--accent), #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
         .nav-row {
-            display: flex; align-items: center; gap: 8px;
-            overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+            padding: 4px 0;
         }
         .nav-row::-webkit-scrollbar { display: none; }
 
         .nav-pill {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
-            color: var(--text-muted); padding: 8px 16px; border-radius: 14px;
-            font-size: 0.82rem; font-weight: 700; cursor: pointer;
-            transition: all 0.25s var(--smooth); display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s var(--smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
         }
-        .nav-pill:hover { color: #fff; background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25); }
+        .nav-pill:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
         .nav-pill:active { transform: scale(0.96); }
         .nav-pill.active {
-            color: #03050c; background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 4px 20px var(--accent-glow);
+            color: #03050c;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
 
         #nav-clock {
-            font-family: monospace; font-size: 0.85rem; font-weight: 800; color: var(--accent);
-            background: rgba(0, 0, 0, 0.4); padding: 6px 14px; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1); white-space: nowrap;
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--accent);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
         }
 
-        .portal-header { text-align: center; padding: 16px 16px 6px 16px; position: relative; z-index: 2; }
-        .portal-header h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 6px; }
+        /* --- STREAMLINED COUNTDOWN STRIP & MOTTO --- */
+        .portal-header {
+            text-align: center;
+            padding: 16px 16px 6px 16px;
+            position: relative;
+            z-index: 2;
+        }
+        .portal-header h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+        .motto {
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
         .countdown-strip {
-            display: inline-flex; gap: 10px; padding: 8px 18px; border-radius: 16px;
-            background: rgba(16, 22, 38, 0.45); border: 1px solid rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            gap: 10px;
+            padding: 8px 18px;
+            border-radius: 16px;
+            background: rgba(16, 22, 38, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .cd-box { text-align: center; min-width: 44px; }
         .cd-box .num { font-size: 1.25rem; font-family: monospace; font-weight: 900; color: var(--accent); }
         .cd-box .lbl { font-size: 0.55rem; text-transform: uppercase; color: var(--text-muted); }
 
-        .main-container { max-width: 1100px; width: 100%; margin: 0 auto; padding: 12px 16px 60px 16px; position: relative; z-index: 2; }
-        .page { display: none; }
-        .page.active { display: block; animation: quickIn 0.3s var(--smooth) forwards; }
-        @keyframes quickIn { from { opacity: 0; transform: scale(0.985) translateY(6px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-        input, select, textarea {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #fff; padding: 12px 16px; border-radius: 14px; font-size: 0.9rem;
-            width: 100%; outline: none; transition: all 0.25s var(--smooth); font-family: inherit;
+        /* Floating bottom tagline */
+        .system-tagline {
+            position: fixed;
+            bottom: 14px;
+            right: 14px;
+            z-index: 900;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            padding: 6px 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            text-shadow: 0 0 10px var(--secondary);
+            background: rgba(10, 10, 18, 0.5);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            pointer-events: none;
         }
-        input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+        /* --- CONTAINER & VIEWS --- */
+        .main-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 12px 16px 60px 16px;
+            position: relative;
+            z-index: 2;
+        }
+        .page { display: none; }
+        .page.active {
+            display: block;
+            animation: quickIn 0.3s var(--smooth) forwards;
+        }
+        @keyframes quickIn {
+            from { opacity: 0; transform: scale(0.985) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* --- LIQUID INPUTS & BUTTONS --- */
+        input, select, textarea {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            transition: all 0.25s var(--smooth);
+            font-family: inherit;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
 
         button.btn {
-            background: rgba(255, 255, 255, 0.08); border-top: 1px solid rgba(255, 255, 255, 0.25);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.3); border-left: 1px solid rgba(255, 255, 255, 0.12);
-            border-right: 1px solid rgba(255, 255, 255, 0.12); color: #fff; padding: 12px 18px;
-            border-radius: 14px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
-            transition: all 0.25s var(--smooth); display: inline-flex; justify-content: center; align-items: center; gap: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s var(--smooth);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            overflow: hidden;
         }
-        button.btn:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.4); transform: translateY(-1px); }
+        button.btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
         button.btn:active { transform: scale(0.96); }
-        button.btn.primary { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); color: #03050c; font-weight: 900; border: none; }
+        button.btn.primary {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #03050c;
+            font-weight: 900;
+            border: none;
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
 
-        .ai-notes-layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
-        @media (min-width: 850px) { .ai-notes-layout { grid-template-columns: 1.35fr 1fr; align-items: start; } }
+        /* --- DASHBOARD GRID --- */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 800px) {
+            .dash-grid { grid-template-columns: 1.3fr 1fr; }
+        }
 
-        .chat-container { display: flex; flex-direction: column; height: 590px; padding: 20px; }
-        .chat-log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 6px; margin-bottom: 12px; }
-        .chat-bubble { max-width: 85%; padding: 12px 18px; border-radius: 18px; font-size: 0.9rem; line-height: 1.55; word-wrap: break-word; }
-        .bubble-user { align-self: flex-end; background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(79, 172, 254, 0.35)); border: 1px solid var(--accent); color: #fff; }
-        .bubble-ai { align-self: flex-start; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); }
+        /* --- TALK TO AI & NOTES SPLIT --- */
+        .ai-notes-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 850px) {
+            .ai-notes-layout {
+                grid-template-columns: 1.35fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 590px;
+            padding: 20px;
+        }
+        .chat-log {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 6px;
+            margin-bottom: 12px;
+        }
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            word-wrap: break-word;
+            animation: bubblePop 0.25s var(--spring);
+        }
+        @keyframes bubblePop {
+            from { opacity: 0; transform: scale(0.92) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .bubble-user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(79, 172, 254, 0.35));
+            border: 1px solid var(--accent);
+            color: #fff;
+        }
+        .bubble-ai {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
         .bubble-ai strong { color: var(--accent); }
 
-        .prompt-chips { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 10px; padding-bottom: 4px; scrollbar-width: none; }
+        .prompt-chips {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            margin-bottom: 10px;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
         .prompt-chip {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--text-muted);
-            white-space: nowrap; cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
         .prompt-chip:hover { color: #fff; border-color: var(--accent); }
 
-        .notes-container { display: flex; flex-direction: column; height: 590px; padding: 20px; }
-        .notes-editor { flex: 1; resize: none; line-height: 1.6; margin-bottom: 12px; font-size: 0.92rem; border-radius: 16px; }
-
-        .progress-bar-bg { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden; margin: 10px 0 20px 0; }
-        .progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), #4facfe); border-radius: 10px; transition: width 0.4s var(--smooth); }
-        .syllabus-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-        @media (min-width: 800px) { .syllabus-grid { grid-template-columns: repeat(3, 1fr); } }
-        .syllabus-item {
-            display: flex; align-items: center; gap: 10px; padding: 10px 14px;
-            background: rgba(255,255,255,0.03); border-radius: 12px; margin-bottom: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.85rem;
+        .notes-container {
+            display: flex;
+            flex-direction: column;
+            height: 590px;
+            padding: 20px;
+        }
+        .notes-editor {
+            flex: 1;
+            resize: none;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-size: 0.92rem;
+            border-radius: 16px;
         }
 
-        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
-        .bubble { aspect-ratio: 1; background: radial-gradient(circle, var(--accent) 0%, #005f73 100%); border-radius: 50%; cursor: pointer; }
-        .bubble.popped { background: rgba(0,0,0,0.6); transform: scale(0.92); }
-        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 220px; margin: 16px auto; }
-        .ttt-cell { aspect-ratio: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 900; cursor: pointer; }
+        /* --- SYLLABUS DIRECTORY --- */
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0 20px 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #4facfe);
+            border-radius: 10px;
+            transition: width 0.4s var(--smooth);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+        .syllabus-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 800px) {
+            .syllabus-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .syllabus-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+            transition: all 0.2s var(--smooth);
+        }
+        .syllabus-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(0, 242, 254, 0.4);
+            transform: translateX(3px);
+        }
 
+        /* Schedule Item & Urgency Styling */
+        .cal-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.25s var(--smooth);
+        }
+        .cal-item.urgent {
+            border-left-color: var(--danger);
+            background: linear-gradient(90deg, rgba(244, 63, 94, 0.12), transparent);
+        }
+
+        /* --- REC ZONE --- */
+        .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+        .bubble {
+            aspect-ratio: 1;
+            background: radial-gradient(circle, var(--accent) 0%, #005f73 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: transform 0.15s var(--spring);
+        }
+        .bubble.popped {
+            background: rgba(0,0,0,0.6);
+            transform: scale(0.92);
+            border-color: rgba(255,255,255,0.08);
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.8);
+        }
+        .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 220px; margin: 16px auto; }
+        .ttt-cell {
+            aspect-ratio: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; font-weight: 900; cursor: pointer;
+            transition: transform 0.2s var(--spring);
+        }
+
+        /* --- PASSCODE GATE OVERLAY --- */
         .password-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 4, 10, 0.9); backdrop-filter: blur(28px) saturate(190%);
+            background: rgba(2, 4, 10, 0.9);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
             z-index: 100000; display: flex; justify-content: center; align-items: center; padding: 16px;
         }
         .password-box { max-width: 340px; width: 100%; padding: 36px 28px; text-align: center; }
@@ -192,16 +546,27 @@
             20%, 60% { transform: translateX(-10px); }
             40%, 80% { transform: translateX(10px); }
         }
+
+        /* --- 30-MIN LOCKOUT MODAL --- */
+        .break-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 16, 0.92);
+            backdrop-filter: blur(25px);
+            z-index: 100005;
+            justify-content: center; align-items: center; text-align: center; padding: 24px;
+        }
     </style>
 </head>
-<body>
+<body class="bg-void">
 
+    <!-- Ambient Mesh & Cursor Trail -->
     <div class="ambient-mesh">
         <div class="liquid-orb orb-1"></div>
         <div class="liquid-orb orb-2"></div>
     </div>
     <canvas id="cursor-trail"></canvas>
 
+    <!-- Top Navigation Row (No Hamburger) -->
     <header class="top-navbar-wrapper">
         <div class="brand-badge">⚡ 10 <span>Pro</span></div>
         <div class="nav-row">
@@ -215,6 +580,7 @@
         <div id="nav-clock">00:00:00</div>
     </header>
 
+    <!-- Passcode Gate (PIN 4443 completely hidden) -->
     <div id="password-gate" class="password-overlay">
         <div id="gate-card" class="glass-panel password-box">
             <div style="font-size:2rem; margin-bottom:12px;">🔒</div>
@@ -225,8 +591,20 @@
         </div>
     </div>
 
+    <!-- 30-Min Study Lockout Modal -->
+    <div id="strict-break-screen" class="break-overlay">
+        <div class="glass-panel" style="max-width:380px; padding:32px 24px; text-align:center;">
+            <h2 style="color:var(--danger); font-size:1.3rem; margin-bottom:8px;">🚨 SYSTEM LOCKOUT</h2>
+            <p style="font-weight:800; font-size:1rem; color:#fff; margin-bottom:12px;">30-Min Continuous Study Block Reached!</p>
+            <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5; margin-bottom:24px;">Your brain requires recovery intervals. Stand up, stretch, and relax your eyes.</p>
+            <button class="btn" style="border-color:var(--danger); background:rgba(244, 63, 94, 0.15);" onclick="dismissStrictBreak()">Resume Grind ⚡</button>
+        </div>
+    </div>
+
+    <!-- Compact Countdown Strip & Motto -->
     <div class="portal-header">
         <h1>Board Exams Countdown 2027</h1>
+        <div class="motto">Refined. Fluid. Focused. 🌊</div>
         <div class="countdown-strip">
             <div class="cd-box"><div class="num" id="cd-days">00</div><div class="lbl">Days</div></div>
             <div class="cd-box"><div class="num" id="cd-hours">00</div><div class="lbl">Hours</div></div>
@@ -235,13 +613,17 @@
         </div>
     </div>
 
+    <div class="system-tagline">10 Pro Portal Online</div>
+
+    <!-- Main Dynamic Viewports -->
     <main class="main-container">
+
         <!-- 1. DASHBOARD -->
         <section id="dash-page" class="page active">
-            <div style="display:grid; grid-template-columns:1fr; gap:16px;">
+            <div class="dash-grid">
                 <div class="glass-panel" style="padding:28px; text-align:center;">
                     <h2 style="font-size:1.1rem; font-weight:800; margin-bottom:8px;">⏱️ Focus Block Engine</h2>
-                    <div id="timer-num" style="font-size:4.4rem; font-family:monospace; font-weight:900; color:#fff;">25:00</div>
+                    <div id="timer-num" style="font-size:4.4rem; font-family:monospace; font-weight:900; color:#fff; text-shadow:0 0 25px var(--accent-glow);">25:00</div>
                     <div style="display:flex; justify-content:center; gap:8px; margin:18px 0;">
                         <input type="number" id="timer-input" value="25" style="width:75px; text-align:center;">
                         <button class="btn" onclick="setTimerMinutes()">Set</button>
@@ -252,10 +634,21 @@
                         <button class="btn" onclick="resetTimer()">Reset 🔄</button>
                     </div>
                 </div>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    <div class="glass-panel" style="padding:20px;">
+                        <h3 style="font-size:1rem; margin-bottom:6px;">🎧 10Hz Alpha Waves</h3>
+                        <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:14px;">Binaural neural synchronization for deep study sessions.</p>
+                        <button id="synth-btn" class="btn" style="width:100%;" onclick="toggleSynth()">Activate Soundscape 🧘</button>
+                    </div>
+                    <div class="glass-panel" style="padding:20px;">
+                        <h3 style="font-size:1rem; margin-bottom:8px;">📝 Live Scratchpad Terminal</h3>
+                        <textarea id="scratchpad-area" rows="4" placeholder="Type formulas, notes, or temporary checklists..." oninput="saveScratchpad()" style="height:90px; resize:none;"></textarea>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- 2. TALK TO AI & NOTES -->
+        <!-- 2. AI TALK & NOTES CONSOLE (POWERED BY GEMINI 3.6 FLASH) -->
         <section id="talk-ai-page" class="page">
             <div class="ai-notes-layout">
                 <div class="glass-panel chat-container">
@@ -273,12 +666,12 @@
 
                     <div class="chat-log" id="chat-stream">
                         <div class="chat-bubble bubble-ai">
-                            <strong>AI:</strong> Ready! Powered by Gemini 3.6 Flash. Ask any derivation, formula, or board question!
+                            <strong>AI:</strong> Ready! Connected to <strong>Gemini 3.6 Flash</strong>. Ask any derivation, formula, equation, or board exam question!
                         </div>
                     </div>
 
                     <div style="display:flex; gap:8px;">
-                        <input type="text" id="chat-input" placeholder="Ask Heron's formula, respiration equation, quadratic proof..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                        <input type="text" id="chat-input" placeholder="Ask Heron's formula, respiration, quadratic proof..." onkeypress="if(event.key==='Enter') sendChatMessage()">
                         <button class="btn primary" onclick="sendChatMessage()">Send ⚡</button>
                     </div>
                 </div>
@@ -291,7 +684,7 @@
                             <button class="btn" style="padding:5px 10px; font-size:0.75rem;" onclick="clearNotes()">Clear</button>
                         </div>
                     </div>
-                    <textarea id="live-notes-area" class="notes-editor" placeholder="Write key formulas, thoughts, or reminders..." oninput="autoSaveNotes()"></textarea>
+                    <textarea id="live-notes-area" class="notes-editor" placeholder="Write key formulas, proofs, or revision points..." oninput="autoSaveNotes()"></textarea>
                     <div style="font-size:0.75rem; color:var(--text-muted); display:flex; justify-content:space-between;">
                         <span>Persisted in browser</span>
                         <span id="save-status">Saved ✓</span>
@@ -300,7 +693,7 @@
             </div>
         </section>
 
-        <!-- 3. SYLLABUS -->
+        <!-- 3. COMPLETE 48-CHAPTER CBSE SYLLABUS DIRECTORY -->
         <section id="syllabus-page" class="page">
             <div class="glass-panel" style="padding:24px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -309,19 +702,19 @@
                 </div>
                 <div class="progress-bar-bg"><div id="syllabus-fill" class="progress-bar-fill"></div></div>
                 <div class="syllabus-grid">
-                    <div><h3 style="color:var(--accent); font-size:0.9rem; margin-bottom:10px;">📐 MATH</h3><div id="math-list"></div></div>
+                    <div><h3 style="color:var(--accent); font-size:0.9rem; margin-bottom:10px;">📐 MATHEMATICS</h3><div id="math-list"></div></div>
                     <div><h3 style="color:var(--accent); font-size:0.9rem; margin-bottom:10px;">🧪 SCIENCE</h3><div id="science-list"></div></div>
-                    <div><h3 style="color:var(--accent); font-size:0.9rem; margin-bottom:10px;">🌍 SOCIAL</h3><div id="social-list"></div></div>
+                    <div><h3 style="color:var(--accent); font-size:0.9rem; margin-bottom:10px;">🌍 SOCIAL SCIENCE</h3><div id="social-list"></div></div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. SCHEDULE -->
+        <!-- 4. SCHEDULE VAULT WITH URGENT 3-DAY HIGHLIGHTS -->
         <section id="schedule-page" class="page">
             <div class="glass-panel" style="padding:24px;">
-                <h2 style="margin-bottom:16px; font-size:1.2rem;">📅 Target Milestones</h2>
+                <h2 style="margin-bottom:16px; font-size:1.2rem; font-weight:800;">📅 Target Timeline Milestones</h2>
                 <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
-                    <input type="text" id="target-title" placeholder="Objective name (e.g. Science Chapter 1-3 Mock)">
+                    <input type="text" id="target-title" placeholder="Objective name (e.g. Science Chapter 1-3 Mock Test)">
                     <input type="date" id="target-date">
                     <button class="btn primary" onclick="addTargetEvent()">Lock Milestone 📌</button>
                 </div>
@@ -333,12 +726,12 @@
         <section id="rec-page" class="page">
             <div style="display:grid; grid-template-columns:1fr; gap:16px;">
                 <div class="glass-panel" style="padding:22px; text-align:center;">
-                    <h3>🎮 Liquid Popper</h3>
+                    <h3 style="font-size:1.1rem; margin-bottom:6px;">🎮 Liquid Haptic Popper</h3>
                     <div class="fidget-grid" id="fidget-grid"></div>
                     <button class="btn" onclick="resetFidget()">Reset Wrap 🔄</button>
                 </div>
                 <div class="glass-panel" style="padding:22px; text-align:center;">
-                    <h3>❌ Tic-Tac-Toe Arena ⭕</h3>
+                    <h3 style="font-size:1.1rem; margin-bottom:6px;">❌ Tic-Tac-Toe Arena ⭕</h3>
                     <div id="ttt-arena" class="ttt-grid"></div>
                     <button class="btn" onclick="resetTTT()">Reset Match 🔄</button>
                 </div>
@@ -348,18 +741,146 @@
         <!-- 6. THEMES -->
         <section id="bg-page" class="page">
             <div class="glass-panel" style="padding:24px;">
-                <h2 style="margin-bottom:14px; font-size:1.2rem;">🌌 Liquid Ambiance</h2>
+                <h2 style="margin-bottom:14px; font-size:1.2rem; font-weight:800;">🌌 Liquid Ambiance</h2>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px;">
                     <button class="btn" style="height:60px;" onclick="setTheme('bg-void')">Deep Void</button>
                     <button class="btn" style="height:60px;" onclick="setTheme('bg-ocean')">Abyssal Ocean</button>
                     <button class="btn" style="height:60px;" onclick="setTheme('bg-vapor')">Neon Vapor</button>
+                    <button class="btn" style="height:60px;" onclick="setTheme('bg-aurora')">Aurora Mesh</button>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        /* --- 1. FULL AUDIO CHIME & SOUNDSCAPE ARCHITECTURE --- */
+        const AudioEngine = {
+            ctx: null, osc1: null, osc2: null, droneGain: null, isDronePlaying: false,
+            init() {
+                try {
+                    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+                } catch(e){}
+            },
+            playGlassTone(freq, type, duration, vol) {
+                this.init();
+                if(!this.ctx) return;
+                try {
+                    const t = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    osc.type = type || 'sine';
+                    osc.frequency.setValueAtTime(freq, t);
+                    gainNode.gain.setValueAtTime(0, t);
+                    gainNode.gain.linearRampToValueAtTime(vol || 0.15, t + 0.02);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, t + duration);
+                    osc.connect(gainNode);
+                    gainNode.connect(this.ctx.destination);
+                    osc.start(t);
+                    osc.stop(t + duration);
+                } catch(e){}
+            },
+            playClick() { this.playGlassTone(1200 + Math.random()*200, 'sine', 0.6, 0.12); },
+            playTick() { this.playGlassTone(2200, 'sine', 0.08, 0.02); },
+            playPop() { this.playGlassTone(800, 'sine', 0.5, 0.18); },
+            playSuccess() {
+                this.playGlassTone(880, 'sine', 0.8, 0.15);
+                setTimeout(() => this.playGlassTone(1108.73, 'sine', 0.8, 0.15), 100);
+                setTimeout(() => this.playGlassTone(1318.51, 'sine', 1.5, 0.15), 200);
+            },
+            playError() {
+                this.playGlassTone(300, 'sawtooth', 0.3, 0.1);
+                setTimeout(() => this.playGlassTone(250, 'sawtooth', 0.3, 0.1), 150);
+            },
+            toggleAlphaWave() {
+                this.init();
+                if(!this.ctx) return false;
+                if (this.isDronePlaying) {
+                    this.stopAlphaWave(); return false;
+                } else {
+                    const t = this.ctx.currentTime;
+                    this.droneGain = this.ctx.createGain();
+                    this.osc1 = this.ctx.createOscillator(); this.osc1.type = 'sine'; this.osc1.frequency.setValueAtTime(140, t);
+                    this.osc2 = this.ctx.createOscillator(); this.osc2.type = 'sine'; this.osc2.frequency.setValueAtTime(150, t);
+                    this.droneGain.gain.setValueAtTime(0.0, t);
+                    this.droneGain.gain.linearRampToValueAtTime(0.04, t + 2.0);
+                    this.osc1.connect(this.droneGain); this.osc2.connect(this.droneGain);
+                    this.droneGain.connect(this.ctx.destination);
+                    this.osc1.start(t); this.osc2.start(t);
+                    this.isDronePlaying = true;
+                    return true;
+                }
+            },
+            stopAlphaWave() {
+                if(this.droneGain && this.ctx) {
+                    const t = this.ctx.currentTime;
+                    this.droneGain.gain.cancelScheduledValues(t);
+                    this.droneGain.gain.setValueAtTime(this.droneGain.gain.value, t);
+                    this.droneGain.gain.linearRampToValueAtTime(0.0, t + 0.5);
+                    setTimeout(() => { try { this.osc1.stop(); this.osc2.stop(); } catch(e){} }, 600);
+                }
+                this.isDronePlaying = false;
+            }
+        };
+
+        /* --- 2. GLOBAL WATER RIPPLE ON CLICK/TOUCH --- */
+        document.addEventListener('mousedown', function(e) {
+            if(e.target.closest('input') || e.target.closest('textarea')) return;
+            const ring = document.createElement("div");
+            ring.className = "global-touch-ring";
+            ring.style.left = e.clientX + "px";
+            ring.style.top = e.clientY + "px";
+            document.body.appendChild(ring);
+            setTimeout(() => ring.remove(), 650);
+            try { AudioEngine.playTick(); } catch(e){}
+
+            const target = e.target.closest('button, .bubble, .ttt-cell, .prompt-chip, .syllabus-item');
+            if (target) {
+                const circle = document.createElement("span");
+                const diameter = Math.max(target.clientWidth, target.clientHeight);
+                const radius = diameter / 2;
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${e.clientX - target.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${e.clientY - target.getBoundingClientRect().top - radius}px`;
+                circle.classList.add("ripple");
+                const existing = target.querySelector(".ripple");
+                if (existing) existing.remove();
+                target.appendChild(circle);
+            }
+        });
+
+        /* --- 3. HARDWARE-FRIENDLY CURSOR TRAIL --- */
+        const canvas = document.getElementById('cursor-trail');
+        const ctx = canvas.getContext('2d');
+        let pts = [];
+        function syncCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', syncCanvas); syncCanvas();
+
+        function addPoint(x, y) {
+            if(pts.length > 18) pts.shift();
+            pts.push({ x, y, life: 1 });
+        }
+        window.addEventListener('mousemove', e => addPoint(e.clientX, e.clientY));
+        window.addEventListener('touchmove', e => { if(e.touches.length) addPoint(e.touches[0].clientX, e.touches[0].clientY); });
+
+        function drawTrail() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for(let i = 0; i < pts.length; i++) {
+                let p = pts[i];
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 7 * p.life, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 242, 254, ${p.life * 0.3})`;
+                ctx.fill();
+                p.life -= 0.05;
+            }
+            pts = pts.filter(p => p.life > 0);
+            requestAnimationFrame(drawTrail);
+        }
+        drawTrail();
+
+        /* --- 4. INSTANT TELEPORT NAVIGATION --- */
         function teleportTo(pageId, btn) {
+            AudioEngine.playClick();
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
             const target = document.getElementById(pageId);
@@ -367,14 +888,18 @@
             if(btn) btn.classList.add('active');
         }
 
+        /* --- 5. PIN AUTHORIZATION (HIDDEN 4443 & HAPTIC SHAKE) --- */
         function verifyPin() {
+            AudioEngine.init();
             const val = document.getElementById('gate-pin').value.trim();
             const card = document.getElementById('gate-card');
             if(val === "4443") {
+                AudioEngine.playSuccess();
                 sessionStorage.setItem('portal_unlocked', 'true');
                 document.getElementById('password-gate').style.display = 'none';
                 bootWorkspace();
             } else {
+                AudioEngine.playError();
                 card.classList.add('shake-error');
                 setTimeout(() => card.classList.remove('shake-error'), 400);
                 document.getElementById('gate-pin').value = "";
@@ -389,6 +914,7 @@
             }
         });
 
+        /* --- 6. REAL-TIME CLOCK & EXAM COUNTDOWN --- */
         setInterval(() => {
             const d = new Date();
             document.getElementById('nav-clock').innerText = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
@@ -403,50 +929,106 @@
             document.getElementById('cd-secs').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
         }, 1000);
 
+        /* --- 7. 30-MIN STUDY LOCKOUT INTERVAL --- */
+        let breakCounter = 1800;
+        setInterval(() => {
+            if (breakCounter > 0) breakCounter--;
+            else {
+                if(document.getElementById("strict-break-screen").style.display !== "flex") {
+                    try { AudioEngine.playError(); } catch(e){}
+                    document.getElementById("strict-break-screen").style.display = "flex";
+                }
+            }
+        }, 1000);
+        function dismissStrictBreak() {
+            AudioEngine.playSuccess();
+            document.getElementById("strict-break-screen").style.display = "none";
+            breakCounter = 1800;
+        }
+
+        /* --- 8. FOCUS BLOCK TIMER WITH SOUND CUES --- */
         let baseSecs = 1500, currentSecs = baseSecs, timerId = null;
         function updateTimerUI() { document.getElementById('timer-num').innerText = `${Math.floor(currentSecs / 60).toString().padStart(2,'0')}:${(currentSecs % 60).toString().padStart(2,'0')}`; }
-        function setTimerMinutes() { const m = parseInt(document.getElementById('timer-input').value); if(m > 0) { pauseTimer(); baseSecs = m * 60; currentSecs = baseSecs; updateTimerUI(); } }
-        function startTimer() { if(currentSecs <= 0) currentSecs = baseSecs; if(!timerId) { timerId = setInterval(() => { if(currentSecs > 0) { currentSecs--; updateTimerUI(); } else { clearInterval(timerId); timerId = null; alert("Focus Block Complete!"); currentSecs = baseSecs; updateTimerUI(); } }, 1000); } }
-        function pauseTimer() { clearInterval(timerId); timerId = null; }
-        function resetTimer() { pauseTimer(); currentSecs = baseSecs; updateTimerUI(); }
+        function setTimerMinutes() {
+            AudioEngine.playClick();
+            const m = parseInt(document.getElementById('timer-input').value);
+            if(m > 0) { pauseTimer(); baseSecs = m * 60; currentSecs = baseSecs; updateTimerUI(); }
+        }
+        function startTimer() {
+            AudioEngine.playClick();
+            if(currentSecs <= 0) currentSecs = baseSecs;
+            if(!timerId) {
+                timerId = setInterval(() => {
+                    if(currentSecs > 0) {
+                        currentSecs--; updateTimerUI();
+                        if(currentSecs <= 5 && currentSecs > 0) AudioEngine.playTick();
+                    } else {
+                        clearInterval(timerId); timerId = null;
+                        AudioEngine.playSuccess(); alert("Focus Block Complete!");
+                        currentSecs = baseSecs; updateTimerUI();
+                    }
+                }, 1000);
+            }
+        }
+        function pauseTimer() { AudioEngine.playClick(); clearInterval(timerId); timerId = null; }
+        function resetTimer() { AudioEngine.playClick(); pauseTimer(); currentSecs = baseSecs; updateTimerUI(); }
 
-        /* --- DETAILED ACADEMIC FORMULAS (OFFLINE BACKUP) --- */
+        /* --- 9. SCRATCHPAD & SOUNDSCAPE --- */
+        function saveScratchpad() {
+            localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value);
+        }
+        function toggleSynth() {
+            const btn = document.getElementById('synth-btn');
+            if(AudioEngine.toggleAlphaWave()) {
+                btn.innerText = "Decommission Soundscape 🛑";
+                btn.style.borderColor = "var(--accent)";
+            } else {
+                btn.innerText = "Activate Soundscape 🧘";
+                btn.style.borderColor = "rgba(255,255,255,0.12)";
+            }
+        }
+
+        /* --- 10. COMPREHENSIVE ACADEMIC KNOWLEDGE BASE (OFFLINE PROOFS) --- */
         function getDetailedAnswer(query) {
             const q = query.toLowerCase();
             
             if (q.includes('heron')) {
-                return "📐 Heron's Formula (Area of a Triangle):\n\nHeron's formula is used to calculate the area of any triangle when all three sides (a, b, c) are known without needing the height.\n\nStep 1: Calculate the Semi-Perimeter (s):\n   s = (a + b + c) / 2\n\nStep 2: Calculate the Area:\n   Area = √[ s(s - a)(s - b)(s - c) ]\n\n• a, b, c = lengths of the 3 sides\n• s = semi-perimeter\n\nExample:\nIf a = 5, b = 6, c = 7:\ns = (5 + 6 + 7) / 2 = 9\nArea = √[ 9(9 - 5)(9 - 6)(9 - 7) ] = √[ 9 × 4 × 3 × 2 ] = √216 = 6√6 ≈ 14.7 sq units.";
+                return "📐 Heron's Formula (Area of a Triangle):\n\nUsed to calculate the area of any triangle when all three sides (a, b, c) are known.\n\nStep 1: Calculate the Semi-Perimeter (s):\n   s = (a + b + c) / 2\n\nStep 2: Calculate the Area:\n   Area = √[ s(s - a)(s - b)(s - c) ]\n\n• a, b, c = lengths of the sides\n• s = semi-perimeter\n\nExample:\nFor sides 5, 6, 7:\ns = (5 + 6 + 7)/2 = 9\nArea = √[9(9-5)(9-6)(9-7)] = √[9 × 4 × 3 × 2] = √216 = 6√6 ≈ 14.7 sq units.";
             }
             if (q.includes('quadratic')) {
-                return "📐 Quadratic Equation & Quadratic Formula:\n\nStandard Form: ax² + bx + c = 0 (where a ≠ 0)\n\n1. Discriminant (D):\n   D = b² - 4ac\n   • If D > 0: Two distinct real roots\n   • If D = 0: Two equal real roots\n   • If D < 0: No real roots\n\n2. Quadratic Formula for roots (x):\n   x = (-b ± √(b² - 4ac)) / (2a)";
+                return "📐 Quadratic Equation & Roots Formula:\n\nStandard Form: ax² + bx + c = 0 (where a ≠ 0)\n\n1. Discriminant (D):\n   D = b² - 4ac\n   • D > 0: Two distinct real roots\n   • D = 0: Two equal real roots\n   • D < 0: No real roots\n\n2. Quadratic Roots Formula:\n   x = (-b ± √(b² - 4ac)) / (2a)";
             }
             if (q.includes('respiration') || q.includes('exothermic')) {
-                return "🧪 Respiration as an Exothermic Reaction:\n\nRespiration is considered an exothermic reaction because glucose combines with oxygen in the body's cells and breaks down into carbon dioxide and water along with the release of large amounts of energy (ATP).\n\nBalanced Chemical Equation:\nC₆H₁₂O₆(aq) + 6O₂(g) → 6CO₂(g) + 6H₂O(l) + Energy (ATP)";
+                return "🧪 Respiration as an Exothermic Reaction:\n\nRespiration breaks down glucose in the presence of oxygen inside our body cells to release energy in the form of ATP:\n\nBalanced Chemical Equation:\nC₆H₁₂O₆(aq) + 6O₂(g) → 6CO₂(g) + 6H₂O(l) + Energy (ATP)";
             }
             if (q.includes('electricity') || q.includes('ohm')) {
-                return "⚡ Key Electricity Formulas (Class 10):\n\n• Ohm's Law: V = I × R\n• Resistance & Resistivity: R = ρ(L / A)\n• Series Equivalent: R = R₁ + R₂ + R₃\n• Parallel Equivalent: 1/R = 1/R₁ + 1/R₂ + 1/R₃\n• Electric Power: P = VI = I²R = V² / R\n• Joule's Heating Law: H = I²Rt";
+                return "⚡ Electricity Laws & Formulas (Class 10):\n\n• Ohm's Law: V = I × R\n• Resistance & Resistivity: R = ρ(L / A)\n• Series Equivalent: R = R₁ + R₂ + R₃\n• Parallel Equivalent: 1/R = 1/R₁ + 1/R₂ + 1/R₃\n• Electric Power: P = VI = I²R = V² / R\n• Joule's Heating: H = I²Rt";
             }
             if (q.includes('mirror') || q.includes('lens')) {
-                return "🔍 Optics Formulas (Class 10):\n\n• Mirror Formula: 1/f = 1/v + 1/u\n• Mirror Magnification: m = -v/u = h'/h\n\n• Lens Formula: 1/f = 1/v - 1/u\n• Lens Magnification: m = v/u = h'/h\n• Power of Lens: P = 1 / f (in meters), Unit: Dioptre (D)";
+                return "🔍 Optics Formulas (Class 10):\n\n• Mirror Formula: 1/f = 1/v + 1/u\n• Mirror Magnification: m = -v/u = h'/h\n\n• Lens Formula: 1/f = 1/v - 1/u\n• Lens Magnification: m = v/u = h'/h\n• Power of Lens: P = 1 / f (meters), Unit: Dioptre (D)";
+            }
+            if (q.includes('nationalism') || q.includes('india')) {
+                return "📜 Nationalism in India Key Dates:\n\n• 1919: Rowlatt Act & Jallianwala Bagh Massacre\n• 1920: Non-Cooperation Movement launched\n• 1922: Chauri Chaura incident; movement withdrawn\n• 1930: Dandi Salt March & Civil Disobedience Movement\n• 1931: Gandhi-Irwin Pact";
             }
             if (q === 'hi' || q === 'hello') {
-                return "Hello! I am your Class 10 study assistant. Ask me about Heron's formula, respiration, quadratic roots, electricity laws, or history!";
+                return "Hello! I am your Class 10 study assistant. Ask me about Heron's formula, respiration, quadratic equations, electricity, optics, or history!";
             }
-            return `Class 10 Concept Summary for "${query}":\n• Definitions must match exact NCERT keywords.\n• For numericals, write the formula, step-by-step substitution, and final units.\n• Draw clean, labelled diagrams where required.`;
+            return `Class 10 Concept Summary for "${query}":\n• Definitions must match exact NCERT keywords.\n• For numericals, write the formula, step-by-step substitution, and final units.\n• Label all diagram axes and components cleanly.`;
         }
 
+        /* --- 11. ACTIVE GEMINI 3.6 FLASH CHAT ENGINE --- */
         let lastAiAnswer = "";
         function configureKey() {
             const current = localStorage.getItem('portal_gemini_api_key') || '';
             const key = prompt("Enter Google Gemini API Key for live AI answers:", current);
             if(key !== null) {
                 localStorage.setItem('portal_gemini_api_key', key.trim());
-                alert("API Key saved to browser storage!");
+                AudioEngine.playSuccess();
+                alert("API Key saved securely to browser storage!");
             }
         }
         function quickAsk(text) { document.getElementById('chat-input').value = text; sendChatMessage(); }
 
-        /* --- ACTIVE GEMINI 3.6 FLASH CHAT ENGINE --- */
         async function sendChatMessage() {
             const input = document.getElementById('chat-input');
             const q = input.value.trim();
@@ -470,12 +1052,12 @@
 
             if(!apiKey) {
                 lastAiAnswer = getDetailedAnswer(q);
-                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:var(--text-muted);">(Tip: Click 🔑 API Key at the top right to connect live Gemini AI answers!)</small>`;
+                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:var(--text-muted);">(Tip: Click 🔑 API Key to connect live Gemini AI answers!)</small>`;
                 stream.scrollTop = stream.scrollHeight;
                 return;
             }
 
-            // Endpoints: gemini-3.6-flash, fallback to gemini-3.5-flash
+            // Target gemini-3.6-flash, fallback to gemini-3.5-flash
             const endpoints = [
                 `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
                 `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`
@@ -492,7 +1074,7 @@
                         body: JSON.stringify({
                             contents: [{
                                 role: "user",
-                                parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Explain in detail with formulas, step-by-step working, and clean formatting:\n\n${q}` }]
+                                parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Provide a clear, detailed, step-by-step answer with formulas, derivations, and clear formatting:\n\n${q}` }]
                             }]
                         })
                     });
@@ -507,6 +1089,7 @@
                     if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
                         lastAiAnswer = data.candidates[0].content.parts[0].text;
                         aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
+                        AudioEngine.playSuccess();
                         success = true;
                         break;
                     }
@@ -517,7 +1100,7 @@
 
             if (!success) {
                 lastAiAnswer = getDetailedAnswer(q);
-                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:#f43f5e;">[API Notice: ${apiErrorMessage || 'Model unavailable'}. Displayed local proof instead.]</small>`;
+                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}<br><br><small style="color:var(--danger);">[API Notice: ${apiErrorMessage || 'Model unavailable'}. Displayed local proof instead.]</small>`;
             }
 
             stream.scrollTop = stream.scrollHeight;
@@ -525,18 +1108,46 @@
 
         function copyAiToNotes() {
             if(!lastAiAnswer) return;
+            AudioEngine.playPop();
             const clean = lastAiAnswer.replace(/<[^>]*>?/gm, '');
             const area = document.getElementById('live-notes-area');
             area.value += (area.value ? "\n\n" : "") + `[Pinned Note]:\n${clean}`;
             autoSaveNotes();
         }
-        function autoSaveNotes() { localStorage.setItem('portal_notes_draft', document.getElementById('live-notes-area').value); document.getElementById('save-status').innerText = "Saved ✓"; }
-        function clearNotes() { if(confirm("Clear notes?")) { document.getElementById('live-notes-area').value = ""; autoSaveNotes(); } }
+        function autoSaveNotes() {
+            localStorage.setItem('portal_notes_draft', document.getElementById('live-notes-area').value);
+            document.getElementById('save-status').innerText = "Saved ✓";
+        }
+        function clearNotes() {
+            if(confirm("Clear notes?")) {
+                AudioEngine.playClick();
+                document.getElementById('live-notes-area').value = "";
+                autoSaveNotes();
+            }
+        }
 
+        /* --- 12. FULL 48-CHAPTER CBSE SYLLABUS DIRECTORY --- */
         const subjects = {
-            math: ["Real Numbers", "Polynomials", "Linear Equations", "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Trigonometry Intro", "Trigonometry Apps", "Circles", "Areas Related to Circles", "Surface Areas & Volumes", "Statistics", "Probability"],
-            science: ["Chemical Reactions", "Acids, Bases & Salts", "Metals & Non-metals", "Carbon & its Compounds", "Life Processes", "Control & Coordination", "Reproduction in Organisms", "Heredity", "Light Reflection & Refraction", "Human Eye", "Electricity", "Magnetic Effects", "Our Environment"],
-            social: ["Nationalism in Europe", "Nationalism in India", "Making of Global World", "Age of Industrialisation", "Print Culture", "Resources & Development", "Forest & Wildlife", "Water Resources", "Agriculture", "Minerals & Energy", "Manufacturing", "Power Sharing", "Federalism", "Political Parties", "Democracy Outcomes", "Development", "Sectors of Economy", "Money & Credit", "Globalisation"]
+            math: [
+                "Real Numbers", "Polynomials", "Linear Equations in 2 Variables", "Quadratic Equations", 
+                "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Intro to Trigonometry", 
+                "Applications of Trigonometry", "Circles", "Areas Related to Circles", 
+                "Surface Areas and Volumes", "Statistics", "Probability"
+            ],
+            science: [
+                "Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals", 
+                "Carbon and its Compounds", "Life Processes", "Control and Coordination", 
+                "How do Organisms Reproduce?", "Heredity and Evolution", "Light Reflection & Refraction", 
+                "The Human Eye", "Electricity", "Magnetic Effects of Current", "Our Environment"
+            ],
+            social: [
+                "Nationalism in Europe", "Nationalism in India", "Making of a Global World", 
+                "Age of Industrialisation", "Print Culture & Modern World", "Resources and Development", 
+                "Forest and Wildlife", "Water Resources", "Agriculture", "Minerals and Energy", 
+                "Manufacturing Industries", "Lifelines of National Economy", "Power Sharing", 
+                "Federalism", "Gender, Religion and Caste", "Political Parties", 
+                "Outcomes of Democracy", "Development", "Sectors of Economy", "Money & Credit", "Globalisation"
+            ]
         };
 
         function buildSyllabus() {
@@ -548,18 +1159,29 @@
                     const id = `${sub}_${i}`;
                     const isChecked = saved[id] ? true : false;
                     total++; if(isChecked) checkedCount++;
-                    return `<div class="syllabus-item"><input type="checkbox" id="${id}" ${isChecked ? 'checked' : ''} onchange="saveSyllabus('${id}')" style="accent-color:var(--accent); cursor:pointer;"><span>${title}</span></div>`;
+                    return `
+                        <div class="syllabus-item">
+                            <input type="checkbox" id="${id}" ${isChecked ? 'checked' : ''} onchange="saveSyllabus('${id}')" style="accent-color:var(--accent); cursor:pointer;">
+                            <span>${title}</span>
+                        </div>
+                    `;
                 }).join('');
             });
             updateSyllabusStats(checkedCount, total);
         }
 
         function saveSyllabus(id) {
+            AudioEngine.playPop();
             const saved = JSON.parse(localStorage.getItem('portal_syllabus_checks') || '{}');
             saved[id] = document.getElementById(id).checked;
             localStorage.setItem('portal_syllabus_checks', JSON.stringify(saved));
             let total = 0, checked = 0;
-            ['math', 'science', 'social'].forEach(s => { subjects[s].forEach((_, i) => { total++; if(saved[`${s}_${i}`]) checked++; }); });
+            ['math', 'science', 'social'].forEach(s => {
+                subjects[s].forEach((_, i) => {
+                    total++;
+                    if(saved[`${s}_${i}`]) checked++;
+                });
+            });
             updateSyllabusStats(checked, total);
         }
         function updateSyllabusStats(checked, total) {
@@ -568,28 +1190,57 @@
             document.getElementById('syllabus-fill').style.width = `${pct}%`;
         }
 
+        /* --- 13. SCHEDULE VAULT & URGENCY LOGIC --- */
         function addTargetEvent() {
-            const t = document.getElementById('target-title').value.trim(), d = document.getElementById('target-date').value;
-            if(!t || !d) return;
+            const t = document.getElementById('target-title').value.trim();
+            const d = document.getElementById('target-date').value;
+            if(!t || !d) { AudioEngine.playError(); return; }
+            AudioEngine.playSuccess();
             const cur = JSON.parse(localStorage.getItem('portal_targets') || '[]');
-            cur.push({ t, d }); cur.sort((a,b) => new Date(a.d) - new Date(b.d));
+            cur.push({ t, d });
+            cur.sort((a,b) => new Date(a.d) - new Date(b.d));
             localStorage.setItem('portal_targets', JSON.stringify(cur));
-            renderTargets(); document.getElementById('target-title').value = "";
+            renderTargets();
+            document.getElementById('target-title').value = "";
         }
         function renderTargets() {
             const cur = JSON.parse(localStorage.getItem('portal_targets') || '[]');
-            document.getElementById('target-stream').innerHTML = cur.map((item, i) => `<div class="syllabus-item" style="justify-content:space-between;"><div><strong style="color:#fff;">${item.t}</strong><div style="font-size:0.75rem; color:var(--accent);">Target: ${item.d}</div></div><button onclick="removeTarget(${i})" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;">×</button></div>`).join('');
+            const referenceDay = new Date(); referenceDay.setHours(0,0,0,0);
+            document.getElementById('target-stream').innerHTML = cur.map((item, i) => {
+                const targetDay = new Date(item.d); targetDay.setHours(0,0,0,0);
+                const diff = Math.ceil((targetDay - referenceDay) / (1000 * 60 * 60 * 24));
+                const isUrgent = diff >= 0 && diff <= 3;
+                return `
+                    <div class="cal-item ${isUrgent ? 'urgent' : ''}">
+                        <div>
+                            <strong style="color:#fff; font-size:0.9rem;">${escapeHTML(item.t)}</strong>
+                            <div style="font-size:0.75rem; color:${isUrgent ? 'var(--danger)' : 'var(--accent)'}; margin-top:2px;">
+                                📅 Target: ${item.d} ${isUrgent ? '⚠️ (Approaching Deadline!)' : ''}
+                            </div>
+                        </div>
+                        <button onclick="removeTarget(${i})" style="background:transparent; border:none; color:var(--text-muted); font-size:1.3rem; cursor:pointer;">×</button>
+                    </div>
+                `;
+            }).join('');
         }
         function removeTarget(i) {
+            AudioEngine.playPop();
             const cur = JSON.parse(localStorage.getItem('portal_targets') || '[]');
-            cur.splice(i, 1); localStorage.setItem('portal_targets', JSON.stringify(cur)); renderTargets();
+            cur.splice(i, 1);
+            localStorage.setItem('portal_targets', JSON.stringify(cur));
+            renderTargets();
         }
 
+        /* --- 14. REC ZONE (POPPERS & TIC-TAC-TOE) --- */
         function buildFidget() {
             const g = document.getElementById('fidget-grid'); g.innerHTML = "";
-            for(let i = 0; i < 15; i++) { const b = document.createElement('div'); b.className = 'bubble'; b.onclick = function() { this.classList.toggle('popped'); }; g.appendChild(b); }
+            for(let i = 0; i < 15; i++) {
+                const b = document.createElement('div'); b.className = 'bubble';
+                b.onclick = function() { AudioEngine.playPop(); this.classList.toggle('popped'); };
+                g.appendChild(b);
+            }
         }
-        function resetFidget() { document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped')); }
+        function resetFidget() { AudioEngine.playClick(); document.querySelectorAll('.bubble').forEach(b => b.classList.remove('popped')); }
 
         let tttState = ["","","","","","","","",""], tttTurn = "❌";
         function buildTTT() {
@@ -597,11 +1248,16 @@
             tttState.forEach((val, i) => {
                 const cell = document.createElement('div'); cell.className = 'ttt-cell'; cell.innerText = val;
                 cell.onclick = () => {
-                    if(tttState[i] !== "") return;
+                    if(tttState[i] !== "") { AudioEngine.playError(); return; }
+                    AudioEngine.playPop();
                     tttState[i] = tttTurn; buildTTT();
-                    if(checkTTT()) { setTimeout(() => { alert(`${tttTurn} Won!`); resetTTT(); }, 30); }
-                    else if(!tttState.includes("")) { setTimeout(() => { alert("Draw!"); resetTTT(); }, 30); }
-                    else { tttTurn = tttTurn === "❌" ? "⭕" : "❌"; }
+                    if(checkTTT()) {
+                        setTimeout(() => { AudioEngine.playSuccess(); alert(`${tttTurn} Won!`); resetTTT(); }, 30);
+                    } else if(!tttState.includes("")) {
+                        setTimeout(() => { AudioEngine.playError(); alert("Match Drawn!"); resetTTT(); }, 30);
+                    } else {
+                        tttTurn = tttTurn === "❌" ? "⭕" : "❌";
+                    }
                 };
                 a.appendChild(cell);
             });
@@ -610,15 +1266,29 @@
             const w = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
             return w.some(c => tttState[c[0]] && tttState[c[0]] === tttState[c[1]] && tttState[c[1]] === tttState[c[2]]);
         }
-        function resetTTT() { tttState = ["","","","","","","","",""]; tttTurn = "❌"; buildTTT(); }
+        function resetTTT() { AudioEngine.playClick(); tttState = ["","","","","","","","",""]; tttTurn = "❌"; buildTTT(); }
 
-        function setTheme(t) { document.body.className = t; localStorage.setItem('portal_theme', t); }
+        /* --- 15. THEMES --- */
+        function setTheme(t) {
+            AudioEngine.playPop();
+            document.body.className = t;
+            localStorage.setItem('portal_theme', t);
+        }
 
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        }
+
+        /* --- 16. BOOTSTRAP WORKSPACE --- */
         function bootWorkspace() {
             document.getElementById('live-notes-area').value = localStorage.getItem('portal_notes_draft') || "";
+            document.getElementById('scratchpad-area').value = localStorage.getItem('portal_global_scratchpad') || "";
             const theme = localStorage.getItem('portal_theme');
             if(theme) document.body.className = theme;
-            buildSyllabus(); renderTargets(); buildFidget(); buildTTT();
+            buildSyllabus();
+            renderTargets();
+            buildFidget();
+            buildTTT();
         }
     </script>
 </body>
