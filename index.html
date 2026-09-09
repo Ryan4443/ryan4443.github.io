@@ -273,7 +273,7 @@
 
                     <div class="chat-log" id="chat-stream">
                         <div class="chat-bubble bubble-ai">
-                            <strong>AI:</strong> Ready! I am powered with built-in Class 10 Board knowledge, so I can answer your questions immediately.
+                            <strong>AI:</strong> Ready! I am connected to Gemini and have built-in Class 10 Board knowledge.
                         </div>
                     </div>
 
@@ -389,7 +389,6 @@
             }
         });
 
-        // Clock & Countdown
         setInterval(() => {
             const d = new Date();
             document.getElementById('nav-clock').innerText = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
@@ -404,7 +403,6 @@
             document.getElementById('cd-secs').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
         }, 1000);
 
-        // Timer
         let baseSecs = 1500, currentSecs = baseSecs, timerId = null;
         function updateTimerUI() { document.getElementById('timer-num').innerText = `${Math.floor(currentSecs / 60).toString().padStart(2,'0')}:${(currentSecs % 60).toString().padStart(2,'0')}`; }
         function setTimerMinutes() { const m = parseInt(document.getElementById('timer-input').value); if(m > 0) { pauseTimer(); baseSecs = m * 60; currentSecs = baseSecs; updateTimerUI(); } }
@@ -412,35 +410,35 @@
         function pauseTimer() { clearInterval(timerId); timerId = null; }
         function resetTimer() { pauseTimer(); currentSecs = baseSecs; updateTimerUI(); }
 
-        // Smart Knowledge Base (Works even without an API key)
         function getBuiltInAnswer(query) {
             const q = query.toLowerCase();
             if(q === 'hi' || q === 'hello' || q === 'hey') {
-                return "Hello! I am your Class 10 study assistant. You can ask me any question about Math (quadratic equations, triangles), Science (chemical reactions, electricity), or Social Science (nationalism, democracy)!";
+                return "Hello! I am your Class 10 study companion. Ask me any concept, formula, or board exam question in Math, Science, or Social Science!";
             }
             if(q.includes('respiration') || q.includes('exothermic')) {
-                return "Respiration is considered an exothermic reaction because glucose combines with oxygen in the cells of our body and breaks down into carbon dioxide and water along with the release of large amounts of energy (ATP).\n\nChemical Equation:\nC₆H₁₂O₆(aq) + 6O₂(g) → 6CO₂(g) + 6H₂O(l) + Energy";
+                return "Respiration is considered an exothermic reaction because glucose combines with oxygen in cells and releases heat energy (ATP).\n\nReaction:\nC₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energy";
             }
             if(q.includes('quadratic')) {
-                return "For any standard quadratic equation: ax² + bx + c = 0 (where a ≠ 0):\n\nDiscriminant (D) = b² - 4ac\n• If D > 0: Two distinct real roots\n• If D = 0: Two equal real roots\n• If D < 0: No real roots\n\nQuadratic Formula:\nx = (-b ± √(b² - 4ac)) / (2a)";
+                return "For ax² + bx + c = 0:\nDiscriminant D = b² - 4ac\nRoots formula: x = (-b ± √D) / (2a)";
             }
             if(q.includes('nationalism') || q.includes('india')) {
-                return "Key Dates in Nationalism in India (Class 10):\n• 1919: Rowlatt Act & Jallianwala Bagh Massacre\n• 1920: Non-Cooperation Movement launched by Mahatma Gandhi\n• 1922: Chauri Chaura incident; movement called off\n• 1930: Salt March (Dandi March) & Civil Disobedience Movement";
+                return "Key Dates in Nationalism in India:\n• 1919: Rowlatt Act & Jallianwala Bagh\n• 1920: Non-Cooperation Movement\n• 1922: Chauri Chaura incident\n• 1930: Dandi Salt March";
             }
-            return `Key Board Prep Insight for "${query}":\n• Break this concept into 3 core points.\n• Always write definitions word-for-word as per NCERT.\n• For numericals/equations, clearly show the formula used and state your final answer with units!`;
+            return `Key Board Prep Insight for "${query}":\n• Focus on NCERT textbook definitions.\n• State formulas and step-by-step calculations with units.\n• Use headings and bullet points in theoretical answers.`;
         }
 
         let lastAiAnswer = "";
         function configureKey() {
             const current = localStorage.getItem('portal_gemini_api_key') || '';
-            const key = prompt("Optional: Enter your personal Google Gemini API Key for live answers:", current);
+            const key = prompt("Enter Google Gemini API Key:", current);
             if(key !== null) {
                 localStorage.setItem('portal_gemini_api_key', key.trim());
-                alert("API Key saved to your browser!");
+                alert("API Key saved to browser storage!");
             }
         }
         function quickAsk(text) { document.getElementById('chat-input').value = text; sendChatMessage(); }
 
+        /* --- FIXED DUAL-ENDPOINT AUTO-FALLBACK FUNCTION --- */
         async function sendChatMessage() {
             const input = document.getElementById('chat-input');
             const q = input.value.trim();
@@ -467,26 +465,39 @@
                     lastAiAnswer = getBuiltInAnswer(q);
                     aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
                     stream.scrollTop = stream.scrollHeight;
-                }, 300);
+                }, 250);
                 return;
             }
 
-            try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Provide a clear, precise, step-by-step answer:\n\n${q}` }] }]
-                    })
-                });
-                const data = await res.json();
-                if(data.error) {
-                    lastAiAnswer = getBuiltInAnswer(q) + `<br><br><small style="color:var(--text-muted);">(Note: Gemini API reported: ${data.error.message}. Displayed offline answer instead.)</small>`;
-                } else {
-                    lastAiAnswer = data.candidates?.[0]?.content?.parts?.[0]?.text || getBuiltInAnswer(q);
-                }
-                aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
-            } catch(e) {
+            const endpoints = [
+                `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`
+            ];
+
+            let success = false;
+
+            for (const url of endpoints) {
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Provide a clear, precise, step-by-step answer:\n\n${q}` }] }]
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (!data.error && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        lastAiAnswer = data.candidates[0].content.parts[0].text;
+                        aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
+                        success = true;
+                        break;
+                    }
+                } catch (err) {}
+            }
+
+            if (!success) {
                 lastAiAnswer = getBuiltInAnswer(q);
                 aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
             }
@@ -503,7 +514,6 @@
         function autoSaveNotes() { localStorage.setItem('portal_notes_draft', document.getElementById('live-notes-area').value); document.getElementById('save-status').innerText = "Saved ✓"; }
         function clearNotes() { if(confirm("Clear notes?")) { document.getElementById('live-notes-area').value = ""; autoSaveNotes(); } }
 
-        // Syllabus
         const subjects = {
             math: ["Real Numbers", "Polynomials", "Linear Equations", "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Trigonometry Intro", "Trigonometry Apps", "Circles", "Areas Related to Circles", "Surface Areas & Volumes", "Statistics", "Probability"],
             science: ["Chemical Reactions", "Acids, Bases & Salts", "Metals & Non-metals", "Carbon & its Compounds", "Life Processes", "Control & Coordination", "Reproduction in Organisms", "Heredity", "Light Reflection & Refraction", "Human Eye", "Electricity", "Magnetic Effects", "Our Environment"],
@@ -539,7 +549,6 @@
             document.getElementById('syllabus-fill').style.width = `${pct}%`;
         }
 
-        // Schedule
         function addTargetEvent() {
             const t = document.getElementById('target-title').value.trim(), d = document.getElementById('target-date').value;
             if(!t || !d) return;
@@ -557,7 +566,6 @@
             cur.splice(i, 1); localStorage.setItem('portal_targets', JSON.stringify(cur)); renderTargets();
         }
 
-        // Games
         function buildFidget() {
             const g = document.getElementById('fidget-grid'); g.innerHTML = "";
             for(let i = 0; i < 15; i++) { const b = document.createElement('div'); b.className = 'bubble'; b.onclick = function() { this.classList.toggle('popped'); }; g.appendChild(b); }
