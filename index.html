@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Pro Portal | Glass Workspace</title>
+    <title>10 Pro Portal | Apple-Grade Liquid Glass</title>
     <style>
-        /* --- HIGH PERFORMANCE LIQUID NEON VARIABLES --- */
+        /* --- APPLE VISION / iOS LIQUID GLASS TOKENS --- */
         :root {
             --accent: #00f2fe;
+            --accent-soft: rgba(0, 242, 254, 0.18);
             --accent-glow: rgba(0, 242, 254, 0.35);
             --secondary: #9d4edd;
-            --secondary-glow: rgba(157, 78, 221, 0.35);
-            --bg-card: rgba(16, 20, 34, 0.72);
-            --bg-card-hover: rgba(22, 28, 48, 0.85);
+            --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(13, 17, 30, 0.65);
+            --glass-card-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(18, 23, 40, 0.75);
+            --glass-rim-top: rgba(255, 255, 255, 0.35);
+            --glass-rim-bottom: rgba(0, 0, 0, 0.4);
+            --glass-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.55), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+            --glass-inset: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 -1px 1px rgba(0, 0, 0, 0.3);
             --text-heading: #ffffff;
-            --text-main: #f1f5f9;
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-glass: rgba(255, 255, 255, 0.12);
-            --border-glow: rgba(0, 242, 254, 0.4);
-            --success: #10b981;
-            --danger: #ef4444;
-            --smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* --- BASE RESETS & OPTIMIZATION --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -32,24 +32,44 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
             color: var(--text-main);
-            background-color: #03040b;
-            background-attachment: fixed;
-            background-size: cover;
+            background-color: #03050c;
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            letter-spacing: -0.01em;
         }
 
-        /* Lightweight ambient backgrounds (GPU friendly) */
-        body.bg-void { background: #03040b; }
-        body.bg-ocean { background: radial-gradient(circle at 10% 20%, #032b43 0%, #02121e 60%, #01080d 100%); }
-        body.bg-vapor { background: radial-gradient(circle at 90% 10%, #3c096c 0%, #170326 60%, #090110 100%); }
-        body.bg-aurora { background: linear-gradient(135deg, #051622 0%, #1a0826 50%, #030712 100%); }
+        /* --- GPU-ACCELERATED HARDWARE-FRIENDLY LIQUID AMBIANCE --- */
+        .ambient-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+        .liquid-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            will-change: transform;
+            animation: drift 18s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 65vw; height: 65vw; background: radial-gradient(circle, #00f2fe 0%, transparent 70%); top: -15%; left: -15%; }
+        .orb-2 { width: 75vw; height: 75vw; background: radial-gradient(circle, #7928ca 0%, transparent 70%); bottom: -20%; right: -15%; animation-delay: -9s; }
 
-        /* Hardware-accelerated canvas */
+        @keyframes drift {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            100% { transform: translate3d(40px, 50px, 0) scale(1.08); }
+        }
+
         #cursor-trail {
             position: fixed;
             top: 0;
@@ -60,76 +80,79 @@
             z-index: 1;
         }
 
-        /* --- LIQUID GLASS CARDS (NO LAYOUT-THRASHING ANIMATIONS) --- */
-        .glass-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glass);
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-            transition: transform 0.25s var(--smooth), border-color 0.25s var(--smooth);
+        /* --- APPLE VISION GLASS SPECULAR ENGINE --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(190%);
+            -webkit-backdrop-filter: blur(22px) saturate(190%);
+            border-top: 1px solid var(--glass-rim-top);
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid var(--glass-rim-bottom);
+            box-shadow: var(--glass-shadow), var(--glass-inset);
+            border-radius: 20px;
             position: relative;
             z-index: 2;
+            transition: transform 0.3s var(--smooth), box-shadow 0.3s var(--smooth), background 0.3s var(--smooth);
+        }
+        .glass-panel:hover {
+            background: var(--glass-card-hover);
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 242, 254, 0.12), var(--glass-inset);
         }
 
-        .glass-card:hover {
-            border-color: var(--border-glow);
-        }
-
-        /* --- TOP STICKY BAR: DESKTOP ROW & CLOCK --- */
+        /* --- TOP DOCKED PERSISTENT ROW --- */
         .top-navbar-wrapper {
             position: sticky;
             top: 0;
             z-index: 1000;
             padding: 10px 16px;
-            background: rgba(3, 4, 11, 0.75);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--border-glass);
+            background: rgba(3, 5, 12, 0.72);
+            backdrop-filter: blur(24px) saturate(190%);
+            -webkit-backdrop-filter: blur(24px) saturate(190%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
         }
-
         .brand-badge {
             font-weight: 900;
-            font-size: 1rem;
-            letter-spacing: 1px;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
             color: #fff;
-            white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            white-space: nowrap;
         }
-        .brand-badge span { color: var(--accent); }
+        .brand-badge span {
+            background: linear-gradient(135deg, var(--accent), #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        /* Smooth, horizontal scrollable item row for PC & Mobile */
         .nav-row {
             display: flex;
             align-items: center;
             gap: 8px;
             overflow-x: auto;
             white-space: nowrap;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
+            scrollbar-width: none;
             padding: 4px 0;
         }
         .nav-row::-webkit-scrollbar { display: none; }
 
         .nav-pill {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: var(--text-muted);
             padding: 8px 16px;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            transition: all 0.2s ease;
+            letter-spacing: 0.2px;
+            transition: all 0.25s var(--smooth);
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -137,109 +160,130 @@
         }
         .nav-pill:hover {
             color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
         }
+        .nav-pill:active { transform: scale(0.96); }
         .nav-pill.active {
-            color: #000;
-            background: var(--accent);
-            border-color: var(--accent);
-            box-shadow: 0 0 16px var(--accent-glow);
+            color: #03050c;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
 
         #nav-clock {
-            font-family: "Courier New", monospace;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", monospace;
             font-size: 0.85rem;
             font-weight: 800;
             color: var(--accent);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 6px 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border-glass);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             white-space: nowrap;
-            flex-shrink: 0;
         }
 
-        /* --- STREAMLINED COUNTDOWN BANNER --- */
+        /* --- STREAMLINED COUNTDOWN STRIP --- */
         .portal-header {
             text-align: center;
-            padding: 18px 16px 8px 16px;
+            padding: 16px 16px 6px 16px;
             position: relative;
             z-index: 2;
         }
         .portal-header h1 {
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
         }
         .countdown-strip {
             display: inline-flex;
-            gap: 12px;
-            padding: 10px 20px;
-            background: rgba(16, 20, 34, 0.5);
-            border: 1px solid var(--border-glass);
-            border-radius: 14px;
-            margin-top: 4px;
+            gap: 10px;
+            padding: 8px 18px;
+            border-radius: 16px;
+            background: rgba(16, 22, 38, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .cd-box { text-align: center; min-width: 44px; }
         .cd-box .num { font-size: 1.25rem; font-family: monospace; font-weight: 900; color: var(--accent); }
         .cd-box .lbl { font-size: 0.55rem; text-transform: uppercase; color: var(--text-muted); }
 
-        /* --- CONTENT VIEWPORTS --- */
+        /* --- CONTAINER & PAGES --- */
         .main-container {
             max-width: 1100px;
             width: 100%;
             margin: 0 auto;
-            padding: 14px 16px 60px 16px;
+            padding: 12px 16px 60px 16px;
             position: relative;
             z-index: 2;
         }
         .page { display: none; }
-        .page.active { display: block; animation: quickIn 0.2s ease forwards; }
-        @keyframes quickIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .page.active {
+            display: block;
+            animation: iosScaleIn 0.3s var(--smooth) forwards;
+        }
+        @keyframes iosScaleIn {
+            from { opacity: 0; transform: scale(0.985) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
 
-        /* --- COMMON UI CONTROLS --- */
+        /* --- INPUTS & LIQUID CONTROLS --- */
         input, select, textarea {
-            background: rgba(0, 0, 0, 0.45);
-            border: 1px solid var(--border-glass);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: #fff;
-            padding: 10px 14px;
-            border-radius: 10px;
+            padding: 12px 16px;
+            border-radius: 14px;
             font-size: 0.9rem;
             width: 100%;
             outline: none;
-            transition: border-color 0.2s ease;
+            transition: all 0.25s var(--smooth);
             font-family: inherit;
         }
-        input:focus, select:focus, textarea:focus {
+        input:focus, textarea:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 10px var(--accent-glow);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+            background: rgba(0, 0, 0, 0.55);
         }
+
         button.btn {
-            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            background: rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.12);
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
             color: #fff;
-            border: 1px solid var(--border-glass);
             padding: 12px 18px;
-            border-radius: 10px;
+            border-radius: 14px;
             font-size: 0.85rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
+            letter-spacing: 0.3px;
+            transition: all 0.25s var(--smooth);
             display: inline-flex;
             justify-content: center;
             align-items: center;
             gap: 6px;
         }
-        button.btn:hover { background: rgba(0, 242, 254, 0.15); border-color: var(--accent); }
-        button.btn:active { transform: scale(0.97); }
-        button.btn.primary { background: var(--accent); color: #000; font-weight: 900; }
-        button.btn.primary:hover { background: #38f9d7; box-shadow: 0 0 16px var(--accent-glow); }
+        button.btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+        button.btn:active { transform: scale(0.96); }
+        button.btn.primary {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #03050c;
+            font-weight: 900;
+            border: none;
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+        button.btn.primary:hover {
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5);
+        }
 
-        /* --- DASHBOARD GRID --- */
+        /* --- DASHBOARD --- */
         .dash-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -249,7 +293,7 @@
             .dash-grid { grid-template-columns: 1.3fr 1fr; }
         }
 
-        /* --- TALK TO AI & NOTES SPLIT VIEW --- */
+        /* --- TALK TO AI & NOTES WORKSPACE --- */
         .ai-notes-layout {
             display: grid;
             grid-template-columns: 1fr;
@@ -257,17 +301,15 @@
         }
         @media (min-width: 850px) {
             .ai-notes-layout {
-                grid-template-columns: 1.3fr 1fr;
+                grid-template-columns: 1.35fr 1fr;
                 align-items: start;
             }
         }
-
-        /* Chat Window */
         .chat-container {
             display: flex;
             flex-direction: column;
-            height: 580px;
-            padding: 18px;
+            height: 590px;
+            padding: 20px;
         }
         .chat-log {
             flex: 1;
@@ -280,49 +322,86 @@
         }
         .chat-bubble {
             max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 14px;
-            font-size: 0.88rem;
-            line-height: 1.5;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.55;
             word-wrap: break-word;
+            animation: bubblePop 0.25s var(--spring);
+        }
+        @keyframes bubblePop {
+            from { opacity: 0; transform: scale(0.92) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .bubble-user {
             align-self: flex-end;
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(157, 78, 221, 0.2));
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(79, 172, 254, 0.35));
             border: 1px solid var(--accent);
+            border-bottom-right-radius: 4px;
             color: #fff;
-            border-bottom-right-radius: 2px;
         }
         .bubble-ai {
             align-self: flex-start;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass);
-            border-bottom-left-radius: 2px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom-left-radius: 4px;
         }
         .bubble-ai strong { color: var(--accent); }
 
-        .chat-input-row {
+        .prompt-chips {
             display: flex;
-            gap: 10px;
+            gap: 6px;
+            overflow-x: auto;
+            margin-bottom: 10px;
+            padding-bottom: 4px;
+            scrollbar-width: none;
         }
+        .prompt-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .prompt-chip:hover { color: #fff; border-color: var(--accent); }
 
-        /* Notes Window */
+        /* Notes Pane */
         .notes-container {
             display: flex;
             flex-direction: column;
-            height: 580px;
-            padding: 18px;
+            height: 590px;
+            padding: 20px;
         }
         .notes-editor {
             flex: 1;
             resize: none;
-            font-family: inherit;
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 12px;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
+            border-radius: 16px;
         }
 
-        /* --- SYLLABUS GRID --- */
+        /* --- SYLLABUS PROGRESS ENGINE --- */
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0 20px 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #4facfe);
+            border-radius: 10px;
+            transition: width 0.4s var(--smooth);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
         .syllabus-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -336,13 +415,18 @@
             align-items: center;
             gap: 10px;
             padding: 10px 14px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
             margin-bottom: 8px;
-            border: 1px solid var(--border-glass);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             font-size: 0.85rem;
+            transition: all 0.2s var(--smooth);
         }
-        .syllabus-item:hover { border-color: var(--accent); }
+        .syllabus-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(0, 242, 254, 0.4);
+            transform: translateX(3px);
+        }
 
         /* --- REC ZONE --- */
         .fidget-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
@@ -351,40 +435,62 @@
             background: radial-gradient(circle, var(--accent) 0%, #005f73 100%);
             border-radius: 50%;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.25);
-            transition: transform 0.15s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: transform 0.15s var(--spring);
         }
-        .bubble.popped { background: rgba(0,0,0,0.6); transform: scale(0.92); border-color: var(--border-glass); }
-
+        .bubble.popped {
+            background: rgba(0,0,0,0.6);
+            transform: scale(0.92);
+            border-color: rgba(255,255,255,0.08);
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.8);
+        }
         .ttt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 220px; margin: 16px auto; }
         .ttt-cell {
-            aspect-ratio: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            aspect-ratio: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
             font-size: 1.8rem; font-weight: 900; cursor: pointer;
+            transition: transform 0.2s var(--spring);
         }
+        .ttt-cell:active { transform: scale(0.94); }
 
-        /* Password Overlay */
+        /* --- iOS PASSCODE GATE WITH HAPTIC SHAKE --- */
         .password-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 4, 11, 0.94); backdrop-filter: blur(20px);
-            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            background: rgba(2, 4, 10, 0.88);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            z-index: 100000; display: flex; justify-content: center; align-items: center;
             padding: 16px;
         }
-        .password-box { max-width: 360px; width: 100%; padding: 32px 24px; text-align: center; }
+        .password-box {
+            max-width: 340px; width: 100%; padding: 36px 28px; text-align: center;
+        }
+        .shake-error {
+            animation: iosShake 0.4s ease-in-out;
+        }
+        @keyframes iosShake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
     </style>
 </head>
 <body class="bg-void">
 
+    <!-- Hardware-Accelerated Ambient Orbs -->
+    <div class="ambient-mesh">
+        <div class="liquid-orb orb-1"></div>
+        <div class="liquid-orb orb-2"></div>
+    </div>
     <canvas id="cursor-trail"></canvas>
 
-    <!-- Top Sticky Desktop/Mobile Row -->
+    <!-- Top Navigation Bar (No Hamburger) -->
     <header class="top-navbar-wrapper">
         <div class="brand-badge">⚡ 10 <span>Pro</span></div>
         
-        <!-- Direct Teleport Navigation Row (Replaces Hamburger) -->
         <div class="nav-row">
             <button class="nav-pill active" onclick="teleportTo('dash-page', this)">🏠 Dashboard</button>
-            <button class="nav-pill" onclick="teleportTo('talk-ai-page', this)">💬 Talk to AI & Notes</button>
+            <button class="nav-pill" onclick="teleportTo('talk-ai-page', this)">💬 AI Talk & Notes</button>
             <button class="nav-pill" onclick="teleportTo('syllabus-page', this)">📚 Syllabus</button>
             <button class="nav-pill" onclick="teleportTo('schedule-page', this)">📅 Schedule</button>
             <button class="nav-pill" onclick="teleportTo('rec-page', this)">🎮 Rec Zone</button>
@@ -394,19 +500,20 @@
         <div id="nav-clock">00:00:00</div>
     </header>
 
-    <!-- PIN Authentication Gate -->
+    <!-- Secure Password Gate (4443 Completely Hidden) -->
     <div id="password-gate" class="password-overlay">
-        <div class="glass-card password-box">
-            <h2 style="color:var(--accent); font-size:1.3rem; margin-bottom:8px;">🔒 SECURE ACCESS</h2>
-            <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:20px;">Enter Terminal PIN (4443)</p>
-            <input type="password" id="gate-pin" placeholder="••••" maxlength="4" style="text-align:center; font-size:1.8rem; letter-spacing:14px; margin-bottom:20px;">
-            <button class="btn primary" style="width:100%;" onclick="verifyPin()">Unlock Workspace ⚡</button>
+        <div id="gate-card" class="glass-panel password-box">
+            <div style="font-size:2rem; margin-bottom:12px;">🔒</div>
+            <h2 style="font-size:1.25rem; font-weight:800; margin-bottom:6px; color:#fff;">Passcode Protected</h2>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:24px;">Enter terminal access PIN</p>
+            <input type="password" id="gate-pin" placeholder="••••" maxlength="4" style="text-align:center; font-size:2rem; letter-spacing:16px; margin-bottom:24px;">
+            <button class="btn primary" style="width:100%;" onclick="verifyPin()">Unlock Matrix ⚡</button>
         </div>
     </div>
 
-    <!-- Compact Countdown Header -->
+    <!-- Compact Countdown Strip -->
     <div class="portal-header">
-        <h1>Board Exams Target 2027</h1>
+        <h1>Board Exams Countdown 2027</h1>
         <div class="countdown-strip">
             <div class="cd-box"><div class="num" id="cd-days">00</div><div class="lbl">Days</div></div>
             <div class="cd-box"><div class="num" id="cd-hours">00</div><div class="lbl">Hours</div></div>
@@ -415,16 +522,16 @@
         </div>
     </div>
 
-    <!-- Main Workspace Container -->
+    <!-- Main Dynamic Viewports -->
     <main class="main-container">
 
         <!-- 1. DASHBOARD -->
         <section id="dash-page" class="page active">
             <div class="dash-grid">
-                <div class="glass-card" style="padding:24px; text-align:center;">
-                    <h2 style="font-size:1.1rem; margin-bottom:12px;">⏱️ Focus Block Timer</h2>
-                    <div id="timer-num" style="font-size:4.2rem; font-family:monospace; font-weight:900; color:#fff; text-shadow:0 0 20px var(--accent-glow);">25:00</div>
-                    <div style="display:flex; justify-content:center; gap:8px; margin:16px 0;">
+                <div class="glass-panel" style="padding:28px; text-align:center;">
+                    <h2 style="font-size:1.1rem; font-weight:800; margin-bottom:8px;">⏱️ Focus Block Engine</h2>
+                    <div id="timer-num" style="font-size:4.4rem; font-family:monospace; font-weight:900; color:#fff; text-shadow:0 0 25px var(--accent-glow);">25:00</div>
+                    <div style="display:flex; justify-content:center; gap:8px; margin:18px 0;">
                         <input type="number" id="timer-input" value="25" style="width:75px; text-align:center;">
                         <button class="btn" onclick="setTimerMinutes()">Set</button>
                     </div>
@@ -435,61 +542,78 @@
                     </div>
                 </div>
                 <div style="display:flex; flex-direction:column; gap:16px;">
-                    <div class="glass-card" style="padding:20px;">
-                        <h3 style="font-size:1rem; margin-bottom:8px;">🎧 10Hz Alpha Waves</h3>
-                        <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:14px;">Binaural frequency synthesizer for continuous mental clarity.</p>
+                    <div class="glass-panel" style="padding:22px;">
+                        <h3 style="font-size:1rem; margin-bottom:6px;">🎧 10Hz Alpha Waves</h3>
+                        <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:16px;">Binaural neural synchronization for deep study sessions.</p>
                         <button id="synth-btn" class="btn" style="width:100%;" onclick="toggleSynth()">Activate Soundscape 🧘</button>
                     </div>
-                    <div class="glass-card" style="padding:20px;">
-                        <h3 style="font-size:1rem; margin-bottom:8px;">⚡ Quick Status</h3>
-                        <p style="color:var(--text-muted); font-size:0.8rem;">Platform optimized for low-latency execution on desktop and mobile.</p>
+                    <div class="glass-panel" style="padding:22px;">
+                        <h3 style="font-size:1rem; margin-bottom:6px;">⚡ Liquid Fluidity</h3>
+                        <p style="color:var(--text-muted); font-size:0.8rem;">VisionOS specular lighting active. Low battery footprint enabled.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. NEW DEDICATED TALK TO AI & LIVE NOTES PAGE -->
+        <!-- 2. AI TALK & NOTES CONSOLE -->
         <section id="talk-ai-page" class="page">
             <div class="ai-notes-layout">
-                <!-- Left: Live AI Talk Console -->
-                <div class="glass-card chat-container">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <h2 style="font-size:1.1rem;">💬 Talk to AI Assistant</h2>
-                        <button class="btn" style="padding:4px 10px; font-size:0.75rem;" onclick="configureKey()">🔑 API Key</button>
+                <!-- Left: Chat Viewport -->
+                <div class="glass-panel chat-container">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <h2 style="font-size:1.1rem; font-weight:800;">💬 AI Study Companion</h2>
+                        <button class="btn" style="padding:5px 12px; font-size:0.75rem;" onclick="configureKey()">🔑 API Key</button>
                     </div>
+                    
+                    <!-- Quick Suggestions -->
+                    <div class="prompt-chips">
+                        <span class="prompt-chip" onclick="quickAsk('Explain why respiration is an exothermic reaction with chemical equation')">🧪 Respiration Eq</span>
+                        <span class="prompt-chip" onclick="quickAsk('State and derive the Quadratic Formula step-by-step')">📐 Quadratic Derivation</span>
+                        <span class="prompt-chip" onclick="quickAsk('Give 3 key dates and events for Nationalism in India')">📜 India Nationalism</span>
+                        <span class="prompt-chip" onclick="quickAsk('Give me a 3-step strategy to ace Class 10 Board exam')">💡 Exam Strategy</span>
+                    </div>
+
                     <div class="chat-log" id="chat-stream">
                         <div class="chat-bubble bubble-ai">
-                            <strong>AI:</strong> Hey! I am right here with you. Ask me any formula, derivation, or Class 10 Board exam doubt. You can also take notes on the right!
+                            <strong>AI:</strong> Hey! I am here right beside you. Ask me any derivation, question, or doubt. You can easily pin any solution to your notes on the right!
                         </div>
                     </div>
-                    <div class="chat-input-row">
-                        <input type="text" id="chat-input" placeholder="Ask questions, explanations, step-by-step proofs..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="chat-input" placeholder="Ask questions, derivations, formulas..." onkeypress="if(event.key==='Enter') sendChatMessage()">
                         <button class="btn primary" onclick="sendChatMessage()">Send ⚡</button>
                     </div>
                 </div>
 
                 <!-- Right: Dedicated Notes Workspace -->
-                <div class="glass-card notes-container">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <h2 style="font-size:1.1rem;">📝 Quick Scratch Notes</h2>
+                <div class="glass-panel notes-container">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <h2 style="font-size:1.1rem; font-weight:800;">📝 Study Scratchpad</h2>
                         <div style="display:flex; gap:6px;">
-                            <button class="btn" style="padding:4px 10px; font-size:0.75rem;" onclick="copyAiToNotes()">+ Paste AI Answer</button>
-                            <button class="btn" style="padding:4px 10px; font-size:0.75rem;" onclick="clearNotes()">Clear</button>
+                            <button class="btn" style="padding:5px 10px; font-size:0.75rem;" onclick="copyAiToNotes()">+ Pin AI Answer</button>
+                            <button class="btn" style="padding:5px 10px; font-size:0.75rem;" onclick="clearNotes()">Clear</button>
                         </div>
                     </div>
-                    <textarea id="live-notes-area" class="notes-editor" placeholder="Jot down notes, formulas, or key reminders while you study..." oninput="autoSaveNotes()"></textarea>
+                    <textarea id="live-notes-area" class="notes-editor" placeholder="Write key formulas, thoughts, proofs, or revision points..." oninput="autoSaveNotes()"></textarea>
                     <div style="font-size:0.75rem; color:var(--text-muted); display:flex; justify-content:space-between;">
-                        <span>Auto-saved to local browser</span>
+                        <span>Persisted in browser memory</span>
                         <span id="save-status">Saved ✓</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. SYLLABUS TRACKER -->
+        <!-- 3. SYLLABUS PROGRESS TRACKER -->
         <section id="syllabus-page" class="page">
-            <div class="glass-card" style="padding:22px;">
-                <h2 style="margin-bottom:18px; font-size:1.2rem;">📚 Class 10 CBSE Syllabus Tracker</h2>
+            <div class="glass-panel" style="padding:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2 style="font-size:1.2rem; font-weight:800;">📚 Class 10 Syllabus Completion</h2>
+                    <span id="syllabus-percentage" style="color:var(--accent); font-weight:900; font-size:1rem;">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="syllabus-fill" class="progress-bar-fill"></div>
+                </div>
+
                 <div class="syllabus-grid">
                     <div>
                         <h3 style="color:var(--accent); font-size:0.9rem; margin-bottom:10px;">📐 MATHEMATICS</h3>
@@ -509,12 +633,12 @@
 
         <!-- 4. SCHEDULE VAULT -->
         <section id="schedule-page" class="page">
-            <div class="glass-card" style="padding:22px;">
-                <h2 style="margin-bottom:16px; font-size:1.2rem;">📅 Milestone Target Schedule</h2>
+            <div class="glass-panel" style="padding:24px;">
+                <h2 style="margin-bottom:16px; font-size:1.2rem; font-weight:800;">📅 Target Timeline Milestones</h2>
                 <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px;">
-                    <input type="text" id="target-title" placeholder="Objective name (e.g. Electricity Numerical Revision)">
+                    <input type="text" id="target-title" placeholder="Objective name (e.g. Science Chapter 1-3 Mock Test)">
                     <input type="date" id="target-date">
-                    <button class="btn primary" onclick="addTargetEvent()">Commit Milestone 📌</button>
+                    <button class="btn primary" onclick="addTargetEvent()">Lock Milestone 📌</button>
                 </div>
                 <div id="target-stream"></div>
             </div>
@@ -523,13 +647,13 @@
         <!-- 5. REC ZONE -->
         <section id="rec-page" class="page">
             <div style="display:grid; grid-template-columns:1fr; gap:16px;">
-                <div class="glass-card" style="padding:20px; text-align:center;">
-                    <h3>🎮 Liquid Fidget Wrap</h3>
+                <div class="glass-panel" style="padding:22px; text-align:center;">
+                    <h3 style="font-size:1.1rem; margin-bottom:6px;">🎮 Liquid Haptic Popper</h3>
                     <div class="fidget-grid" id="fidget-grid"></div>
                     <button class="btn" onclick="resetFidget()">Reset Wrap 🔄</button>
                 </div>
-                <div class="glass-card" style="padding:20px; text-align:center;">
-                    <h3>❌ Tic-Tac-Toe Arena ⭕</h3>
+                <div class="glass-panel" style="padding:22px; text-align:center;">
+                    <h3 style="font-size:1.1rem; margin-bottom:6px;">❌ Tic-Tac-Toe Arena ⭕</h3>
                     <div id="ttt-arena" class="ttt-grid"></div>
                     <button class="btn" onclick="resetTTT()">Reset Match 🔄</button>
                 </div>
@@ -538,8 +662,8 @@
 
         <!-- 6. THEMES -->
         <section id="bg-page" class="page">
-            <div class="glass-card" style="padding:22px;">
-                <h2 style="margin-bottom:14px; font-size:1.2rem;">🌌 Background Ambiance</h2>
+            <div class="glass-panel" style="padding:24px;">
+                <h2 style="margin-bottom:14px; font-size:1.2rem; font-weight:800;">🌌 Liquid Ambiance</h2>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px;">
                     <button class="btn" style="height:60px;" onclick="setTheme('bg-void')">Deep Void</button>
                     <button class="btn" style="height:60px;" onclick="setTheme('bg-ocean')">Abyssal Ocean</button>
@@ -552,7 +676,7 @@
     </main>
 
     <script>
-        /* --- 1. INSTANT TELEPORT NAVIGATION --- */
+        /* --- 1. INSTANT PAGE TELEPORT (NO SCROLL DELAYS) --- */
         function teleportTo(pageId, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
@@ -562,18 +686,22 @@
             if(btn) btn.classList.add('active');
         }
 
-        /* --- 2. PIN AUTHORIZATION WITH SESSION PERSISTENCE --- */
+        /* --- 2. PIN VERIFICATION (HIDDEN 4443 WITH HAPTIC SHAKE) --- */
         function verifyPin() {
             const val = document.getElementById('gate-pin').value.trim();
+            const card = document.getElementById('gate-card');
             if(val === "4443") {
                 sessionStorage.setItem('portal_unlocked', 'true');
                 document.getElementById('password-gate').style.display = 'none';
                 bootWorkspace();
             } else {
-                alert("Incorrect PIN.");
+                card.classList.add('shake-error');
+                setTimeout(() => card.classList.remove('shake-error'), 400);
                 document.getElementById('gate-pin').value = "";
             }
         }
+        document.getElementById('gate-pin').addEventListener('keypress', e => { if(e.key === 'Enter') verifyPin(); });
+
         window.addEventListener('DOMContentLoaded', () => {
             if(sessionStorage.getItem('portal_unlocked') === 'true') {
                 document.getElementById('password-gate').style.display = 'none';
@@ -581,7 +709,7 @@
             }
         });
 
-        /* --- 3. HARDWARE-FRIENDLY CURSOR TRAIL --- */
+        /* --- 3. HARDWARE-OPTIMIZED PARTICLES --- */
         const canvas = document.getElementById('cursor-trail');
         const ctx = canvas.getContext('2d');
         let pts = [];
@@ -589,7 +717,7 @@
         window.addEventListener('resize', syncCanvas); syncCanvas();
 
         function addPoint(x, y) {
-            if(pts.length > 20) pts.shift(); // Hard clamp for low-end devices
+            if(pts.length > 18) pts.shift();
             pts.push({ x, y, life: 1 });
         }
         window.addEventListener('mousemove', e => addPoint(e.clientX, e.clientY));
@@ -600,17 +728,17 @@
             for(let i = 0; i < pts.length; i++) {
                 let p = pts[i];
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 8 * p.life, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 242, 254, ${p.life * 0.35})`;
+                ctx.arc(p.x, p.y, 7 * p.life, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 242, 254, ${p.life * 0.3})`;
                 ctx.fill();
-                p.life -= 0.04;
+                p.life -= 0.05;
             }
             pts = pts.filter(p => p.life > 0);
             requestAnimationFrame(drawTrail);
         }
         drawTrail();
 
-        /* --- 4. CLOCK & EXAM COUNTDOWN --- */
+        /* --- 4. REAL-TIME CLOCK & EXAM COUNTDOWN --- */
         setInterval(() => {
             const d = new Date();
             document.getElementById('nav-clock').innerText = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
@@ -625,7 +753,7 @@
             document.getElementById('cd-secs').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
         }, 1000);
 
-        /* --- 5. TIMER WITH AUTO-RESET --- */
+        /* --- 5. POMODORO TIMER --- */
         let baseSecs = 1500, currentSecs = baseSecs, timerId = null;
         function updateTimerUI() {
             document.getElementById('timer-num').innerText = `${Math.floor(currentSecs / 60).toString().padStart(2,'0')}:${(currentSecs % 60).toString().padStart(2,'0')}`;
@@ -646,15 +774,20 @@
         function pauseTimer() { clearInterval(timerId); timerId = null; }
         function resetTimer() { pauseTimer(); currentSecs = baseSecs; updateTimerUI(); }
 
-        /* --- 6. AI CONVERSATION & SMART NOTES --- */
+        /* --- 6. INTERACTIVE AI CHAT & SMART NOTES --- */
         let lastAiAnswer = "";
         function configureKey() {
             const current = localStorage.getItem('portal_gemini_api_key') || '';
-            const key = prompt("Enter Google Gemini API Key for dynamic responses:", current);
+            const key = prompt("Enter Google Gemini API Key for live AI answers:", current);
             if(key !== null) {
                 localStorage.setItem('portal_gemini_api_key', key.trim());
-                alert("API Key saved securely in your browser!");
+                alert("API Key saved securely!");
             }
+        }
+
+        function quickAsk(text) {
+            document.getElementById('chat-input').value = text;
+            sendChatMessage();
         }
 
         async function sendChatMessage() {
@@ -664,7 +797,7 @@
 
             const stream = document.getElementById('chat-stream');
             
-            // Render user bubble
+            // Append user message
             const userDiv = document.createElement('div');
             userDiv.className = 'chat-bubble bubble-user';
             userDiv.innerText = q;
@@ -672,20 +805,20 @@
             input.value = "";
             stream.scrollTop = stream.scrollHeight;
 
-            // Loading indicator bubble
+            // Loading state
             const aiDiv = document.createElement('div');
             aiDiv.className = 'chat-bubble bubble-ai';
-            aiDiv.innerHTML = "<strong>AI:</strong> Thinking... ⚡";
+            aiDiv.innerHTML = "<strong>AI:</strong> Processing... ⚡";
             stream.appendChild(aiDiv);
             stream.scrollTop = stream.scrollHeight;
 
             const apiKey = localStorage.getItem('portal_gemini_api_key');
             if(!apiKey) {
                 setTimeout(() => {
-                    lastAiAnswer = `Class 10 Insight for "${q}": Always state definitions clearly, write balanced equations with physical states, and highlight key terms in your final answer! (Connect your Gemini API Key in the top right for live full-spectrum dynamic answers).`;
-                    aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer}`;
+                    lastAiAnswer = `Class 10 Revision Concept for "${q}":\n• Focus on exact definitions and CBSE keywords.\n• In Science, balance chemical equations and mention physical states.\n• In Math, write out each theorem statement and formula.\n(Tip: Save your Gemini API key in the top right to enable live full answers!)`;
+                    aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
                     stream.scrollTop = stream.scrollHeight;
-                }, 400);
+                }, 350);
                 return;
             }
 
@@ -694,28 +827,27 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ role: "user", parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Provide a clear, step-by-step, precise answer:\n\n${q}` }] }]
+                        contents: [{ role: "user", parts: [{ text: `You are an expert tutor for a CBSE Class 10 student. Provide a clear, precise, step-by-step answer formatted cleanly:\n\n${q}` }] }]
                     })
                 });
                 const data = await res.json();
                 lastAiAnswer = data.candidates?.[0]?.content?.parts?.[0]?.text || "No response received.";
                 aiDiv.innerHTML = `<strong>AI:</strong> ${lastAiAnswer.replace(/\n/g, '<br>')}`;
             } catch (err) {
-                aiDiv.innerHTML = `<strong>AI:</strong> Failed to fetch answer. Please check your API key or connection.`;
+                aiDiv.innerHTML = `<strong>AI:</strong> Request failed. Verify network or API key.`;
             }
             stream.scrollTop = stream.scrollHeight;
         }
 
         function copyAiToNotes() {
-            if(!lastAiAnswer) { alert("No AI response to copy yet!"); return; }
+            if(!lastAiAnswer) { alert("No AI response to pin yet!"); return; }
             const area = document.getElementById('live-notes-area');
-            area.value += (area.value ? "\n\n" : "") + `[AI Note]:\n${lastAiAnswer}`;
+            area.value += (area.value ? "\n\n" : "") + `[Pinned Insight]:\n${lastAiAnswer}`;
             autoSaveNotes();
         }
         function autoSaveNotes() {
             localStorage.setItem('portal_notes_draft', document.getElementById('live-notes-area').value);
-            const status = document.getElementById('save-status');
-            status.innerText = "Saved ✓";
+            document.getElementById('save-status').innerText = "Saved ✓";
         }
         function clearNotes() {
             if(confirm("Clear current scratch notes?")) {
@@ -724,7 +856,7 @@
             }
         }
 
-        /* --- 7. SYLLABUS DIRECTORY --- */
+        /* --- 7. SYLLABUS DIRECTORY & COMPLETION ENGINE --- */
         const subjects = {
             math: ["Real Numbers", "Polynomials", "Linear Equations", "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Trigonometry Intro", "Trigonometry Apps", "Circles", "Areas Related to Circles", "Surface Areas & Volumes", "Statistics", "Probability"],
             science: ["Chemical Reactions", "Acids, Bases & Salts", "Metals & Non-metals", "Carbon & its Compounds", "Life Processes", "Control & Coordination", "Reproduction in Organisms", "Heredity", "Light Reflection & Refraction", "Human Eye", "Electricity", "Magnetic Effects", "Our Environment"],
@@ -733,24 +865,45 @@
 
         function buildSyllabus() {
             const saved = JSON.parse(localStorage.getItem('portal_syllabus_checks') || '{}');
+            let total = 0, checkedCount = 0;
             ['math', 'science', 'social'].forEach(sub => {
                 const dom = document.getElementById(`${sub}-list`);
                 dom.innerHTML = subjects[sub].map((title, i) => {
                     const id = `${sub}_${i}`;
-                    const chk = saved[id] ? 'checked' : '';
+                    const isChecked = saved[id] ? true : false;
+                    total++;
+                    if(isChecked) checkedCount++;
                     return `
                         <div class="syllabus-item">
-                            <input type="checkbox" id="${id}" ${chk} onchange="saveSyllabus('${id}')" style="accent-color:var(--accent); cursor:pointer;">
+                            <input type="checkbox" id="${id}" ${isChecked ? 'checked' : ''} onchange="saveSyllabus('${id}')" style="accent-color:var(--accent); cursor:pointer;">
                             <span>${title}</span>
                         </div>
                     `;
                 }).join('');
             });
+            updateSyllabusStats(checkedCount, total);
         }
+
         function saveSyllabus(id) {
             const saved = JSON.parse(localStorage.getItem('portal_syllabus_checks') || '{}');
             saved[id] = document.getElementById(id).checked;
             localStorage.setItem('portal_syllabus_checks', JSON.stringify(saved));
+            
+            // Calculate stats
+            let total = 0, checked = 0;
+            ['math', 'science', 'social'].forEach(s => {
+                subjects[s].forEach((_, i) => {
+                    total++;
+                    if(saved[`${s}_${i}`]) checked++;
+                });
+            });
+            updateSyllabusStats(checked, total);
+        }
+
+        function updateSyllabusStats(checked, total) {
+            const pct = Math.round((checked / total) * 100);
+            document.getElementById('syllabus-percentage').innerText = `${pct}% (${checked}/${total})`;
+            document.getElementById('syllabus-fill').style.width = `${pct}%`;
         }
 
         /* --- 8. TARGET SCHEDULE --- */
@@ -784,7 +937,7 @@
             renderTargets();
         }
 
-        /* --- 9. REC ZONE (FIDGET & TTT) --- */
+        /* --- 9. REC ZONE --- */
         function buildFidget() {
             const g = document.getElementById('fidget-grid');
             g.innerHTML = "";
@@ -809,8 +962,8 @@
                     if(tttState[i] !== "") return;
                     tttState[i] = tttTurn;
                     buildTTT();
-                    if(checkTTT()) { setTimeout(() => { alert(`${tttTurn} Won!`); resetTTT(); }, 20); }
-                    else if(!tttState.includes("")) { setTimeout(() => { alert("Draw!"); resetTTT(); }, 20); }
+                    if(checkTTT()) { setTimeout(() => { alert(`${tttTurn} Won!`); resetTTT(); }, 30); }
+                    else if(!tttState.includes("")) { setTimeout(() => { alert("Match Drawn!"); resetTTT(); }, 30); }
                     else { tttTurn = tttTurn === "❌" ? "⭕" : "❌"; }
                 };
                 a.appendChild(cell);
@@ -822,7 +975,7 @@
         }
         function resetTTT() { tttState = ["","","","","","","","",""]; tttTurn = "❌"; buildTTT(); }
 
-        /* --- 10. LIGHTWEIGHT AUDIO SYNTH --- */
+        /* --- 10. LIGHTWEIGHT WEB AUDIO SYNTH --- */
         let aCtx = null, osc1 = null, osc2 = null, isSynth = false;
         function toggleSynth() {
             if(!aCtx) aCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -845,13 +998,13 @@
             }
         }
 
-        /* --- 11. THEME SWITCHER --- */
+        /* --- 11. THEME SELECTION --- */
         function setTheme(theme) {
             document.body.className = theme;
             localStorage.setItem('portal_theme', theme);
         }
 
-        /* --- BOOTSTRAP --- */
+        /* --- INITIAL BOOT --- */
         function bootWorkspace() {
             document.getElementById('live-notes-area').value = localStorage.getItem('portal_notes_draft') || "";
             const theme = localStorage.getItem('portal_theme');
