@@ -3,38 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>10 Pro Portal | WWDC25 Liquid Glass Edition</title>
+    <title>10 Pro Portal | Apple Liquid Glass OS</title>
     <style>
         /* --- WWDC25 LIQUID GLASS OPTICAL TOKENS --- */
         :root {
             --accent: #00f2fe;
             --accent-rgb: 0, 242, 254;
-            --secondary: #7928ca;
-            --secondary-rgb: 121, 40, 202;
+            --secondary: #9d4edd;
+            --secondary-rgb: 157, 78, 221;
             --tertiary: #4facfe;
             --bg-base: #020308;
-            --bg-depth: radial-gradient(circle at 50% 0%, #0a1128 0%, #020308 75%);
+            --bg-depth: radial-gradient(ellipse at 50% -10%, #0d1e42 0%, #030612 55%, #010206 100%);
             
             --text-heading: #ffffff;
-            --text-main: #f1f5f9;
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
             --danger: #f43f5e;
 
             /* Optical Lensing & Specular Layers */
-            --glass-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.05) 100%);
-            --glass-tint: rgba(10, 14, 26, 0.55);
-            --glass-rim-light: rgba(255, 255, 255, 0.42);
-            --glass-rim-subtle: rgba(255, 255, 255, 0.12);
+            --glass-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.06) 100%);
+            --glass-tint: rgba(8, 12, 24, 0.58);
+            --glass-rim-subtle: rgba(255, 255, 255, 0.15);
             --glass-shadow: 
-                0 24px 48px -12px rgba(0, 0, 0, 0.7),
-                0 4px 16px rgba(0, 0, 0, 0.4),
-                0 0 28px -6px rgba(var(--accent-rgb), 0.14);
+                0 24px 50px -12px rgba(0, 0, 0, 0.75),
+                0 6px 20px rgba(0, 0, 0, 0.45),
+                0 0 32px -6px rgba(var(--accent-rgb), 0.16);
             --glass-lensing-inset: 
-                inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.38),
-                inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.45),
-                inset 1px 0 1px 0 rgba(255, 255, 255, 0.14),
-                inset -1px 0 1px 0 rgba(255, 255, 255, 0.14);
+                inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.45),
+                inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.5),
+                inset 1px 0 1px 0 rgba(255, 255, 255, 0.18),
+                inset -1px 0 1px 0 rgba(255, 255, 255, 0.18);
 
             /* Fluid Gel & Spring Physics */
             --spring-morph: cubic-bezier(0.22, 1.35, 0.36, 1);
@@ -48,56 +47,56 @@
             --secondary: #7928ca; --secondary-rgb: 121, 40, 202;
             --tertiary: #4facfe;
             --bg-base: #020308;
-            --bg-depth: radial-gradient(ellipse at 50% -10%, #0d1b3e 0%, #040611 55%, #010206 100%);
+            --bg-depth: radial-gradient(ellipse at 50% -10%, #0d1e42 0%, #030612 55%, #010206 100%);
         }
         body[data-theme="trench"] {
             --accent: #00ffc8; --accent-rgb: 0, 255, 200;
             --secondary: #0051ff; --secondary-rgb: 0, 81, 255;
             --tertiary: #00b4d8;
             --bg-base: #01080e;
-            --bg-depth: radial-gradient(ellipse at 20% 10%, #033649 0%, #011627 55%, #00070c 100%);
+            --bg-depth: radial-gradient(ellipse at 20% 10%, #04435c 0%, #011627 55%, #00070c 100%);
         }
         body[data-theme="nebula"] {
             --accent: #e0aaff; --accent-rgb: 224, 170, 255;
             --secondary: #ff007f; --secondary-rgb: 255, 0, 127;
-            --tertiary: #7b2cbf;
+            --tertiary: #9d4edd;
             --bg-base: #07010f;
-            --bg-depth: radial-gradient(ellipse at 80% 10%, #3c096c 0%, #150328 55%, #05010a 100%);
+            --bg-depth: radial-gradient(ellipse at 80% 10%, #480ca8 0%, #150328 55%, #05010a 100%);
         }
         body[data-theme="crimson"] {
             --accent: #ff4d6d; --accent-rgb: 255, 77, 109;
             --secondary: #ff758f; --secondary-rgb: 255, 117, 143;
-            --tertiary: #a4133c;
+            --tertiary: #c9184a;
             --bg-base: #090104;
-            --bg-depth: radial-gradient(ellipse at 50% 0%, #4a0617 0%, #1a0208 55%, #060002 100%);
+            --bg-depth: radial-gradient(ellipse at 50% 0%, #590d22 0%, #1a0208 55%, #060002 100%);
         }
         body[data-theme="emerald"] {
-            --accent: #10b981; --accent-rgb: 16, 185, 129;
-            --secondary: #047857; --secondary-rgb: 4, 120, 87;
-            --tertiary: #34d399;
+            --accent: #34d399; --accent-rgb: 52, 211, 153;
+            --secondary: #059669; --secondary-rgb: 5, 150, 105;
+            --tertiary: #10b981;
             --bg-base: #010906;
-            --bg-depth: radial-gradient(ellipse at 30% 0%, #064e3b 0%, #022c22 55%, #010806 100%);
+            --bg-depth: radial-gradient(ellipse at 30% 0%, #065f46 0%, #022c22 55%, #010806 100%);
         }
         body[data-theme="solar"] {
             --accent: #ffbe0b; --accent-rgb: 255, 190, 11;
             --secondary: #fb5607; --secondary-rgb: 251, 86, 7;
             --tertiary: #ff006e;
             --bg-base: #0b0300;
-            --bg-depth: radial-gradient(ellipse at 70% 0%, #4d1900 0%, #210901 55%, #080200 100%);
+            --bg-depth: radial-gradient(ellipse at 70% 0%, #5c1e00 0%, #210901 55%, #080200 100%);
         }
         body[data-theme="obsidian"] {
             --accent: #ffd166; --accent-rgb: 255, 209, 102;
-            --secondary: #8d6e63; --secondary-rgb: 141, 110, 99;
+            --secondary: #b08968; --secondary-rgb: 176, 137, 104;
             --tertiary: #f4a261;
             --bg-base: #060606;
-            --bg-depth: radial-gradient(ellipse at 50% -10%, #2b2314 0%, #110f0a 55%, #040404 100%);
+            --bg-depth: radial-gradient(ellipse at 50% -10%, #362b18 0%, #120f0a 55%, #040404 100%);
         }
         body[data-theme="borealis"] {
             --accent: #72efdd; --accent-rgb: 114, 239, 221;
             --secondary: #7400b8; --secondary-rgb: 116, 0, 184;
             --tertiary: #48bfe3;
             --bg-base: #020810;
-            --bg-depth: radial-gradient(ellipse at 50% 0%, #0b3c49 0%, #160f29 55%, #02050a 100%);
+            --bg-depth: radial-gradient(ellipse at 50% 0%, #0e4d5e 0%, #160f29 55%, #02050a 100%);
         }
 
         * {
@@ -117,7 +116,7 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            transition: background-color 0.7s var(--smooth-out);
+            transition: background-color 0.6s var(--smooth-out);
             -webkit-font-smoothing: antialiased;
         }
 
@@ -140,24 +139,24 @@
         }
         .orb-1 {
             width: 75vw; height: 75vw;
-            max-width: 750px; max-height: 750px;
-            background: radial-gradient(circle, rgba(var(--accent-rgb), 0.24) 0%, rgba(var(--accent-rgb), 0.06) 45%, transparent 70%);
+            max-width: 760px; max-height: 760px;
+            background: radial-gradient(circle, rgba(var(--accent-rgb), 0.25) 0%, rgba(var(--accent-rgb), 0.06) 45%, transparent 70%);
             top: -20%; left: -15%;
-            animation: orbFloat1 22s infinite alternate ease-in-out;
+            animation: orbFloat1 20s infinite alternate ease-in-out;
         }
         .orb-2 {
             width: 80vw; height: 80vw;
             max-width: 820px; max-height: 820px;
-            background: radial-gradient(circle, rgba(var(--secondary-rgb), 0.25) 0%, rgba(var(--secondary-rgb), 0.06) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(var(--secondary-rgb), 0.26) 0%, rgba(var(--secondary-rgb), 0.06) 45%, transparent 70%);
             bottom: -25%; right: -15%;
-            animation: orbFloat2 26s infinite alternate ease-in-out -7s;
+            animation: orbFloat2 25s infinite alternate ease-in-out -7s;
         }
         .orb-3 {
             width: 55vw; height: 55vw;
-            max-width: 550px; max-height: 550px;
-            background: radial-gradient(circle, rgba(var(--accent-rgb), 0.14) 0%, rgba(var(--secondary-rgb), 0.08) 50%, transparent 72%);
+            max-width: 560px; max-height: 560px;
+            background: radial-gradient(circle, rgba(var(--accent-rgb), 0.16) 0%, rgba(var(--secondary-rgb), 0.08) 50%, transparent 72%);
             top: 30%; left: 28%;
-            animation: orbFloat3 30s infinite alternate ease-in-out -12s;
+            animation: orbFloat3 28s infinite alternate ease-in-out -12s;
         }
         @keyframes orbFloat1 {
             0% { transform: translate3d(0, 0, 0) scale(1); }
@@ -185,9 +184,9 @@
             --py: 0%;
             --glow-opacity: 0;
             background: var(--glass-surface), var(--glass-tint);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
-            border-radius: 26px;
+            backdrop-filter: blur(30px) saturate(210%);
+            -webkit-backdrop-filter: blur(30px) saturate(210%);
+            border-radius: 28px;
             border: 1px solid var(--glass-rim-subtle);
             box-shadow: var(--glass-shadow), var(--glass-lensing-inset);
             position: relative;
@@ -200,19 +199,19 @@
                 border-color 0.45s var(--smooth-out);
         }
 
-        /* Interactive Internal Illumination Layer (WWDC25 Specular Highlight) */
+        /* Interactive Internal Illumination Layer */
         .glass-panel::before {
             content: "";
             position: absolute;
             inset: 0;
             background: radial-gradient(
-                480px circle at var(--px) var(--py),
-                rgba(255, 255, 255, 0.15) 0%,
-                rgba(var(--accent-rgb), 0.10) 30%,
+                460px circle at var(--px) var(--py),
+                rgba(255, 255, 255, 0.16) 0%,
+                rgba(var(--accent-rgb), 0.12) 32%,
                 transparent 70%
             );
             opacity: var(--glow-opacity);
-            transition: opacity 0.4s var(--smooth-out);
+            transition: opacity 0.35s var(--smooth-out);
             pointer-events: none;
             z-index: 0;
         }
@@ -223,13 +222,13 @@
             position: absolute;
             inset: 0;
             border-radius: inherit;
-            padding: 1.2px;
+            padding: 1.3px;
             background: linear-gradient(
                 135deg,
-                rgba(255, 255, 255, 0.5) 0%,
-                rgba(255, 255, 255, 0.08) 38%,
+                rgba(255, 255, 255, 0.58) 0%,
+                rgba(255, 255, 255, 0.1) 35%,
                 rgba(255, 255, 255, 0.03) 65%,
-                rgba(var(--accent-rgb), 0.35) 100%
+                rgba(var(--accent-rgb), 0.42) 100%
             );
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -248,8 +247,8 @@
                 --glow-opacity: 1;
                 transform: translate3d(0, -3px, 0) scale(1.004);
                 box-shadow: 
-                    0 28px 60px -12px rgba(0, 0, 0, 0.78),
-                    0 0 36px -4px rgba(var(--accent-rgb), 0.22),
+                    0 30px 65px -12px rgba(0, 0, 0, 0.8),
+                    0 0 38px -4px rgba(var(--accent-rgb), 0.24),
                     var(--glass-lensing-inset);
             }
         }
@@ -264,14 +263,14 @@
             max-width: 1120px;
             padding: 8px 14px;
             border-radius: 999px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)), rgba(8, 11, 22, 0.72);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03)), rgba(8, 12, 24, 0.72);
             backdrop-filter: blur(32px) saturate(210%);
             -webkit-backdrop-filter: blur(32px) saturate(210%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 
-                0 16px 36px -8px rgba(0, 0, 0, 0.65),
-                inset 0 1.5px 1px rgba(255, 255, 255, 0.35),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+                0 18px 38px -8px rgba(0, 0, 0, 0.68),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.4),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.45);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -281,7 +280,7 @@
 
         .brand-badge {
             font-weight: 900;
-            font-size: 1.02rem;
+            font-size: 1.04rem;
             color: #fff;
             display: flex;
             align-items: center;
@@ -295,7 +294,7 @@
             background: linear-gradient(135deg, var(--accent), var(--tertiary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.4));
+            filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.45));
         }
 
         .nav-row {
@@ -306,28 +305,28 @@
             overflow-x: auto;
             white-space: nowrap;
             scrollbar-width: none;
-            padding: 3px;
+            padding: 4px;
             border-radius: 999px;
-            background: rgba(0, 0, 0, 0.28);
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.34);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
         }
         .nav-row::-webkit-scrollbar { display: none; }
 
         /* Continuous Morphing Liquid Pill Indicator */
         #nav-morph-lens {
             position: absolute;
-            top: 3px;
+            top: 4px;
             left: 0;
-            height: calc(100% - 6px);
+            height: calc(100% - 8px);
             border-radius: 999px;
-            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.92) 0%, var(--tertiary) 100%);
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95) 0%, var(--tertiary) 100%);
             box-shadow: 
-                0 4px 18px rgba(var(--accent-rgb), 0.45),
-                inset 0 1.5px 1px rgba(255, 255, 255, 0.65),
+                0 4px 20px rgba(var(--accent-rgb), 0.5),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.75),
                 inset 0 -1px 1px rgba(0, 0, 0, 0.25);
             transition: 
-                transform 0.52s var(--spring-morph),
-                width 0.52s var(--spring-morph);
+                transform 0.5s var(--spring-morph),
+                width 0.5s var(--spring-morph);
             pointer-events: none;
             z-index: 1;
             will-change: transform, width;
@@ -351,15 +350,17 @@
             flex-shrink: 0;
             user-select: none;
         }
-        .nav-pill:hover {
-            color: #fff;
-        }
-        .nav-pill:active {
-            transform: scale(0.92);
-        }
+        .nav-pill:hover { color: #fff; }
+        .nav-pill:active { transform: scale(0.92); }
         .nav-pill.active {
             color: #02040a;
             font-weight: 800;
+        }
+
+        .nav-right-cluster {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         #nav-clock {
@@ -370,68 +371,89 @@
             background: rgba(0, 0, 0, 0.45);
             padding: 7px 13px;
             border-radius: 999px;
-            border: 1px solid rgba(var(--accent-rgb), 0.28);
+            border: 1px solid rgba(var(--accent-rgb), 0.3);
             white-space: nowrap;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 0 14px rgba(var(--accent-rgb), 0.15);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18), 0 0 14px rgba(var(--accent-rgb), 0.15);
             letter-spacing: 0.03em;
+        }
+
+        .lock-now-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s var(--spring-gel);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        }
+        .lock-now-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.4);
         }
 
         /* --- HEADER & LIQUID COUNTDOWN LENS --- */
         .portal-header {
             text-align: center;
-            padding: 20px 16px 10px 16px;
+            padding: 22px 16px 12px 16px;
             position: relative;
             z-index: 2;
         }
         .portal-header h1 {
-            font-size: clamp(1.35rem, 3.5vw, 1.75rem);
-            font-weight: 800;
+            font-size: clamp(1.4rem, 3.6vw, 1.85rem);
+            font-weight: 900;
             letter-spacing: -0.03em;
             margin-bottom: 4px;
-            background: linear-gradient(180deg, #ffffff 30%, rgba(255, 255, 255, 0.68) 100%);
+            background: linear-gradient(180deg, #ffffff 35%, rgba(255, 255, 255, 0.68) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .motto {
             font-size: 0.72rem;
             color: var(--accent);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
-            font-weight: 700;
-            text-shadow: 0 0 12px rgba(var(--accent-rgb), 0.45);
+            letter-spacing: 2.8px;
+            font-weight: 800;
+            text-shadow: 0 0 14px rgba(var(--accent-rgb), 0.5);
         }
         .countdown-strip {
             display: inline-flex;
-            gap: 10px;
-            padding: 8px 18px;
+            gap: 12px;
+            padding: 9px 22px;
             border-radius: 999px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.02)), rgba(10, 14, 26, 0.6);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.28);
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)), rgba(10, 14, 26, 0.62);
+            backdrop-filter: blur(24px) saturate(190%);
+            -webkit-backdrop-filter: blur(24px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 1.5px 1px rgba(255, 255, 255, 0.35);
         }
         .cd-box {
             text-align: center;
-            min-width: 48px;
+            min-width: 50px;
             padding: 2px 4px;
         }
         .cd-box .num {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-family: "SF Mono", ui-monospace, monospace;
             font-weight: 900;
             color: var(--accent);
-            text-shadow: 0 0 14px rgba(var(--accent-rgb), 0.45);
+            text-shadow: 0 0 16px rgba(var(--accent-rgb), 0.5);
             display: inline-block;
             transition: transform 0.28s var(--spring-gel), color 0.28s ease;
         }
         .cd-box .lbl {
-            font-size: 0.54rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
             color: var(--text-muted);
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
         }
         .digit-tick {
             animation: liquidDigitPulse 0.32s var(--spring-gel);
@@ -456,12 +478,12 @@
         }
         .page.active {
             display: block;
-            animation: liquidMaterialize 0.48s var(--smooth-out) forwards;
+            animation: liquidMaterialize 0.46s var(--smooth-out) forwards;
         }
         @keyframes liquidMaterialize {
             0% {
                 opacity: 0;
-                transform: translate3d(0, 14px, 0) scale(0.975);
+                transform: translate3d(0, 14px, 0) scale(0.978);
             }
             100% {
                 opacity: 1;
@@ -471,9 +493,9 @@
 
         /* --- GEL-FLEX CONTROLS, INPUTS & TINTED GLASS BUTTONS --- */
         input, select, textarea {
-            background: rgba(4, 7, 15, 0.52);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+            background: rgba(4, 7, 15, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(255, 255, 255, 0.12);
             color: #fff;
             padding: 12px 16px;
             border-radius: 16px;
@@ -485,23 +507,23 @@
         }
         input:focus, textarea:focus {
             border-color: var(--accent);
-            background: rgba(6, 10, 22, 0.72);
+            background: rgba(6, 10, 22, 0.78);
             box-shadow: 
-                0 0 0 3px rgba(var(--accent-rgb), 0.18),
-                0 0 20px rgba(var(--accent-rgb), 0.2),
+                0 0 0 3px rgba(var(--accent-rgb), 0.2),
+                0 0 22px rgba(var(--accent-rgb), 0.22),
                 inset 0 1px 3px rgba(0, 0, 0, 0.5);
             transform: translateY(-1px);
         }
 
         button.btn {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 
-                0 6px 16px rgba(0, 0, 0, 0.3),
-                inset 0 1px 1px rgba(255, 255, 255, 0.35),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+                0 6px 18px rgba(0, 0, 0, 0.32),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.38),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.32);
             color: #fff;
-            padding: 11px 18px;
+            padding: 11px 19px;
             border-radius: 999px;
             font-size: 0.85rem;
             font-weight: 700;
@@ -521,35 +543,34 @@
         }
         @media (hover: hover) {
             button.btn:hover {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%);
-                border-color: rgba(255, 255, 255, 0.42);
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.09) 100%);
+                border-color: rgba(255, 255, 255, 0.45);
                 transform: translateY(-2px) scale(1.03);
                 box-shadow: 
-                    0 10px 24px rgba(0, 0, 0, 0.45),
-                    0 0 18px rgba(var(--accent-rgb), 0.25),
-                    inset 0 1.5px 1px rgba(255, 255, 255, 0.5);
+                    0 10px 26px rgba(0, 0, 0, 0.48),
+                    0 0 20px rgba(var(--accent-rgb), 0.28),
+                    inset 0 1.5px 1px rgba(255, 255, 255, 0.55);
             }
         }
         button.btn:active {
             transform: scale(0.93) !important;
         }
 
-        /* WWDC25 Tinted Primary Glass Button */
         button.btn.primary {
-            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.9) 0%, var(--tertiary) 100%);
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95) 0%, var(--tertiary) 100%);
             color: #02040a;
             font-weight: 800;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 
-                0 8px 24px rgba(var(--accent-rgb), 0.38),
-                inset 0 1.5px 1px rgba(255, 255, 255, 0.7),
+                0 8px 26px rgba(var(--accent-rgb), 0.42),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.78),
                 inset 0 -1.5px 1px rgba(0, 0, 0, 0.25);
         }
         @media (hover: hover) {
             button.btn.primary:hover {
                 box-shadow: 
-                    0 12px 30px rgba(var(--accent-rgb), 0.55),
-                    inset 0 1.5px 2px rgba(255, 255, 255, 0.85);
+                    0 12px 32px rgba(var(--accent-rgb), 0.6),
+                    inset 0 1.5px 2px rgba(255, 255, 255, 0.9);
             }
         }
 
@@ -563,8 +584,8 @@
             transform: translate(-50%, -50%) scale(0.8);
             opacity: 0.85;
             pointer-events: none;
-            z-index: 99999;
-            box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.5);
+            z-index: 999999;
+            box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.55);
             animation: ringExpand 0.55s var(--smooth-out) forwards;
         }
         @keyframes ringExpand {
@@ -594,11 +615,11 @@
         }
 
         #timer-num {
-            font-size: clamp(3.4rem, 8vw, 4.6rem);
+            font-size: clamp(3.5rem, 8vw, 4.8rem);
             font-family: "SF Mono", ui-monospace, monospace;
             font-weight: 900;
             color: #fff;
-            text-shadow: 0 0 32px rgba(var(--accent-rgb), 0.45);
+            text-shadow: 0 0 34px rgba(var(--accent-rgb), 0.5);
             display: inline-block;
             letter-spacing: -0.02em;
             margin: 6px 0;
@@ -624,7 +645,6 @@
             padding: 22px;
         }
 
-        /* WWDC25 Adaptive Scroll-Edge Optical Mask */
         .chat-log {
             flex: 1;
             overflow-y: auto;
@@ -654,17 +674,17 @@
         .bubble-user {
             align-self: flex-end;
             border-bottom-right-radius: 6px;
-            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.30), rgba(var(--secondary-rgb), 0.35));
-            border: 1px solid rgba(var(--accent-rgb), 0.55);
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.32), rgba(var(--secondary-rgb), 0.38));
+            border: 1px solid rgba(var(--accent-rgb), 0.6);
             color: #fff;
-            box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.38);
         }
         .bubble-ai {
             align-self: flex-start;
             border-bottom-left-radius: 6px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.065);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.22);
         }
         .bubble-ai strong { color: var(--accent); }
 
@@ -678,9 +698,9 @@
         }
         .prompt-chips::-webkit-scrollbar { display: none; }
         .prompt-chip {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.065);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.22);
             padding: 6px 14px;
             border-radius: 999px;
             font-size: 0.76rem;
@@ -695,8 +715,8 @@
             color: #fff;
             border-color: var(--accent);
             transform: translateY(-2px) scale(1.03);
-            background: rgba(var(--accent-rgb), 0.14);
-            box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.22);
+            background: rgba(var(--accent-rgb), 0.16);
+            box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.25);
         }
         .prompt-chip:active { transform: scale(0.94); }
 
@@ -709,16 +729,16 @@
             border-radius: 18px;
         }
 
-        /* --- SYLLABUS DIRECTORY (CONTENT LAYER SEPARATION) --- */
+        /* --- SYLLABUS DIRECTORY --- */
         .progress-bar-bg {
             width: 100%;
-            height: 10px;
-            background: rgba(0, 0, 0, 0.45);
+            height: 11px;
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 999px;
             overflow: hidden;
             margin: 12px 0 22px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.75);
         }
         .progress-bar-fill {
             height: 100%;
@@ -726,7 +746,7 @@
             background: linear-gradient(90deg, var(--accent) 0%, var(--tertiary) 50%, var(--secondary) 100%);
             border-radius: 999px;
             transition: width 0.6s var(--spring-morph);
-            box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.6);
+            box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.65);
         }
 
         .syllabus-grid {
@@ -740,33 +760,37 @@
         .syllabus-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 11px;
             padding: 11px 14px;
-            background: rgba(255, 255, 255, 0.035);
-            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.038);
+            border-radius: 15px;
             margin-bottom: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.09);
             font-size: 0.85rem;
             transition: all 0.28s var(--spring-gel);
             cursor: pointer;
             user-select: none;
         }
         .syllabus-item:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.085);
             border-color: rgba(var(--accent-rgb), 0.45);
             transform: translateX(5px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         }
         .syllabus-item.done {
-            background: rgba(var(--accent-rgb), 0.08);
-            border-color: rgba(var(--accent-rgb), 0.3);
+            background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.14), rgba(255, 255, 255, 0.03));
+            border-color: rgba(var(--accent-rgb), 0.4);
             color: #fff;
+        }
+        .syllabus-item.done span {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.65);
         }
 
         /* --- SCHEDULE VAULT --- */
         .cal-item {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-left: 4px solid var(--accent);
             border-radius: 16px;
             padding: 14px 16px;
@@ -778,12 +802,12 @@
         }
         .cal-item:hover {
             transform: translateX(4px) translateY(-1px);
-            background: rgba(255, 255, 255, 0.075);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
         }
         .cal-item.urgent {
             border-left-color: var(--danger);
-            background: linear-gradient(90deg, rgba(244, 63, 94, 0.16), rgba(255, 255, 255, 0.03));
+            background: linear-gradient(90deg, rgba(244, 63, 94, 0.18), rgba(255, 255, 255, 0.03));
         }
 
         /* --- REC ZONE --- */
@@ -804,20 +828,20 @@
         }
         .bubble {
             aspect-ratio: 1;
-            background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.65) 0%, var(--accent) 30%, rgba(var(--accent-rgb), 0.25) 75%, rgba(0, 0, 0, 0.5) 100%);
+            background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.7) 0%, var(--accent) 30%, rgba(var(--accent-rgb), 0.25) 75%, rgba(0, 0, 0, 0.55) 100%);
             border-radius: 50%;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.55);
             box-shadow: 
-                inset 0 3px 6px rgba(255, 255, 255, 0.6),
+                inset 0 3px 6px rgba(255, 255, 255, 0.65),
                 inset 0 -3px 6px rgba(0, 0, 0, 0.5),
-                0 6px 16px rgba(var(--accent-rgb), 0.3);
+                0 6px 16px rgba(var(--accent-rgb), 0.32);
             transition: transform 0.32s var(--spring-gel), box-shadow 0.3s ease, background 0.3s ease;
         }
         .bubble:hover { transform: scale(1.09); }
         .bubble.popped {
-            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.75) 0%, rgba(255, 255, 255, 0.05) 100%);
-            transform: scale(0.86);
+            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.78) 0%, rgba(255, 255, 255, 0.05) 100%);
+            transform: scale(0.85);
             border-color: rgba(255, 255, 255, 0.12);
             box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.9);
         }
@@ -831,9 +855,9 @@
         }
         .ttt-cell {
             aspect-ratio: 1;
-            background: rgba(255, 255, 255, 0.045);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.22);
             border-radius: 18px;
             display: flex;
             align-items: center;
@@ -846,7 +870,7 @@
         }
         .ttt-cell:hover {
             transform: scale(1.06);
-            background: rgba(255, 255, 255, 0.09);
+            background: rgba(255, 255, 255, 0.1);
             border-color: var(--accent);
         }
         .ttt-cell.marked {
@@ -866,8 +890,8 @@
         .theme-card {
             padding: 16px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.13);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -877,54 +901,142 @@
         }
         .theme-card:hover {
             transform: translateY(-3px) scale(1.02);
-            background: rgba(255, 255, 255, 0.09);
-            border-color: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+            background: rgba(255, 255, 255, 0.095);
+            border-color: rgba(255, 255, 255, 0.38);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.48);
         }
         .theme-card.active-theme {
             border-color: var(--accent);
-            background: rgba(var(--accent-rgb), 0.12);
-            box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            background: rgba(var(--accent-rgb), 0.14);
+            box-shadow: 0 0 26px rgba(var(--accent-rgb), 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.38);
         }
         .theme-orb-preview {
             width: 44px;
             height: 44px;
             border-radius: 50%;
             flex-shrink: 0;
-            border: 1.5px solid rgba(255, 255, 255, 0.45);
-            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5), 0 4px 12px rgba(0, 0, 0, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.55), 0 4px 12px rgba(0, 0, 0, 0.5);
         }
 
-        /* --- PASSCODE GATE & LOCKOUT MODALS --- */
+        /* --- UPGRADED iOS LIQUID GLASS PASSCODE LOCK SCREEN --- */
         .password-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(2, 4, 10, 0.88);
-            backdrop-filter: blur(36px) saturate(200%);
-            -webkit-backdrop-filter: blur(36px) saturate(200%);
+            background: radial-gradient(circle at 50% 30%, rgba(var(--accent-rgb), 0.14) 0%, rgba(2, 4, 12, 0.94) 70%);
+            backdrop-filter: blur(40px) saturate(210%);
+            -webkit-backdrop-filter: blur(40px) saturate(210%);
             z-index: 100000;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 16px;
-            transition: opacity 0.55s var(--smooth-out), transform 0.55s var(--smooth-out);
+            opacity: 1;
+            transition: opacity 0.48s var(--smooth-out), transform 0.48s var(--spring-morph);
         }
         .password-overlay.unlocking {
             opacity: 0;
-            transform: scale(1.08);
+            transform: scale(1.1);
             pointer-events: none;
         }
         .password-box {
             max-width: 350px;
             width: 100%;
-            padding: 36px 28px;
+            padding: 30px 26px 26px 26px;
             text-align: center;
         }
-        .shake-error { animation: iosShake 0.4s ease-in-out; }
+        .lock-badge-orb {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 12px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255, 255, 255, 0.32);
+            box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.3), inset 0 1.5px 1px rgba(255, 255, 255, 0.5);
+        }
+
+        /* 4 Optical Passcode Indicator Dots */
+        .pin-dots-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 18px 0 22px 0;
+        }
+        .pin-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s var(--spring-gel);
+        }
+        .pin-dot.filled {
+            background: var(--accent);
+            border-color: #fff;
+            transform: scale(1.22);
+            box-shadow: 0 0 16px var(--accent), 0 0 6px #fff;
+        }
+        .pin-dot.error {
+            background: var(--danger);
+            border-color: var(--danger);
+            box-shadow: 0 0 16px var(--danger);
+        }
+
+        /* Tactile Liquid Glass Keypad */
+        .pin-keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 256px;
+            margin: 0 auto 18px auto;
+        }
+        .key-btn {
+            aspect-ratio: 1.15;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 6px 16px rgba(0, 0, 0, 0.35),
+                inset 0 1.5px 1px rgba(255, 255, 255, 0.38),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+            color: #fff;
+            font-size: 1.35rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            transition: transform 0.25s var(--spring-gel), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        @media (hover: hover) {
+            .key-btn:hover {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.26) 0%, rgba(var(--accent-rgb), 0.16) 100%);
+                border-color: rgba(255, 255, 255, 0.5);
+                transform: scale(1.06);
+                box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.28), inset 0 1.5px 1px rgba(255, 255, 255, 0.6);
+            }
+        }
+        .key-btn:active {
+            transform: scale(0.9) !important;
+            background: rgba(var(--accent-rgb), 0.35);
+        }
+        .key-btn.action-key {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 800;
+        }
+
+        .shake-error { animation: iosShake 0.42s ease-in-out; }
         @keyframes iosShake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-10px); }
-            40%, 80% { transform: translateX(10px); }
+            20%, 60% { transform: translateX(-12px); }
+            40%, 80% { transform: translateX(12px); }
         }
 
         .break-overlay {
@@ -961,7 +1073,7 @@
             pointer-events: none;
         }
 
-        /* --- MOBILE ERGONOMICS & RESPONSIVE TUNING --- */
+        /* --- MOBILE ERGONOMICS --- */
         @media (max-width: 720px) {
             .top-navbar-wrapper {
                 top: 8px;
@@ -981,15 +1093,6 @@
             .nav-pill { padding: 7px 13px; font-size: 0.78rem; }
             .chat-container, .notes-container { height: 500px; padding: 16px; }
             .system-tagline { display: none; }
-        }
-
-        /* Respect System Accessibility Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-            *, ::before, ::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
         }
     </style>
 </head>
@@ -1015,17 +1118,44 @@
             <button class="nav-pill" onclick="teleportTo('rec-page', this)">🎮 Rec Zone</button>
             <button class="nav-pill" onclick="teleportTo('bg-page', this)">🌌 Themes</button>
         </div>
-        <div id="nav-clock">00:00:00</div>
+        <div class="nav-right-cluster">
+            <div id="nav-clock">00:00:00</div>
+            <button class="lock-now-btn" title="Lock Portal" onclick="lockPortal()">🔒</button>
+        </div>
     </header>
 
-    <!-- Passcode Gate (PIN 4443) -->
+    <!-- UPGRADED iOS LIQUID GLASS PASSCODE GATE (PIN: 4443) -->
     <div id="password-gate" class="password-overlay">
         <div id="gate-card" class="glass-panel password-box">
-            <div style="font-size:2.3rem; margin-bottom:10px; filter: drop-shadow(0 0 12px rgba(var(--accent-rgb), 0.5));">🔒</div>
-            <h2 style="font-size:1.3rem; font-weight:800; margin-bottom:6px; color:#fff;">Liquid Glass Terminal</h2>
-            <p style="color:var(--text-muted); font-size:0.84rem; margin-bottom:22px;">Enter 4-digit access PIN to materialize</p>
-            <input type="password" id="gate-pin" inputmode="numeric" placeholder="••••" maxlength="4" style="text-align:center; font-size:1.9rem; letter-spacing:14px; margin-bottom:20px;">
-            <button class="btn primary" style="width:100%;" onclick="verifyPin()">Unlock Matrix ⚡</button>
+            <div class="lock-badge-orb" id="lock-icon">🔒</div>
+            <h2 style="font-size:1.28rem; font-weight:800; margin-bottom:4px; color:#fff;">10 Pro Security</h2>
+            <p id="pin-status-text" style="color:var(--text-muted); font-size:0.82rem;">Enter Passcode (4443) to Unlock</p>
+
+            <!-- 4 Optical Glowing Dots -->
+            <div class="pin-dots-row" id="pin-dots">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
+
+            <!-- Tactile Liquid Glass Number Pad -->
+            <div class="pin-keypad">
+                <button type="button" class="key-btn" onclick="pressPinDigit('1')">1</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('2')">2</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('3')">3</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('4')">4</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('5')">5</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('6')">6</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('7')">7</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('8')">8</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('9')">9</button>
+                <button type="button" class="key-btn action-key" onclick="clearPinDigits()">CLR</button>
+                <button type="button" class="key-btn" onclick="pressPinDigit('0')">0</button>
+                <button type="button" class="key-btn action-key" onclick="backspacePinDigit()">⌫</button>
+            </div>
+
+            <button type="button" class="btn primary" style="width:100%;" onclick="verifyPin()">Unlock Matrix ⚡</button>
         </div>
     </div>
 
@@ -1051,7 +1181,7 @@
         </div>
     </div>
 
-    <div class="system-tagline">Liquid Glass Engine v2.5</div>
+    <div class="system-tagline">Liquid Glass OS v3.0</div>
 
     <!-- Main Dynamic Viewports -->
     <main class="main-container">
@@ -1192,6 +1322,23 @@
     </main>
 
     <script>
+        /* --- 0. CRASH-PROOF STORAGE ENGINE (Fixes file:// & iframe SecurityErrors) --- */
+        const SafeStore = {
+            mem: {},
+            get(key) {
+                try { return localStorage.getItem(key); } catch(e) { return this.mem[key] || null; }
+            },
+            set(key, val) {
+                try { localStorage.setItem(key, val); } catch(e) { this.mem[key] = String(val); }
+            },
+            getSession(key) {
+                try { return sessionStorage.getItem(key); } catch(e) { return this.mem['s_' + key] || null; }
+            },
+            setSession(key, val) {
+                try { sessionStorage.setItem(key, val); } catch(e) { this.mem['s_' + key] = String(val); }
+            }
+        };
+
         /* --- 1. WEB AUDIO HARMONIC ENGINE --- */
         const AudioEngine = {
             ctx: null, osc1: null, osc2: null, droneGain: null, isDronePlaying: false,
@@ -1219,17 +1366,17 @@
                     osc.stop(t + duration);
                 } catch(e){}
             },
-            playClick() { this.playGlassTone(1150 + Math.random() * 180, 'sine', 0.25, 0.09); },
+            playClick() { this.playGlassTone(1150 + Math.random() * 180, 'sine', 0.22, 0.09); },
             playTick() { this.playGlassTone(1900, 'sine', 0.05, 0.015); },
-            playPop() { this.playGlassTone(720 + Math.random() * 160, 'sine', 0.22, 0.14); },
+            playPop() { this.playGlassTone(720 + Math.random() * 160, 'sine', 0.2, 0.14); },
             playSuccess() {
-                this.playGlassTone(880, 'sine', 0.45, 0.12);
-                setTimeout(() => this.playGlassTone(1108.73, 'sine', 0.45, 0.12), 90);
-                setTimeout(() => this.playGlassTone(1318.51, 'sine', 0.8, 0.14), 180);
+                this.playGlassTone(880, 'sine', 0.4, 0.12);
+                setTimeout(() => this.playGlassTone(1108.73, 'sine', 0.4, 0.12), 80);
+                setTimeout(() => this.playGlassTone(1318.51, 'sine', 0.75, 0.14), 160);
             },
             playError() {
                 this.playGlassTone(280, 'triangle', 0.25, 0.1);
-                setTimeout(() => this.playGlassTone(220, 'triangle', 0.3, 0.1), 130);
+                setTimeout(() => this.playGlassTone(220, 'triangle', 0.3, 0.1), 120);
             },
             toggleAlphaWave() {
                 this.init();
@@ -1273,17 +1420,202 @@
             }
         };
 
-        /* --- 2. WWDC25 SPECULAR LIGHT TRACKING ON GLASS PANELS --- */
+        /* --- 2. FIXED & UPGRADED PASSCODE LOCK ENGINE (PIN: 4443) --- */
+        let enteredPin = "";
+        let isUnlocking = false;
+
+        function updatePinDotsUI(isError = false) {
+            const dots = document.querySelectorAll('#pin-dots .pin-dot');
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('filled', idx < enteredPin.length && !isError);
+                dot.classList.toggle('error', isError);
+            });
+        }
+
+        function pressPinDigit(digit) {
+            if (isUnlocking) return;
+            AudioEngine.playPop();
+            if (enteredPin.length < 4) {
+                enteredPin += String(digit);
+                updatePinDotsUI(false);
+                if (enteredPin.length === 4) {
+                    setTimeout(verifyPin, 90);
+                }
+            }
+        }
+
+        function backspacePinDigit() {
+            if (isUnlocking) return;
+            AudioEngine.playClick();
+            enteredPin = enteredPin.slice(0, -1);
+            updatePinDotsUI(false);
+        }
+
+        function clearPinDigits() {
+            if (isUnlocking) return;
+            AudioEngine.playClick();
+            enteredPin = "";
+            updatePinDotsUI(false);
+        }
+
+        function verifyPin() {
+            if (isUnlocking) return;
+            const card = document.getElementById('gate-card');
+            const overlay = document.getElementById('password-gate');
+            const statusText = document.getElementById('pin-status-text');
+            const lockIcon = document.getElementById('lock-icon');
+
+            if (enteredPin === "4443") {
+                isUnlocking = true;
+                AudioEngine.playSuccess();
+                SafeStore.setSession('portal_unlocked', 'true');
+                if (lockIcon) lockIcon.innerText = "🔓";
+                if (statusText) {
+                    statusText.innerText = "Access Granted — Materializing...";
+                    statusText.style.color = "var(--accent)";
+                }
+
+                overlay.classList.add('unlocking');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    overlay.classList.remove('unlocking');
+                    isUnlocking = false;
+                    bootWorkspace();
+                }, 440);
+            } else {
+                AudioEngine.playError();
+                updatePinDotsUI(true);
+                if (statusText) {
+                    statusText.innerText = "Incorrect PIN — Try 4443";
+                    statusText.style.color = "var(--danger)";
+                }
+                if (card) {
+                    card.classList.remove('shake-error');
+                    void card.offsetWidth;
+                    card.classList.add('shake-error');
+                }
+                setTimeout(() => {
+                    enteredPin = "";
+                    updatePinDotsUI(false);
+                    if (statusText) {
+                        statusText.innerText = "Enter Passcode (4443) to Unlock";
+                        statusText.style.color = "var(--text-muted)";
+                    }
+                }, 550);
+            }
+        }
+
+        function lockPortal() {
+            AudioEngine.playClick();
+            SafeStore.setSession('portal_unlocked', 'false');
+            enteredPin = "";
+            isUnlocking = false;
+            updatePinDotsUI(false);
+            const overlay = document.getElementById('password-gate');
+            const lockIcon = document.getElementById('lock-icon');
+            const statusText = document.getElementById('pin-status-text');
+            if (lockIcon) lockIcon.innerText = "🔒";
+            if (statusText) {
+                statusText.innerText = "Enter Passcode (4443) to Unlock";
+                statusText.style.color = "var(--text-muted)";
+            }
+            overlay.classList.remove('unlocking');
+            overlay.style.display = 'flex';
+        }
+
+        // Physical Keyboard Support for Lock Screen
+        window.addEventListener('keydown', e => {
+            const overlay = document.getElementById('password-gate');
+            if (!overlay || overlay.style.display === 'none') return;
+            if (e.key >= '0' && e.key <= '9') {
+                e.preventDefault();
+                pressPinDigit(e.key);
+            } else if (e.key === 'Backspace') {
+                e.preventDefault();
+                backspacePinDigit();
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                clearPinDigits();
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                verifyPin();
+            }
+        });
+
+        /* --- 3. WWDC25 SPECULAR LIGHT TRACKING ON GLASS PANELS --- */
         function bindSpecularCards() {
             const panels = document.querySelectorAll('.glass-panel');
             panels.forEach(panel => {
+                if (panel.dataset.specularBound) return;
+                panel.dataset.specularBound = "true";
                 panel.addEventListener('pointermove', e => {
                     const rect = panel.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    panel.style.setProperty('--px', `${x}px`);
-                    panel.style.setProperty('--py', `${y}px`); panel.style.setProperty('--glow-opacity', '1'); }, { passive: true });  panel.addEventListener('pointerleave', () => { panel.style.setProperty('--glow-opacity', '0'); }, { passive: true }); }); }  /* --- 3. MORPHING FLUID NAVIGATION PILL --- */ function syncNavLens(targetBtn) { const activeBtn = targetBtn \vert{}\vert{} document.querySelector('.nav-pill.active'); const lens = document.getElementById('nav-morph-lens'); if (!activeBtn \vert{}\vert{} !lens) return; lens.style.width = `${activeBtn.offsetWidth}px`;
-            lens.style.transform = `translate3d(${activeBtn.offsetLeft}px, 0, 0)`; }  function teleportTo(pageId, btn) { AudioEngine.playClick(); document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active')); const target = document.getElementById(pageId); if (target) target.classList.add('active'); if (btn) { btn.classList.add('active'); syncNavLens(btn); btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } } window.addEventListener('resize', () => syncNavLens());  /* --- 4. ULTRA-SMOOTH ZERO-LAG GPU CURSOR TRAIL --- */ const canvas = document.getElementById('cursor-trail'); const ctx = canvas.getContext('2d', { alpha: true }); let pts = []; let animRunning = false; let currentAccentRGB = "0, 242, 254";  function syncCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } window.addEventListener('resize', syncCanvas, { passive: true }); syncCanvas();  function addPoint(x, y) { if (pts.length > 16) pts.shift(); pts.push({ x, y, life: 1 }); if (!animRunning) { animRunning = true; requestAnimationFrame(drawTrail); } } window.addEventListener('pointermove', e => addPoint(e.clientX, e.clientY), { passive: true });  function drawTrail() { ctx.clearRect(0, 0, canvas.width, canvas.height); for (let i = 0; i < pts.length; i++) { const p = pts[i]; const rad = Math.max(1, 14 * p.life); const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad); grad.addColorStop(0, `rgba(${currentAccentRGB}, ${p.life * 0.38})`); grad.addColorStop(1, `rgba(${currentAccentRGB}, 0)`);
+                    panel.style.setProperty('--px', `${e.clientX - rect.left}px`);
+                    panel.style.setProperty('--py', `${e.clientY - rect.top}px`);
+                    panel.style.setProperty('--glow-opacity', '1');
+                }, { passive: true });
+
+                panel.addEventListener('pointerleave', () => {
+                    panel.style.setProperty('--glow-opacity', '0');
+                }, { passive: true });
+            });
+        }
+
+        /* --- 4. MORPHING FLUID NAVIGATION PILL --- */
+        function syncNavLens(targetBtn) {
+            const activeBtn = targetBtn || document.querySelector('.nav-pill.active');
+            const lens = document.getElementById('nav-morph-lens');
+            if (!activeBtn || !lens) return;
+            lens.style.width = `${activeBtn.offsetWidth}px`;
+            lens.style.transform = `translate3d(${activeBtn.offsetLeft}px, 0, 0)`;
+        }
+
+        function teleportTo(pageId, btn) {
+            AudioEngine.playClick();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
+            const target = document.getElementById(pageId);
+            if (target) target.classList.add('active');
+            if (btn) {
+                btn.classList.add('active');
+                syncNavLens(btn);
+                btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }
+        window.addEventListener('resize', () => syncNavLens());
+
+        /* --- 5. ULTRA-SMOOTH ZERO-LAG GPU CURSOR TRAIL --- */
+        const canvas = document.getElementById('cursor-trail');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let pts = [];
+        let animRunning = false;
+        let currentAccentRGB = "0, 242, 254";
+
+        function syncCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', syncCanvas, { passive: true });
+        syncCanvas();
+
+        function addPoint(x, y) {
+            if (pts.length > 16) pts.shift();
+            pts.push({ x, y, life: 1 });
+            if (!animRunning) {
+                animRunning = true;
+                requestAnimationFrame(drawTrail);
+            }
+        }
+        window.addEventListener('pointermove', e => addPoint(e.clientX, e.clientY), { passive: true });
+
+        function drawTrail() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < pts.length; i++) {
+                const p = pts[i];
+                const rad = Math.max(1, 14 * p.life);
+                const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad);
+                grad.addColorStop(0, `rgba(${currentAccentRGB}, ${p.life * 0.38})`);
+                grad.addColorStop(1, `rgba(${currentAccentRGB}, 0)`);
                 ctx.fillStyle = grad;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, rad, 0, Math.PI * 2);
@@ -1299,7 +1631,7 @@
             }
         }
 
-        /* --- 5. GLOBAL TOUCH RING & INNER GLOW RIPPLE --- */
+        /* --- 6. GLOBAL TOUCH RING & INNER GLOW RIPPLE --- */
         document.addEventListener('pointerdown', function(e) {
             if (e.target.closest('input') || e.target.closest('textarea')) return;
             const ring = document.createElement("div");
@@ -1315,8 +1647,31 @@
                 const circle = document.createElement("span");
                 const diameter = Math.max(rect.width, rect.height);
                 const radius = diameter / 2;
-                circle.style.width = circle.style.height = `${diameter}px`; circle.style.left = `${e.clientX - rect.left - radius}px`;
-                circle.style.top = `${e.clientY - rect.top - radius}px`; circle.classList.add("ripple"); const existing = target.querySelector(".ripple"); if (existing) existing.remove(); target.appendChild(circle); setTimeout(() => circle.remove(), 600); } }, { passive: true });  /* --- 6. PASSCODE GATE (4443) --- */ function verifyPin() { AudioEngine.init(); const pinInput = document.getElementById('gate-pin'); const val = pinInput.value.trim(); const card = document.getElementById('gate-card'); const overlay = document.getElementById('password-gate'); if (val === "4443") { AudioEngine.playSuccess(); sessionStorage.setItem('portal_unlocked', 'true'); overlay.classList.add('unlocking'); setTimeout(() => { overlay.style.display = 'none'; bootWorkspace(); }, 520); } else { AudioEngine.playError(); card.classList.remove('shake-error'); void card.offsetWidth; card.classList.add('shake-error'); pinInput.value = ""; } } document.getElementById('gate-pin').addEventListener('keypress', e => { if (e.key === 'Enter') verifyPin(); });  /* --- 7. REAL-TIME CLOCK & EXAM COUNTDOWN --- */ function updateWithTick(el, text) { if (el && el.innerText !== text) { el.innerText = text; el.classList.remove('digit-tick'); void el.offsetWidth; el.classList.add('digit-tick'); } }  const examTarget = new Date("February 15, 2027 00:00:00").getTime(); function tickClocks() { const d = new Date(); const timeStr = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${e.clientX - rect.left - radius}px`;
+                circle.style.top = `${e.clientY - rect.top - radius}px`;
+                circle.classList.add("ripple");
+                const existing = target.querySelector(".ripple");
+                if (existing) existing.remove();
+                target.appendChild(circle);
+                setTimeout(() => circle.remove(), 600);
+            }
+        }, { passive: true });
+
+        /* --- 7. REAL-TIME CLOCK & EXAM COUNTDOWN --- */
+        function updateWithTick(el, text) {
+            if (el && el.innerText !== text) {
+                el.innerText = text;
+                el.classList.remove('digit-tick');
+                void el.offsetWidth;
+                el.classList.add('digit-tick');
+            }
+        }
+
+        const examTarget = new Date("February 15, 2027 00:00:00").getTime();
+        function tickClocks() {
+            const d = new Date();
+            const timeStr = `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
             const clockEl = document.getElementById('nav-clock');
             if (clockEl) clockEl.innerText = timeStr;
 
@@ -1405,7 +1760,7 @@
 
         /* --- 10. SCRATCHPAD & ALPHA SYNTHESIZER --- */
         function saveScratchpad() {
-            localStorage.setItem('portal_global_scratchpad', document.getElementById('scratchpad-area').value);
+            SafeStore.set('portal_global_scratchpad', document.getElementById('scratchpad-area').value);
         }
         function toggleSynth() {
             const btn = document.getElementById('synth-btn');
@@ -1441,10 +1796,10 @@
 
         let lastAiAnswer = "";
         function configureKey() {
-            const current = localStorage.getItem('portal_gemini_api_key') || '';
+            const current = SafeStore.get('portal_gemini_api_key') || '';
             const key = prompt("Enter Google Gemini API Key for live AI answers:", current);
             if (key !== null) {
-                localStorage.setItem('portal_gemini_api_key', key.trim());
+                SafeStore.set('portal_gemini_api_key', key.trim());
                 AudioEngine.playSuccess();
             }
         }
@@ -1473,7 +1828,7 @@
             stream.appendChild(aiDiv);
             stream.scrollTop = stream.scrollHeight;
 
-            const apiKey = (localStorage.getItem('portal_gemini_api_key') || '').trim();
+            const apiKey = (SafeStore.get('portal_gemini_api_key') || '').trim();
             if (!apiKey) {
                 lastAiAnswer = getDetailedAnswer(q);
                 aiDiv.innerHTML = `<strong>AI:</strong> ${escapeHTML(lastAiAnswer).replace(/\n/g, '<br>')}<br><br><small style="color:var(--text-muted);">(Offline NCERT Engine active — click 🔑 API Key to connect live Gemini AI)</small>`;
@@ -1499,7 +1854,17 @@
                     const data = await res.json();
                     if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
                         lastAiAnswer = data.candidates[0].content.parts[0].text;
-                        aiDiv.innerHTML = `<strong>AI:</strong> ${escapeHTML(lastAiAnswer).replace(/\n/g, '<br>')}`; AudioEngine.playSuccess(); success = true; break; } } catch (err) {} }  if (!success) { lastAiAnswer = getDetailedAnswer(q); aiDiv.innerHTML = `<strong>AI:</strong> ${escapeHTML(lastAiAnswer).replace(/\n/g, '<br>')}`;
+                        aiDiv.innerHTML = `<strong>AI:</strong> ${escapeHTML(lastAiAnswer).replace(/\n/g, '<br>')}`;
+                        AudioEngine.playSuccess();
+                        success = true;
+                        break;
+                    }
+                } catch (err) {}
+            }
+
+            if (!success) {
+                lastAiAnswer = getDetailedAnswer(q);
+                aiDiv.innerHTML = `<strong>AI:</strong> ${escapeHTML(lastAiAnswer).replace(/\n/g, '<br>')}`;
             }
             stream.scrollTop = stream.scrollHeight;
         }
@@ -1508,7 +1873,53 @@
             if (!lastAiAnswer) return;
             AudioEngine.playPop();
             const area = document.getElementById('live-notes-area');
-            area.value += (area.value ? "\n\n" : "") + `[Pinned Note]:\n${lastAiAnswer}`; autoSaveNotes(); } function autoSaveNotes() { localStorage.setItem('portal_notes_draft', document.getElementById('live-notes-area').value); const st = document.getElementById('save-status'); st.innerText = "Saved ✓"; } function clearNotes() { if (confirm("Clear study scratchpad notes?")) { AudioEngine.playClick(); document.getElementById('live-notes-area').value = ""; autoSaveNotes(); } }  /* --- 12. 48-CHAPTER SYLLABUS TRACKER --- */ const subjects = { math: [ "Real Numbers", "Polynomials", "Linear Equations in 2 Variables", "Quadratic Equations", "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Intro to Trigonometry", "Applications of Trigonometry", "Circles", "Areas Related to Circles", "Surface Areas and Volumes", "Statistics", "Probability" ], science: [ "Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals", "Carbon and its Compounds", "Life Processes", "Control and Coordination", "How do Organisms Reproduce?", "Heredity", "Light Reflection & Refraction", "The Human Eye & Colourful World", "Electricity", "Magnetic Effects of Current", "Our Environment" ], social: [ "Nationalism in Europe", "Nationalism in India", "Making of a Global World", "Age of Industrialisation", "Print Culture & Modern World", "Resources and Development", "Forest and Wildlife", "Water Resources", "Agriculture", "Minerals and Energy", "Manufacturing Industries", "Lifelines of National Economy", "Power Sharing", "Federalism", "Gender, Religion and Caste", "Political Parties", "Outcomes of Democracy", "Development", "Sectors of Indian Economy", "Money & Credit", "Globalisation" ] };  function buildSyllabus() { let saved = {}; try { saved = JSON.parse(localStorage.getItem('portal_syllabus_checks') \vert{}\vert{} '{}'); } catch(e){} let total = 0, checkedCount = 0;  ['math', 'science', 'social'].forEach(sub => { const dom = document.getElementById(`${sub}-list`);
+            area.value += (area.value ? "\n\n" : "") + `[Pinned Note]:\n${lastAiAnswer}`;
+            autoSaveNotes();
+        }
+        function autoSaveNotes() {
+            SafeStore.set('portal_notes_draft', document.getElementById('live-notes-area').value);
+            const st = document.getElementById('save-status');
+            if (st) st.innerText = "Saved ✓";
+        }
+        function clearNotes() {
+            if (confirm("Clear study scratchpad notes?")) {
+                AudioEngine.playClick();
+                document.getElementById('live-notes-area').value = "";
+                autoSaveNotes();
+            }
+        }
+
+        /* --- 12. 48-CHAPTER SYLLABUS TRACKER --- */
+        const subjects = {
+            math: [
+                "Real Numbers", "Polynomials", "Linear Equations in 2 Variables", "Quadratic Equations",
+                "Arithmetic Progressions", "Triangles", "Coordinate Geometry", "Intro to Trigonometry",
+                "Applications of Trigonometry", "Circles", "Areas Related to Circles",
+                "Surface Areas and Volumes", "Statistics", "Probability"
+            ],
+            science: [
+                "Chemical Reactions and Equations", "Acids, Bases and Salts", "Metals and Non-metals",
+                "Carbon and its Compounds", "Life Processes", "Control and Coordination",
+                "How do Organisms Reproduce?", "Heredity", "Light Reflection & Refraction",
+                "The Human Eye & Colourful World", "Electricity", "Magnetic Effects of Current", "Our Environment"
+            ],
+            social: [
+                "Nationalism in Europe", "Nationalism in India", "Making of a Global World",
+                "Age of Industrialisation", "Print Culture & Modern World", "Resources and Development",
+                "Forest and Wildlife", "Water Resources", "Agriculture", "Minerals and Energy",
+                "Manufacturing Industries", "Lifelines of National Economy", "Power Sharing",
+                "Federalism", "Gender, Religion and Caste", "Political Parties",
+                "Outcomes of Democracy", "Development", "Sectors of Indian Economy", "Money & Credit", "Globalisation"
+            ]
+        };
+
+        function buildSyllabus() {
+            let saved = {};
+            try { saved = JSON.parse(SafeStore.get('portal_syllabus_checks') || '{}'); } catch(e){}
+            let total = 0, checkedCount = 0;
+
+            ['math', 'science', 'social'].forEach(sub => {
+                const dom = document.getElementById(`${sub}-list`);
                 if (!dom) return;
                 dom.innerHTML = subjects[sub].map((title, i) => {
                     const id = `${sub}_${i}`;
@@ -1529,14 +1940,14 @@
         function saveSyllabus(id) {
             AudioEngine.playPop();
             let saved = {};
-            try { saved = JSON.parse(localStorage.getItem('portal_syllabus_checks') || '{}'); } catch(e){}
+            try { saved = JSON.parse(SafeStore.get('portal_syllabus_checks') || '{}'); } catch(e){}
             const cb = document.getElementById(id);
             const lbl = document.getElementById(`lbl_${id}`);
             if (cb) {
                 saved[id] = cb.checked;
                 if (lbl) lbl.classList.toggle('done', cb.checked);
             }
-            localStorage.setItem('portal_syllabus_checks', JSON.stringify(saved));
+            SafeStore.set('portal_syllabus_checks', JSON.stringify(saved));
 
             let total = 0, checked = 0;
             ['math', 'science', 'social'].forEach(s => {
@@ -1550,7 +1961,8 @@
 
         function updateSyllabusStats(checked, total) {
             const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
-            document.getElementById('syllabus-percentage').innerText = `${pct}\% (${checked}/${total})`; document.getElementById('syllabus-fill').style.width = `${pct}%`;
+            document.getElementById('syllabus-percentage').innerText = `${pct}% (${checked}/${total})`;
+            document.getElementById('syllabus-fill').style.width = `${pct}%`;
         }
 
         /* --- 13. SCHEDULE VAULT --- */
@@ -1560,17 +1972,17 @@
             if (!t || !d) { AudioEngine.playError(); return; }
             AudioEngine.playSuccess();
             let cur = [];
-            try { cur = JSON.parse(localStorage.getItem('portal_targets') || '[]'); } catch(e){}
+            try { cur = JSON.parse(SafeStore.get('portal_targets') || '[]'); } catch(e){}
             cur.push({ t, d });
             cur.sort((a, b) => new Date(a.d) - new Date(b.d));
-            localStorage.setItem('portal_targets', JSON.stringify(cur));
+            SafeStore.set('portal_targets', JSON.stringify(cur));
             renderTargets();
             document.getElementById('target-title').value = "";
         }
 
         function renderTargets() {
             let cur = [];
-            try { cur = JSON.parse(localStorage.getItem('portal_targets') || '[]'); } catch(e){}
+            try { cur = JSON.parse(SafeStore.get('portal_targets') || '[]'); } catch(e){}
             const referenceDay = new Date();
             referenceDay.setHours(0, 0, 0, 0);
             const stream = document.getElementById('target-stream');
@@ -1588,7 +2000,7 @@
                         <div>
                             <strong style="color:#fff; font-size:0.92rem;">${escapeHTML(item.t)}</strong>
                             <div style="font-size:0.76rem; color:${isUrgent ? 'var(--danger)' : 'var(--accent)'}; margin-top:3px;">
-                                📅 ${item.d}${isUrgent ? '⚠️ (Due in ' + diff + ' day' + (diff === 1 ? '' : 's') + '!)' : ''}
+                                📅 ${item.d} ${isUrgent ? '⚠️ (Due in ' + diff + ' day' + (diff === 1 ? '' : 's') + '!)' : ''}
                             </div>
                         </div>
                         <button class="btn" style="padding:5px 12px; font-size:0.8rem;" onclick="removeTarget(${i})">✕</button>
@@ -1600,9 +2012,9 @@
         function removeTarget(i) {
             AudioEngine.playPop();
             let cur = [];
-            try { cur = JSON.parse(localStorage.getItem('portal_targets') || '[]'); } catch(e){}
+            try { cur = JSON.parse(SafeStore.get('portal_targets') || '[]'); } catch(e){}
             cur.splice(i, 1);
-            localStorage.setItem('portal_targets', JSON.stringify(cur));
+            SafeStore.set('portal_targets', JSON.stringify(cur));
             renderTargets();
         }
 
@@ -1676,7 +2088,7 @@
             { id: 'trench', name: 'Mariana Trench', desc: 'Bioluminescent Abyssal Teal', grad: 'linear-gradient(135deg, #00ffc8, #0051ff)' },
             { id: 'nebula', name: 'Ultraviolet Nebula', desc: 'Deep Magenta & Starlight', grad: 'linear-gradient(135deg, #e0aaff, #ff007f)' },
             { id: 'crimson', name: 'Crimson Eclipse', desc: 'Blood Moon & Obsidian Red', grad: 'linear-gradient(135deg, #ff4d6d, #7209b7)' },
-            { id: 'emerald', name: 'Cyber Emerald', desc: 'Bio-Matrix Deep Forest', grad: 'linear-gradient(135deg, #10b981, #047857)' },
+            { id: 'emerald', name: 'Cyber Emerald', desc: 'Bio-Matrix Deep Forest', grad: 'linear-gradient(135deg, #34d399, #059669)' },
             { id: 'solar', name: 'Solar Flare', desc: 'Amber Corona & Molten Core', grad: 'linear-gradient(135deg, #ffbe0b, #fb5607)' },
             { id: 'obsidian', name: 'Obsidian Gold', desc: 'Luxury Titanium & Champagne', grad: 'linear-gradient(135deg, #ffd166, #5c4d3c)' },
             { id: 'borealis', name: 'Arctic Borealis', desc: 'Polar Mint & Indigo Aurora', grad: 'linear-gradient(135deg, #72efdd, #7400b8)' }
@@ -1690,4 +2102,51 @@
                     <div class="theme-orb-preview" style="background: ${t.grad};"></div>
                     <div>
                         <div style="font-weight:800; font-size:0.92rem; color:#fff;">${t.name}</div>
-                        <div style="font-size:0.75rem
+                        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">${t.desc}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setTheme(themeId) {
+            AudioEngine.playPop();
+            document.body.setAttribute('data-theme', themeId);
+            SafeStore.set('portal_theme_v2', themeId);
+            const computedRGB = getComputedStyle(document.body).getPropertyValue('--accent-rgb').trim();
+            if (computedRGB) currentAccentRGB = computedRGB;
+            buildThemes();
+        }
+
+        function escapeHTML(str) {
+            return String(str).replace(/[&<>'"]/g, tag => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            }[tag] || tag));
+        }
+
+        /* --- 16. BOOTSTRAP WORKSPACE --- */
+        function bootWorkspace() {
+            document.getElementById('live-notes-area').value = SafeStore.get('portal_notes_draft') || "";
+            document.getElementById('scratchpad-area').value = SafeStore.get('portal_global_scratchpad') || "";
+            const savedTheme = SafeStore.get('portal_theme_v2') || 'void';
+            document.body.setAttribute('data-theme', savedTheme);
+            const computedRGB = getComputedStyle(document.body).getPropertyValue('--accent-rgb').trim();
+            if (computedRGB) currentAccentRGB = computedRGB;
+
+            buildSyllabus();
+            renderTargets();
+            buildFidget();
+            buildTTT();
+            buildThemes();
+            bindSpecularCards();
+            setTimeout(() => syncNavLens(), 60);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            bootWorkspace();
+            if (SafeStore.getSession('portal_unlocked') === 'true') {
+                document.getElementById('password-gate').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
